@@ -1,0 +1,14 @@
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 类型别名 -->
+    <typeAliases>
+        <package name="com.berg.fastsearch.**.dto" />
+    </typeAliases>
+
+    <!-- mapper文件路径 -->
+    <mappers>
+        <mapper resource="mappers/**/*Mapper.xml" />
+    </mappers>
+</configuration>
