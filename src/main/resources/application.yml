@@ -14,6 +14,9 @@ spring:
     mode: HTML
     prefix: classpath:/templates/
     suffix: .html
+  devtools:
+    restart:
+      exclude: templates/**,static/**
 
 
 #mybatis配置
@@ -25,3 +28,9 @@ security:
   basic:
     #关闭http基本验证
     enabled: false
+#禁用自带的错误页面
+server:
+  error:
+    whitelabel:
+      enabled: false
+

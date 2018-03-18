@@ -60,6 +60,14 @@
         </dependency>
         <!-- thymeleaf模板的依赖 -->
 
+        <!-- Thymeleaf方言支持SpringSecurity 依赖-->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+            <version>${thymeleaf-extras-springsecurity4.version}</version>
+        </dependency>
+        <!-- Thymeleaf方言支持SpringSecurity 依赖-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
