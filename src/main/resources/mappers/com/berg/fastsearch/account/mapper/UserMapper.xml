@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.berg.fastsearch.account.mapper.UserMapper">
+    <!-- 表名 -->
+    <sql id="TableName">
+        SYS_USERS AS ${alias}
+    </sql>
+
+    <!-- 基础ResultMap -->
+    <resultMap id="BaseResultMap" type="com.berg.fastsearch.account.entity.User">
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+        <result column="PHONE_NUMBER" property="phoneNumber" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="AVATAR" property="avatar" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="LAST_LOGIN_TIME" property="lastLoginTime" jdbcType="DATE" />
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="DATE" />
+    </resultMap>
+
+    <!-- 基础Sql -->
+    <sql id="BaseSql">
+        ${prefix}.ID,
+        ${prefix}.NAME,
+        ${prefix}.EMAIL,
+        ${prefix}.PASSWORD,
+        ${prefix}.PHONE_NUMBER,
+        ${prefix}.STATUS,
+        ${prefix}.AVATAR,
+        ${prefix}.CREATE_TIME,
+        ${prefix}.LAST_LOGIN_TIME,
+        ${prefix}.LAST_UPDATE_TIME
+    </sql>
+
+    <!-- 基本的查询条件 -->
+    <sql id="BaseCondition">
+        <if test="id!=null and id!=0">
+            AND ${prefix}.ID = #{id, jdbcType=DECIMAL}
+        </if>
+        <if test="name!=null and !('').equals(name.trim())">
+            AND ${prefix}.NAME LIKE CONCAT('%', CONCAT(#{name.trim(), jdbcType=VARCHAR}, '%'))
+        </if>
+        <if test="email!=null and !('').equals(email.trim())">
+            AND ${prefix}.EMAIL LIKE CONCAT('%', CONCAT(#{email.trim(), jdbcType=VARCHAR}, '%'))
+        </if>
+        <if test="password!=null and !('').equals(password.trim())">
+            AND ${prefix}.PASSWORD = #{password, jdbcType=VARCHAR}
+        </if>
+        <if test="phoneNumber!=null and !('').equals(phoneNumber.trim())">
+            AND ${prefix}.PHONE_NUMBER LIKE CONCAT('%', CONCAT(#{phoneNumber.trim(), jdbcType=VARCHAR}, '%'))
+        </if>
+        <if test="status!=null and !('').equals(status.trim())">
+            AND ${prefix}.STATUS = #{status, jdbcType=VARCHAR}
+        </if>
+    </sql>
+
+    <!-- 条件查询 -->
+    <select id="select" parameterType="com.berg.fastsearch.account.entity.User"
+            resultMap="com.berg.fastsearch.account.mapper.UserMapper.BaseResultMap">
+        SELECT
+          <include refid="com.berg.fastsearch.account.mapper.UserMapper.BaseSql">
+              <property name="prefix" value="su" />
+          </include>
+        FROM
+          <include refid="com.berg.fastsearch.account.mapper.UserMapper.TableName">
+              <property name="alias" value="su" />
+          </include>
+        <trim prefix="WHERE" prefixOverrides="AND |OR">
+            <include refid="com.berg.fastsearch.account.mapper.UserMapper.BaseCondition">
+                <property name="prefix" value="su"/>
+            </include>
+        </trim>
+    </select>
+
+</mapper>

@@ -1,5 +1,11 @@
 package com.berg.fastsearch.account.mapper;
 
+import com.berg.fastsearch.account.entity.User;
+import com.berg.fastsearch.system.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
 /**
  * <p></p>
  *
@@ -7,5 +13,6 @@ package com.berg.fastsearch.account.mapper;
  * @version v1.0
  * @apiNote Created on 18-3-18
  */
-public interface UserMapper {
+@Mapper
+public interface UserMapper extends BaseMapper<User>{
 }

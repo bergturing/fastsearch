@@ -4,11 +4,11 @@
 <configuration>
     <!-- 类型别名 -->
     <typeAliases>
-        <package name="com.berg.fastsearch.**.dto" />
+        <package name="com.berg.fastsearch.account.entity" />
     </typeAliases>
 
     <!-- mapper文件路径 -->
     <mappers>
-        <mapper resource="mappers/**/*Mapper.xml" />
+        <mapper resource="mappers/com/berg/fastsearch/account/mapper/UserMapper.xml" />
     </mappers>
 </configuration>

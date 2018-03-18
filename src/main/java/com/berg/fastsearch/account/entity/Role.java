@@ -1,4 +1,4 @@
-package com.berg.fastsearch.account.dto;
+package com.berg.fastsearch.account.entity;
 
 import javax.persistence.Table;
 

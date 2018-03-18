@@ -1,5 +1,8 @@
 package com.berg.fastsearch.account.mapper;
 
+import com.berg.fastsearch.account.entity.Role;
+import com.berg.fastsearch.system.mapper.BaseMapper;
+
 /**
  * <p></p>
  *
@@ -7,5 +10,5 @@ package com.berg.fastsearch.account.mapper;
  * @version v1.0
  * @apiNote Created on 18-3-18
  */
-public class RoleMapper {
+public interface RoleMapper extends BaseMapper<Role> {
 }

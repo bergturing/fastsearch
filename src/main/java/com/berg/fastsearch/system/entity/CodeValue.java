@@ -1,4 +1,4 @@
-package com.berg.fastsearch.system.dto;
+package com.berg.fastsearch.system.entity;
 
 import javax.persistence.Table;
 
@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * @apiNote Created on 18-3-18
  */
 @Table(
-        name = "sys_code_b"
+        name = "sys_code_value_b"
 )
-public class Code {
+public class CodeValue {
 }
