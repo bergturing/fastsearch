@@ -1,10 +1,14 @@
 package com.berg.fastsearch.account.entity;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>用户的对象表</p>
@@ -17,7 +21,7 @@ import java.util.Date;
         name = "sys_users"
 )
 @Entity
-public class User {
+public class User implements UserDetails{
     /**
      * 用户的主键
      */
@@ -90,6 +94,47 @@ public class User {
     @Column
     private Date lastUpdateTime;
 
+    /**
+     * 权限列表
+     */
+    @Transient
+    private List<GrantedAuthority> authorityList;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorityList;
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     public Long getId() {
         return id;
     }
@@ -120,10 +165,6 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -168,5 +209,13 @@ public class User {
 
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public List<GrantedAuthority> getAuthorityList() {
+        return authorityList;
+    }
+
+    public void setAuthorityList(List<GrantedAuthority> authorityList) {
+        this.authorityList = authorityList;
     }
 }

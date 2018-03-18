@@ -1,6 +1,8 @@
 package com.berg.fastsearch.config;
 
+import com.berg.fastsearch.security.AuthProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -56,10 +58,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
      */
     @Autowired
     public void configGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password("admin")
-                .roles("ADMIN")
-                .and();
+        //内存认证
+//        auth.inMemoryAuthentication()
+//                .withUser("admin")
+//                .password("admin")
+//                .roles("ADMIN")
+//                .and();
+
+        //通过自定义的逻辑进行认证
+        auth.authenticationProvider(authProvider())
+                //擦除密码
+                .eraseCredentials(true);
+    }
+
+    @Bean
+    public AuthProvider authProvider(){
+        return new AuthProvider();
     }
 }

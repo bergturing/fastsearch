@@ -10,5 +10,7 @@
     <!-- mapper文件路径 -->
     <mappers>
         <mapper resource="mappers/com/berg/fastsearch/account/mapper/UserMapper.xml" />
+        <mapper resource="mappers/com/berg/fastsearch/account/mapper/RoleMapper.xml" />
+        <mapper resource="mappers/com/berg/fastsearch/account/mapper/UserRoleMapper.xml" />
     </mappers>
 </configuration>

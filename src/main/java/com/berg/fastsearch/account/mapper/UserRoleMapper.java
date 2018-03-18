@@ -1,6 +1,6 @@
 package com.berg.fastsearch.account.mapper;
 
-import com.berg.fastsearch.account.entity.Role;
+import com.berg.fastsearch.account.entity.UserRole;
 import com.berg.fastsearch.system.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,5 +12,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @apiNote Created on 18-3-18
  */
 @Mapper
-public interface RoleMapper extends BaseMapper<Role> {
+public interface UserRoleMapper extends BaseMapper<UserRole> {
 }

@@ -15,13 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Controller
 public class LoginController {
-    @GetMapping(value = {"/login.html", "/login"})
-    public String login(Model model){
-        model.addAttribute("name", "张三");
-
-        return "login";
-    }
-
     /**
      * 管理员登录界面
      * @return  管理员登录界面

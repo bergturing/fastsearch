@@ -1,24 +1,22 @@
 package com.berg.fastsearch.account.entity;
 
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * <p>用户角色实体</p>
+ * <p>用户角色对象</p>
  *
  * @author bo.he02@hand-china.com
  * @version v1.0
  * @apiNote Created on 18-3-18
  */
 @Table(
-        name = "sys_roles"
+        name = "sys_user_role"
 )
 @Entity
-public class Role {
+public class UserRole {
     /**
-     * 角色的主键
+     * 角色分派的主键
      */
     @Id
     @GeneratedValue(
@@ -27,19 +25,18 @@ public class Role {
     private Long id;
 
     /**
-     * 角色名
+     * 用户id,用户表(sys_users)的主键
      */
     @Column
-    @Length(max = 32)
     @NotNull
-    private String name;
+    private Long userId;
 
     /**
-     * 描述
+     * 角色的id,角色表(sys_roles)的主键
      */
     @Column
-    @Length(max = 255)
-    private String description;
+    @NotNull
+    private Long roleId;
 
     public Long getId() {
         return id;
@@ -49,19 +46,19 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getDescription() {
-        return description;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 }

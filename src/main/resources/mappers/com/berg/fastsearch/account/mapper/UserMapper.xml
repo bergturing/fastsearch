@@ -41,16 +41,16 @@
             AND ${prefix}.ID = #{id, jdbcType=DECIMAL}
         </if>
         <if test="name!=null and !('').equals(name.trim())">
-            AND ${prefix}.NAME LIKE CONCAT('%', CONCAT(#{name.trim(), jdbcType=VARCHAR}, '%'))
+            AND ${prefix}.NAME LIKE CONCAT('%', CONCAT(#{name, jdbcType=VARCHAR}, '%'))
         </if>
         <if test="email!=null and !('').equals(email.trim())">
-            AND ${prefix}.EMAIL LIKE CONCAT('%', CONCAT(#{email.trim(), jdbcType=VARCHAR}, '%'))
+            AND ${prefix}.EMAIL LIKE CONCAT('%', CONCAT(#{email, jdbcType=VARCHAR}, '%'))
         </if>
         <if test="password!=null and !('').equals(password.trim())">
             AND ${prefix}.PASSWORD = #{password, jdbcType=VARCHAR}
         </if>
         <if test="phoneNumber!=null and !('').equals(phoneNumber.trim())">
-            AND ${prefix}.PHONE_NUMBER LIKE CONCAT('%', CONCAT(#{phoneNumber.trim(), jdbcType=VARCHAR}, '%'))
+            AND ${prefix}.PHONE_NUMBER LIKE CONCAT('%', CONCAT(#{phoneNumber, jdbcType=VARCHAR}, '%'))
         </if>
         <if test="status!=null and !('').equals(status.trim())">
             AND ${prefix}.STATUS = #{status, jdbcType=VARCHAR}
