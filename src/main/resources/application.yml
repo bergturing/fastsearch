@@ -1,10 +1,7 @@
-#datasource配置
 spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/fast_search
-    username: root
-    password: 123456
+  #默认配置文件
+  profiles:
+    active: dev
   #session绘会话存储类型
   session:
     store-type: hash_map

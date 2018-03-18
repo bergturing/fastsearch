@@ -1,5 +1,7 @@
 package com.berg.fastsearch.system.mapper;
 
+import com.berg.fastsearch.system.entity.Code;
+
 /**
  * <p></p>
  *
@@ -7,5 +9,5 @@ package com.berg.fastsearch.system.mapper;
  * @version v1.0
  * @apiNote Created on 18-3-18
  */
-public interface CodeMapper {
+public interface CodeMapper extends BaseMapper<Code>{
 }

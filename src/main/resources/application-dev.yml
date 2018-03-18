@@ -1,0 +1,7 @@
+#datasource配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/fast_search
+    username: root
+    password: 123456

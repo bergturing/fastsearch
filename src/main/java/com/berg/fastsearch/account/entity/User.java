@@ -1,5 +1,7 @@
 package com.berg.fastsearch.account.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -29,12 +31,14 @@ public class User {
      * 用户名称
      */
     @Column
+    @Length(max = 32)
     private String name;
 
     /**
      * 用户邮箱
      */
     @Column
+    @Length(max = 32)
     private String email;
 
     /**
@@ -42,12 +46,14 @@ public class User {
      */
     @NotNull
     @Column
+    @Length(max = 15)
     private String phoneNumber;
 
     /**
      * 用户密码
      */
     @Column
+    @Length(max = 32)
     private String password;
 
     /**
@@ -56,12 +62,14 @@ public class User {
      */
     @NotNull
     @Column
+    @Length(max = 32)
     private String status;
 
     /**
      * 用户头像
      */
     @Column
+    @Length(max = 255)
     private String avatar;
 
     /**
