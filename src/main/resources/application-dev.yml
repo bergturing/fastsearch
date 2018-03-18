@@ -5,3 +5,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/fast_search
     username: root
     password: 123456
+  #禁止thymeleaf的缓存
+  thymeleaf:
+    cache: false

@@ -9,6 +9,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: validate
+  #thymeleaf的配置
+  thymeleaf:
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
 
 
 #mybatis配置
