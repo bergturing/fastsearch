@@ -1,5 +1,6 @@
 package com.berg.fastsearch.security;
 
+import com.berg.fastsearch.account.dto.UserDto;
 import com.berg.fastsearch.account.entity.User;
 import com.berg.fastsearch.account.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,17 +37,17 @@ public class AuthProvider implements AuthenticationProvider{
         String inputPassword = (String) authentication.getCredentials();
 
         //在数据库中查找到用户
-        User user = userService.findUsserByName(userName);
+        UserDto userDto = userService.findByName(userName);
 
         //没有找到用户
-        if(null == user){
+        if(null == userDto){
             throw new AuthenticationCredentialsNotFoundException("authError");
         }
 
         //判断验证是否通过
-        if(passwordEncoder.isPasswordValid(user.getPassword(), inputPassword, user.getId())){
+        if(passwordEncoder.isPasswordValid(userDto.getPassword(), inputPassword, userDto.getId())){
             //验证通过
-            return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            return new UsernamePasswordAuthenticationToken(userDto, null, userDto.getAuthorities());
         }
 
         //验证失败

@@ -20,17 +20,4 @@ public class UserRoleServiceTest extends FastsearchApplicationTests {
     @Autowired
     private IUserRoleService userRoleService;
 
-    /**
-     * 测试select
-     */
-    @Test
-    public void testSelect(){
-        UserRole userRole = new UserRole();
-        userRole.setUserId(1L);
-        userRole.setRoleId(1L);
-
-        List<UserRole> select = userRoleService.select(userRole);
-
-        Assert.assertEquals(1L, select.size());
-    }
 }

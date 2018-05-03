@@ -1,7 +1,7 @@
 package com.berg.fastsearch.account.service.impl;
 
 import com.berg.fastsearch.FastsearchApplicationTests;
-import com.berg.fastsearch.account.entity.Role;
+import com.berg.fastsearch.account.dto.RoleDto;
 import com.berg.fastsearch.account.service.IRoleService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,25 +26,10 @@ public class RoleServiceTest extends FastsearchApplicationTests {
      */
     @Test
     public void testSelect(){
-        Role role = new Role();
-        role.setId(1L);
-        List<Role> select = roleService.select(role);
+        List<RoleDto> select = roleService.findByUserId(1L);
 
         Assert.assertEquals(1L, select.size());
         Assert.assertEquals("ADMIN", select.get(0).getName());
-    }
-
-    /**
-     * 测试selectByPrimaryKey
-     */
-    @Test
-    public void testSelectByPrimaryKey(){
-        Role role = new Role();
-        role.setId(1L);
-
-        role = roleService.selectByPrimaryKey(role);
-
-        Assert.assertEquals("ADMIN", role.getName());
     }
 }
 

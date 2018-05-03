@@ -6,6 +6,7 @@ import com.berg.fastsearch.account.service.IUserService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 import java.util.List;
 
@@ -20,16 +21,4 @@ public class UserServiceTest extends FastsearchApplicationTests {
     @Autowired
     private IUserService userService;
 
-    /**
-     * 测试select
-     */
-    @Test
-    public void testSelect(){
-        User user = new User();
-        user.setId(1L);
-        List<User> select = userService.select(user);
-
-        Assert.assertEquals(1L, select.size());
-        Assert.assertEquals("admin1", select.get(0).getName());
-    }
 }

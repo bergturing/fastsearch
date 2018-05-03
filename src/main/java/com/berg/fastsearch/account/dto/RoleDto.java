@@ -1,41 +1,36 @@
-package com.berg.fastsearch.account.entity;
+package com.berg.fastsearch.account.dto;
 
+import com.berg.fastsearch.system.dto.BaseDto;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * <p>用户角色实体</p>
+ * <p></p>
  *
  * @author bo.he02@hand-china.com
  * @version v1.0
- * @apiNote Created on 18-3-18
+ * @apiNote Created on 18-5-3
  */
-@Table(
-        name = "sys_roles"
-)
-@Entity
-public class Role {
+public class RoleDto extends BaseDto{
+    private static final long serialVersionUID = -2997485158386765627L;
+
     /**
      * 角色的主键
      */
-    @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
     private Long id;
 
     /**
      * 角色名
      */
-    @Column
+    @NotNull
+    @Length(max = 32)
     private String name;
 
     /**
      * 描述
      */
-    @Column
+    @Length(max = 255)
     private String description;
 
     public Long getId() {

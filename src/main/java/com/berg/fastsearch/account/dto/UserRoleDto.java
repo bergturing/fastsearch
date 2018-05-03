@@ -1,38 +1,38 @@
-package com.berg.fastsearch.account.entity;
+package com.berg.fastsearch.account.dto;
 
-import javax.persistence.*;
+import com.berg.fastsearch.system.dto.BaseDto;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
- * <p>用户角色对象</p>
+ * <p></p>
  *
  * @author bo.he02@hand-china.com
  * @version v1.0
- * @apiNote Created on 18-3-18
+ * @apiNote Created on 18-5-3
  */
-@Table(
-        name = "sys_user_role"
-)
-@Entity
-public class UserRole {
+public class UserRoleDto extends BaseDto{
+    private static final long serialVersionUID = 6943882100632115633L;
+
     /**
      * 角色分派的主键
      */
-    @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
     private Long id;
 
     /**
      * 用户id,用户表(sys_users)的主键
      */
-    @Column
+    @NotNull
     private Long userId;
 
     /**
      * 角色的id,角色表(sys_roles)的主键
      */
-    @Column
+    @NotNull
     private Long roleId;
 
     public Long getId() {
