@@ -1,15 +1,14 @@
 package com.berg.fastsearch.account.service.impl;
 
-import com.berg.fastsearch.account.dto.UserRoleDto;
+import com.berg.fastsearch.account.web.dto.UserRoleDto;
 import com.berg.fastsearch.account.entity.UserRole;
 import com.berg.fastsearch.account.repository.UserRoleRepository;
 import com.berg.fastsearch.account.service.IUserRoleService;
-import com.berg.fastsearch.system.service.impl.AbstractBaseServiceImpl;
+import com.berg.fastsearch.system.base.service.impl.AbstractBaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

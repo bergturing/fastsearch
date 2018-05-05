@@ -1,13 +1,20 @@
 package com.berg.fastsearch.config;
 
-import com.berg.fastsearch.security.AuthProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * <p></p>
@@ -18,61 +25,104 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    /**
+     * 默认记住我的时间
+     */
+    private static final Integer DEFAULT_REMEMBER_ME_SECONDS = 3600;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    private AuthenticationFailureHandler authenticationFailureHandler;
+
+    @Autowired
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
     /**
      * HTTP权限控制
-     * @param http          权限控制对象
+     *
+     * @param http 权限控制对象
      * @throws Exception
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()
-                //管理员登录界面
-                .antMatchers("/admin/login").permitAll()
-                //静态资源
-                .antMatchers("/static/**").permitAll()
-                //用户登录入口
-                .antMatchers("/user/login").permitAll()
-                //其他管理员界面
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                //其他用户界面
-                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
-                //接口
-                .antMatchers("/api/user/**").hasAnyRole("ADMIN", "USER")
+        http.apply(validateCodeSecurityConfig)
                 .and()
-                .formLogin()
+            //处理表单登录
+            .formLogin()
+                //登录入口
+                .loginPage("/admin/login")
                 //配置角色登录处理入口
-                .loginProcessingUrl("/login")
-                .and();
-
-        http.csrf().disable();
-        //同源策略
-        http.headers().frameOptions().sameOrigin();
+                .loginProcessingUrl("/authentication/form")
+                .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler)
+                .and()
+            //记住我
+            .rememberMe()
+                .tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(DEFAULT_REMEMBER_ME_SECONDS)
+                .userDetailsService(userDetailsService)
+                .and()
+            //处理请求
+            .authorizeRequests()
+                .antMatchers(
+                        //管理员登录界面
+                        "/admin/login",
+                        //用户登录入口
+                        "/user/login",
+                        //静态资源
+                        "/static/**",
+                        //获取验证码
+                        "/image/code"
+                    ).permitAll()
+                .antMatchers(
+                        //其他管理员界面
+                        "/admin/**"
+                    ).hasRole("ADMIN")
+                .antMatchers(
+                        //其他用户界面
+                        "/user/**",
+                        //接口
+                        "/api/user/**"
+                    ).hasAnyRole("ADMIN", "USER")
+                .anyRequest()
+                .authenticated()
+                .and()
+            //同源策略
+            .headers()
+                .frameOptions()
+                .sameOrigin()
+                .and()
+            //禁用csrf
+            .csrf()
+                .disable();
     }
 
     /**
-     * 自定义认证策略
-     * @param auth
+     * 注入密码解析对象
+     *
+     * @return
      */
-    @Autowired
-    public void configGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        //内存认证
-//        auth.inMemoryAuthentication()
-//                .withUser("admin")
-//                .password("admin")
-//                .roles("ADMIN")
-//                .and();
-
-        //通过自定义的逻辑进行认证
-        auth.authenticationProvider(authProvider())
-                //擦除密码
-                .eraseCredentials(true);
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthProvider authProvider(){
-        return new AuthProvider();
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+//		tokenRepository.setCreateTableOnStartup(true);
+        return tokenRepository;
     }
 }

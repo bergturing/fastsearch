@@ -1,9 +1,8 @@
 package com.berg.fastsearch.account.entity;
 
-import org.hibernate.validator.constraints.Length;
+import com.berg.fastsearch.system.base.entity.BaseEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 /**
  * <p>用户角色实体</p>
@@ -16,7 +15,7 @@ import javax.validation.constraints.NotNull;
         name = "sys_roles"
 )
 @Entity
-public class Role {
+public class Role extends BaseEntity{
     /**
      * 角色的主键
      */

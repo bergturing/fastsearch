@@ -1,24 +1,20 @@
 package com.berg.fastsearch.account.service.impl;
 
-import com.berg.fastsearch.account.dto.RoleDto;
-import com.berg.fastsearch.account.dto.UserDto;
+import com.berg.fastsearch.account.web.dto.UserDto;
 import com.berg.fastsearch.account.entity.User;
 import com.berg.fastsearch.account.repository.UserRepository;
 import com.berg.fastsearch.account.service.IRoleService;
 import com.berg.fastsearch.account.service.IUserRoleService;
 import com.berg.fastsearch.account.service.IUserService;
-import com.berg.fastsearch.system.service.impl.AbstractBaseServiceImpl;
-import org.springframework.beans.BeanUtils;
+import com.berg.fastsearch.enums.account.UserStatus;
+import com.berg.fastsearch.system.base.service.impl.AbstractBaseServiceImpl;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 /**
  * <p>用户服务的实现类</p>
@@ -48,38 +44,15 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<UserDto, User, Long
     @Autowired
     private IUserRoleService userRoleService;
 
+    /**
+     * 密码处理对象
+     */
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UserDto findByName(String userName) {
-        User user = userRepository.findByName(userName);
-
-        //是否找到用户
-        if(null != user){
-            UserDto userDto = new UserDto();
-            BeanUtils.copyProperties(user, userDto);
-            //获取用户所有的权限对象
-            List<RoleDto> roleDtoList = roleService.findByUserId(user.getId());
-
-            //判断用户是否有权限
-            if(CollectionUtils.isEmpty(roleDtoList)){
-                throw new DisabledException("权限非法");
-            }else{
-                //用户权限列表
-                List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-                //处理用户权限
-                roleDtoList.forEach(roleDto -> {
-                    grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + roleDto.getName()));
-                });
-
-                //设置用户权限列表
-                userDto.setAuthorityList(grantedAuthorities);
-
-                //返回用户
-                return userDto;
-            }
-        }else{
-            //没有找到用户
-            return null;
-        }
+        return transform2D(userRepository.findByName(userName));
     }
 
     @Override
@@ -95,5 +68,33 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<UserDto, User, Long
     @Override
     protected User createEntity() {
         return new User();
+    }
+
+    @Override
+    protected void create(User entity) {
+        //处理用户的密码
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        //处理用户状态
+        if(StringUtils.isBlank(entity.getStatus())){
+            entity.setStatus(UserStatus.NORMAL.getValue());
+        }
+        //处理创建时间
+        entity.setCreateTime(new Date());
+        //处理最近登录时间
+        entity.setLastLoginTime(new Date());
+        //处理最后更新时间
+        entity.setLastUpdateTime(new Date());
+    }
+
+    @Override
+    protected void update(User entity) {
+        //处理用户的密码
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        //处理用户状态
+        if(StringUtils.isBlank(entity.getStatus())){
+            entity.setStatus(UserStatus.NORMAL.getValue());
+        }
+        //处理最后更新时间
+        entity.setLastUpdateTime(new Date());
     }
 }

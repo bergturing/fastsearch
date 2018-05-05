@@ -1,6 +1,9 @@
 package com.berg.fastsearch.account.service;
 
-import com.berg.fastsearch.account.dto.RoleDto;
+import com.berg.fastsearch.account.entity.Role;
+import com.berg.fastsearch.account.web.dto.RoleDto;
+import com.berg.fastsearch.system.base.service.IBaseService;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 
@@ -11,7 +14,7 @@ import java.util.List;
  * @version v1.0
  * @apiNote Created on 18-3-18
  */
-public interface IRoleService{
+public interface IRoleService extends IBaseService<RoleDto, Role, Long>{
 
     /**
      * 根据用户的id来查找其所拥有的权限对象
@@ -19,4 +22,11 @@ public interface IRoleService{
      * @return              所有的权限对象
      */
     List<RoleDto> findByUserId(Long userId);
+
+    /**
+     * 根据用户的主键获取用户的权限列表
+     * @param userId    用户的主键
+     * @return          用户的权限列表
+     */
+    List<GrantedAuthority> getAuthority(Long userId);
 }

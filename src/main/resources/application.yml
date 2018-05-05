@@ -12,7 +12,7 @@ spring:
   #thymeleaf的配置
   thymeleaf:
     mode: HTML
-    prefix: classpath:/templates/
+    prefix: classpath:/resources/
     suffix: .html
   devtools:
     restart:

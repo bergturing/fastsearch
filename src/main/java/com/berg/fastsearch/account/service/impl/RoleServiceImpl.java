@@ -1,15 +1,19 @@
 package com.berg.fastsearch.account.service.impl;
 
-import com.berg.fastsearch.account.dto.RoleDto;
-import com.berg.fastsearch.account.dto.UserRoleDto;
+import com.berg.fastsearch.account.web.dto.RoleDto;
+import com.berg.fastsearch.account.web.dto.UserRoleDto;
 import com.berg.fastsearch.account.entity.Role;
 import com.berg.fastsearch.account.repository.RoleRepository;
 import com.berg.fastsearch.account.service.IRoleService;
 import com.berg.fastsearch.account.service.IUserRoleService;
-import com.berg.fastsearch.system.service.impl.AbstractBaseServiceImpl;
+import com.berg.fastsearch.system.base.service.impl.AbstractBaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +49,28 @@ public class RoleServiceImpl extends AbstractBaseServiceImpl<RoleDto, Role, Long
         //返回角色列表
         return roleDtoList;
     }
+
+    @Override
+    public List<GrantedAuthority> getAuthority(Long userId) {
+        //获取用户所有的权限对象
+        List<RoleDto> roleDtoList = this.findByUserId(userId);
+
+        //判断用户是否有权限
+        if(CollectionUtils.isEmpty(roleDtoList)){
+            throw new DisabledException("权限非法");
+        }else{
+            //用户权限列表
+            List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+            //处理用户权限
+            roleDtoList.forEach(roleDto -> {
+                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + roleDto.getName()));
+            });
+
+            //返回用户
+            return grantedAuthorities;
+        }
+    }
+
 
     @Override
     protected JpaRepository<Role, Long> getRepository() {

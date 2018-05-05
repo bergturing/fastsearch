@@ -1,6 +1,8 @@
 package com.berg.fastsearch.account.service;
 
-import com.berg.fastsearch.account.dto.UserRoleDto;
+import com.berg.fastsearch.account.entity.UserRole;
+import com.berg.fastsearch.account.web.dto.UserRoleDto;
+import com.berg.fastsearch.system.base.service.IBaseService;
 
 import java.util.List;
 
@@ -11,7 +13,7 @@ import java.util.List;
  * @version v1.0
  * @apiNote Created on 18-3-18
  */
-public interface IUserRoleService{
+public interface IUserRoleService extends IBaseService<UserRoleDto, UserRole, Long>{
 
     /**
      * 根据用户的主键来查找用户的角色

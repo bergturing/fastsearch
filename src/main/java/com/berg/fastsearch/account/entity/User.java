@@ -1,6 +1,8 @@
 package com.berg.fastsearch.account.entity;
 
 
+import com.berg.fastsearch.system.base.entity.BaseEntity;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,7 +17,7 @@ import java.util.Date;
         name = "sys_users"
 )
 @Entity
-public class User {
+public class User extends BaseEntity{
     /**
      * 用户的主键
      */

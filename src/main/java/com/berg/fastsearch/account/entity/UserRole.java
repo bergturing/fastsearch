@@ -1,5 +1,7 @@
 package com.berg.fastsearch.account.entity;
 
+import com.berg.fastsearch.system.base.entity.BaseEntity;
+
 import javax.persistence.*;
 
 /**
@@ -13,7 +15,7 @@ import javax.persistence.*;
         name = "sys_user_role"
 )
 @Entity
-public class UserRole {
+public class UserRole extends BaseEntity{
     /**
      * 角色分派的主键
      */
