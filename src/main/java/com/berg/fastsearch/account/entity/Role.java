@@ -26,6 +26,12 @@ public class Role extends BaseEntity{
     private Long id;
 
     /**
+     * 角色代码
+     */
+    @Column
+    private String code;
+
+    /**
      * 角色名
      */
     @Column
@@ -43,6 +49,14 @@ public class Role extends BaseEntity{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

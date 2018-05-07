@@ -11,13 +11,8 @@ import javax.validation.constraints.NotNull;
  * @version v1.0
  * @apiNote Created on 18-5-3
  */
-public class UserRoleDto extends BaseDto{
+public class UserRoleDto extends BaseDto <Long>{
     private static final long serialVersionUID = 6943882100632115633L;
-
-    /**
-     * 角色分派的主键
-     */
-    private Long id;
 
     /**
      * 用户id,用户表(sys_users)的主键
@@ -30,14 +25,6 @@ public class UserRoleDto extends BaseDto{
      */
     @NotNull
     private Long roleId;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getUserId() {
         return userId;

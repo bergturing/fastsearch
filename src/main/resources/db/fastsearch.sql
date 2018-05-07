@@ -43,7 +43,8 @@ CREATE TABLE `sys_users`(
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='用户基本信息表';
 
 BEGIN;
-INSERT INTO `sys_users` (`ID`, `NAME`, `EMAIL`, `PASSWORD`, `PHONE_NUMBER`, `STATUS`, `AVATAR`, `CREATE_TIME`, `LAST_LOGIN_TIME`, `LAST_UPDATE_TIME`)
+INSERT INTO `sys_users`
+(`ID`, `NAME`, `EMAIL`, `PASSWORD`, `PHONE_NUMBER`, `STATUS`, `AVATAR`, `CREATE_TIME`, `LAST_LOGIN_TIME`, `LAST_UPDATE_TIME`)
 VALUES 
 ('1', 'admin1', 'admin1@qq.com', '$2a$10$CO59hGPWBZR7Wu8ECDV7Eu9/4GQAYst7emdJbegL9gUmRAtvLZ7j.', '1536956231', 'NORMAL', 'http://7xo6gy.com1.z0.glb.clouddn.com/99ff568bd61c744bf31185aeddf13580.png', '2018-02-25 15:18:20', '2018-03-15 12:00:00', '2018-03-12 10:29:02'),
 ('2', 'admin2', 'admin2@qq.com', '$2a$10$WhILKBPtFF1WTPxNAQ3ASuRgcx6FGRKZ2Q57My5Zg.5qn03SLgNtq', '1536956232', 'NORMAL', 'http://7xo6gy.com1.z0.glb.clouddn.com/99ff568bd61c744bf31185aeddf13580.png', '2018-02-25 15:18:20', '2018-03-15 12:00:00', '2018-03-12 10:29:02'),
@@ -61,16 +62,18 @@ COMMIT;
 DROP TABLE IF EXISTS `sys_roles`;
 CREATE TABLE `sys_roles`(
 	`ID` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '角色的主键',
+	`CODE` VARCHAR(32) NOT NULL COMMENT '角色编码',
     `NAME` VARCHAR(32) NOT NULL COMMENT '角色名',
     `DESCRIPTION` VARCHAR(255) DEFAULT NULL COMMENT '描述',
     PRIMARY KEY (`ID`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='用户角色表';
 
 BEGIN;
-INSERT INTO `sys_roles` (`ID`, `NAME`, `DESCRIPTION`)
+INSERT INTO `sys_roles`
+(`ID`, `CODE`, `NAME`, `DESCRIPTION`)
 VALUES
-('1', 'ADMIN', '管理员'),
-('2', 'USER', '用户');
+('1', 'ADMIN', '管理员', '管理员'),
+('2', 'USER', '用户', '用户');
 COMMIT;
 
 #角色分派表
@@ -84,7 +87,8 @@ CREATE TABLE `sys_user_role`(
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='角色分派表';
 
 BEGIN;
-INSERT INTO `sys_user_role` (`ID`, `USER_ID`, `ROLE_ID`)
+INSERT INTO `sys_user_role`
+(`ID`, `USER_ID`, `ROLE_ID`)
 VALUES
 ('1', '1', '1'),
 ('2', '2', '2'),
@@ -109,6 +113,21 @@ CREATE TABLE `sys_code_b`(
 	`LAST_UPDATE_TIME` DATETIME NOT NULL COMMENT '最近更新时间',
     PRIMARY KEY (`ID`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='代码维护头表';
+
+BEGIN;
+INSERT INTO `fast_search`.`sys_code_b`
+(`ID`, `CODE`, `DESCRIPTION`, `ENABLED_FLAG`, `CREATE_TIME`, `LAST_UPDATE_TIME`)
+VALUES
+('1', 'TEST_CODE_1', '测试代码维护', 'N', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('2', 'TEST_CODE_2', '测试代码维护', 'N', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('3', 'TEST_CODE_3', '测试代码维护', 'N', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('4', 'TEST_CODE_4', '测试代码维护', 'N', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('5', 'TEST_CODE_5', '测试代码维护', 'N', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('6', 'TEST_CODE_6', '测试代码维护', 'N', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('7', 'TEST_CODE_7', '测试代码维护', 'N', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('8', 'TEST_CODE_8', '测试代码维护', 'N', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('9', 'TEST_CODE_9', '测试代码维护', 'N', '2018-02-25 15:18:20', '2018-03-12 10:29:02');
+COMMIT;
 
 #代码维护头多语言表
 DROP TABLE IF EXISTS `sys_code_tl`;
@@ -173,11 +192,25 @@ CREATE TABLE `fs_cars`(
 	`VOCER` VARCHAR(32) DEFAULT NULL COMMENT '封面',
     `STATUS` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '汽车的状态:',
     `DESCRIPTION` VARCHAR(512) DEFAULT NULL COMMENT '描述',
-    `LAST_LOGIN_TIME` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最近登录时间',
+    `CREATE_TIME` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '汽车创建时间',
     `LAST_UPDATE_TIME` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '上次更新记录时间',
     PRIMARY KEY (`ID`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='汽车实体表';
 
+BEGIN;
+INSERT INTO `fast_search`.`fs_cars`
+(`ID`, `TITLE`, `DEPLOYEE_ID`, `PRICE`, `SEATS`, `DISPLACEMENT`, `MILEAGE`, `AGE`, `GEAR_BOX`, `COLOR`, `DRIVE_TYPE`, `EMISSION_STANDARD`, `STYLE`, `FUEL_TYPE`, `WATCH_TIMES`, `CITY_EN_NAME`, `REGION_EN_NAME`, `ADDRESS`, `STATUS`, `DESCRIPTION`, `CREATE_TIME`, `LAST_UPDATE_TIME`)
+VALUES
+('1', '测试车辆1', '1', '126328', '4', '9', '15236', '10', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', '1234', 'BJ', 'CPQ', 'TEST', 'TEST', '测试数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('2', '测试车辆2', '1', '126328', '4', '9', '15236', '10', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', '1234', 'BJ', 'CPQ', 'TEST', 'TEST', '测试数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('3', '测试车辆3', '1', '126328', '4', '9', '15236', '10', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', '1234', 'BJ', 'CPQ', 'TEST', 'TEST', '测试数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('4', '测试车辆4', '1', '126328', '4', '9', '15236', '10', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', '1234', 'BJ', 'CPQ', 'TEST', 'TEST', '测试数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('5', '测试车辆5', '1', '126328', '4', '9', '15236', '10', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', '1234', 'BJ', 'CPQ', 'TEST', 'TEST', '测试数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('6', '测试车辆6', '1', '126328', '4', '9', '15236', '10', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', '1234', 'BJ', 'CPQ', 'TEST', 'TEST', '测试数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('7', '测试车辆7', '1', '126328', '4', '9', '15236', '10', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', '1234', 'BJ', 'CPQ', 'TEST', 'TEST', '测试数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('8', '测试车辆8', '1', '126328', '4', '9', '15236', '10', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', '1234', 'BJ', 'CPQ', 'TEST', 'TEST', '测试数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('9', '测试车辆9', '1', '126328', '4', '9', '15236', '10', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', '1234', 'BJ', 'CPQ', 'TEST', 'TEST', '测试数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02');
+COMMIT;
 
 #汽车品牌表
 DROP TABLE IF EXISTS `fs_car_brands`;

@@ -70,13 +70,13 @@ public class AppErrorController implements ErrorController{
 
         switch (status){
             case NOT_FOUND_CODE:
-                return String.valueOf(NOT_FOUND_CODE);
+                return NOT_FOUND_PATH;
             case FORBIDDEN_CODE:
-                return String.valueOf(FORBIDDEN_CODE);
+                return FORBIDDEN_PATH;
             case ERROR_CODE:
-                return String.valueOf(ERROR_CODE);
+                return ERROR_PATH;
             default:
-                return String.valueOf(ERROR_CODE);
+                return ERROR_PATH;
         }
     }
 
@@ -85,7 +85,7 @@ public class AppErrorController implements ErrorController{
      * @param request   请求域对象
      * @return          错误结果
      */
-    @RequestMapping(value = ERROR_PATH)
+    @RequestMapping(value = WEB_ERROR_PATH)
     @ResponseBody
     public ResponseData errorApiHandler(HttpServletRequest request){
         RequestAttributes attributes = new ServletRequestAttributes(request);

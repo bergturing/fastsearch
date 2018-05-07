@@ -24,8 +24,30 @@ public class LoginController {
         return "admin/login";
     }
 
+    /**
+     * 管理员主页
+     * @return  管理员主页
+     */
     @GetMapping(value = {"/admin/index"})
     public String adminIndexPage(){
         return "admin/index";
+    }
+
+    /**
+     * 用户登录界面
+     * @return  用户登录界面
+     */
+    @GetMapping(value = {"/user/login"})
+    public String userLoginPage(){
+        return "user/login";
+    }
+
+    /**
+     * 用户主页
+     * @return  用户主页
+     */
+    @GetMapping(value = {"/user/index"})
+    public String userIndexPage(){
+        return "user/index";
     }
 }

@@ -12,13 +12,13 @@ import javax.validation.constraints.NotNull;
  * @version v1.0
  * @apiNote Created on 18-5-3
  */
-public class RoleDto extends BaseDto{
+public class RoleDto extends BaseDto<Long>{
     private static final long serialVersionUID = -2997485158386765627L;
 
     /**
-     * 角色的主键
+     * 角色代码
      */
-    private Long id;
+    private String code;
 
     /**
      * 角色名
@@ -33,12 +33,12 @@ public class RoleDto extends BaseDto{
     @Length(max = 255)
     private String description;
 
-    public Long getId() {
-        return id;
+    public String getCode() {
+        return code;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

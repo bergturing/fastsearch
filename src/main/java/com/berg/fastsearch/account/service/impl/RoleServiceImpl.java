@@ -63,7 +63,7 @@ public class RoleServiceImpl extends AbstractBaseServiceImpl<RoleDto, Role, Long
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
             //处理用户权限
             roleDtoList.forEach(roleDto -> {
-                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + roleDto.getName()));
+                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + roleDto.getCode()));
             });
 
             //返回用户

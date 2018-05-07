@@ -35,27 +35,26 @@
 <div class="page-container">
     <div class="cl pd-5 bg-1 bk-gray">
         <span class="l">
-            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
+            <a id="role_delete" href="javascript:;" class="btn btn-danger radius">
                 <i class="Hui-iconfont">&#xe6e2;</i>
                 批量删除
             </a>
-            <a class="btn btn-primary radius" href="javascript:;" onclick="admin_role_add('添加角色','role-add.html','800')">
+            <a id="role_add" class="btn btn-primary radius" href="javascript:;">
                 <i class="Hui-iconfont">&#xe600;</i>
                 添加角色
             </a>
         </span>
-        <span class="r">共有数据：<strong>54</strong> 条</span>
+        <span id="role_count" class="r">共有数据：<strong>xx</strong> 条</span>
     </div>
-    <table class="table table-border table-bordered table-hover table-bg">
+    <table id="role_list" class="table table-border table-bordered table-hover table-bg">
         <thead>
             <tr>
                 <th scope="col" colspan="6">角色管理</th>
             </tr>
             <tr class="text-c">
                 <th width="25"><input type="checkbox" value="" name=""></th>
-                <th width="40">ID</th>
+                <th width="40">角色编码</th>
                 <th width="200">角色名</th>
-                <th>用户列表</th>
                 <th width="300">描述</th>
                 <th width="70">操作</th>
             </tr>
@@ -63,15 +62,14 @@
         <tbody>
             <tr class="text-c">
                 <td><input type="checkbox" value="" name=""></td>
-                <td>1</td>
-                <td>超级管理员</td>
-                <td><a href="#">admin</a></td>
-                <td>拥有至高无上的权利</td>
+                <td>{{code}}</td>
+                <td>{{name}}</td>
+                <td>{{description}}</td>
                 <td class="f-14">
-                    <a title="编辑" href="javascript:;" onclick="admin_role_edit('角色编辑','role-add.html','1')" style="text-decoration:none">
+                    <a role_id="{{id}}" class="role_edit" title="编辑" href="javascript:;" style="text-decoration:none">
                         <i class="Hui-iconfont">&#xe6df;</i>
                     </a>
-                    <a title="删除" href="javascript:;" onclick="admin_role_del(this,'1')" class="ml-5" style="text-decoration:none">
+                    <a role_id="{{id}}" class="role_delete ml-5" title="删除" href="javascript:;" style="text-decoration:none">
                         <i class="Hui-iconfont">&#xe6e2;</i>
                     </a>
                 </td>
@@ -88,33 +86,135 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="/static/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-    /*管理员-角色-添加*/
-    function admin_role_add(title, url, w, h) {
-        layer_show(title, url, w, h);
-    }
 
-    /*管理员-角色-编辑*/
-    function admin_role_edit(title, url, id, w, h) {
-        layer_show(title, url, w, h);
-    }
+    var fastSerachRole;
 
-    /*管理员-角色-删除*/
-    function admin_role_del(obj, id) {
-        layer.confirm('角色删除须谨慎，确认要删除吗？', function (index) {
+    $(function(){
+        fastSerachRole = new FastSearchRole().init();
+    });
+
+    var FastSearchRole = (function(){
+
+        /**
+         * 内部方法: 添加一个角色
+         */
+        var _roleAdd = function(){
+            var title = '添加角色';
+            var url = 'role-add.html';
+            var width = '800';
+            var height;
+
+            layer_show(title, url, width, height);
+        };
+
+        /**
+         * 内部方法: 编辑角色信息
+         */
+        var _roleEdit = function(id){
+            var title = '编辑角色';
+            var url = 'role-add.html';
+            var width = '800';
+            var height;
+
+            layer_show(title, url, width, height);
+        };
+
+        /**
+         * 内部方法: 删除指定的角色
+         */
+        var _roleDelete = function(obj, id){
+            layer.confirm('角色删除须谨慎，确认要删除吗？', function (index) {
+                $.ajax({
+                    type: 'POST',
+                    url: '',
+                    dataType: 'json',
+                    success: function (data) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', {icon: 1, time: 1000});
+                    },
+                    error: function (data) {
+                        console.log(data.msg);
+                    }
+                });
+            });
+        };
+
+        /**
+         * 内部方法: 绑定事件
+         */
+        var _bind = function(){
+            //添加角色
+            $("#role_add").bind("click", _roleAdd);
+        };
+
+        /**
+         * 内部方法: 渲染列表数据
+         */
+        var _makeList = function(data){
+            if(data && (data instanceof Array)){
+                $("#role_count").html('共有数据：<strong>' + data.length +'</strong> 条');
+
+                var target = $("#role_list>tbody");
+                var _template = target.html();
+
+                var _html = "";
+
+                $.each(data, function(index, item){
+                    _html += _template.replace("{{id}}", item.id)
+                        .replace("{{code}}", item.code)
+                        .replace("{{name}}", item.name)
+                        .replace("{{description}}", item.description);
+                });
+
+                target.html(_html);
+            }
+        };
+
+        /**
+         * 内部方法: 初始化方法
+         */
+        var _init = function(){
+            //绑定
+            _bind();
+        };
+
+        /**
+         * 内部方法: 加载数据
+         */
+        var _loadData = function(){
             $.ajax({
-                type: 'POST',
-                url: '',
+                url: '/account/role',
+                type: 'GET',
                 dataType: 'json',
-                success: function (data) {
-                    $(obj).parents("tr").remove();
-                    layer.msg('已删除!', {icon: 1, time: 1000});
+                success: function (response) {
+                    if(response.code === 200){
+                        _makeList(response.data);
+                    }else{
+                        console.log(response.msg);
+                    }
                 },
-                error: function (data) {
-                    console.log(data.msg);
+                error: function (response) {
+                    console.log(response.msg);
                 }
             });
-        });
-    }
+        };
+
+
+        /**
+         * 内部对象
+         */
+        var _fastSerachRole = function () {};
+
+        /**
+         * 初始化代码
+         */
+        _fastSerachRole.prototype.init = function(){
+            _init();
+            _loadData();
+        };
+
+        return _fastSerachRole;
+    })();
 </script>
 </body>
 </html>

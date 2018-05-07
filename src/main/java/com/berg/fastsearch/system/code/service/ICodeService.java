@@ -1,5 +1,9 @@
 package com.berg.fastsearch.system.code.service;
 
+import com.berg.fastsearch.system.base.service.IBaseService;
+import com.berg.fastsearch.system.code.entity.Code;
+import com.berg.fastsearch.system.code.web.dto.CodeDto;
+
 /**
  * <p></p>
  *
@@ -7,5 +11,5 @@ package com.berg.fastsearch.system.code.service;
  * @version v1.0
  * @apiNote Created on 18-3-18
  */
-public interface ICodeService {
+public interface ICodeService extends IBaseService<CodeDto, Code, Long>{
 }

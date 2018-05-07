@@ -13,13 +13,8 @@ import java.util.Date;
  * @version v1.0
  * @apiNote Created on 18-5-3
  */
-public class UserDto extends BaseDto {
+public class UserDto extends BaseDto <Long>{
     private static final long serialVersionUID = 6002603646559377214L;
-
-    /**
-     * 用户的主键
-     */
-    private Long id;
 
     /**
      * 用户名称
@@ -63,14 +58,6 @@ public class UserDto extends BaseDto {
      * 最近登录时间
      */
     private Date lastLoginTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
