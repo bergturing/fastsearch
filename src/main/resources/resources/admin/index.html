@@ -33,13 +33,13 @@
                     <li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i
                             class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
                         <ul class="dropDown-menu menu radius box-shadow">
-                            <li><a href="javascript:;" onclick="article_add('添加资讯','article-add.html')"><i
-                                    class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
+                            <li><a href="javascript:;" onclick="car_add('添加车辆','/admin/car/add')"><i
+                                    class="Hui-iconfont">&#xe616;</i> 车辆</a></li>
                             <li><a href="javascript:;" onclick="picture_add('添加资讯','picture-add.html')"><i
                                     class="Hui-iconfont">&#xe613;</i> 图片</a></li>
                             <li><a href="javascript:;" onclick="product_add('添加资讯','product-add.html')"><i
                                     class="Hui-iconfont">&#xe620;</i> 产品</a></li>
-                            <li><a href="javascript:;" onclick="member_add('添加用户','member-add.html','','510')"><i
+                            <li><a href="javascript:;" onclick="member_add('添加用户','/admin/account/user/add','','510')"><i
                                     class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
                         </ul>
                     </li>
@@ -81,9 +81,9 @@
             <dt><i class="Hui-iconfont">&#xe62d;</i> 用户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="account/role/role-list.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-                    <li><a data-href="account/permission/permission-list.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
-                    <li><a data-href="account/user/user-list.html" data-title="用户列表" href="javascript:void(0)">用户列表</a></li>
+                    <li><a data-href="/admin/account/role/list" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+                    <li><a data-href="/admin/account/userrole/list" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+                    <li><a data-href="/admin/account/user/list" data-title="用户列表" href="javascript:void(0)">用户列表</a></li>
                 </ul>
             </dd>
         </dl>
@@ -92,7 +92,7 @@
             <dt><i class="Hui-iconfont">&#xe620;</i> 车辆管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="car/car-list.html" data-title="车辆列表" href="javascript:void(0)">车辆列表</a></li>
+                    <li><a data-href="/admin/car/list" data-title="车辆列表" href="javascript:void(0)">车辆列表</a></li>
                 </ul>
             </dd>
         </dl>
@@ -101,7 +101,7 @@
             <dt><i class="Hui-iconfont">&#xe613;</i> 图片管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="picture/picture-list.html" data-title="图片管理" href="javascript:void(0)">图片管理</a></li>
+                    <li><a data-href="/admin/picture/list" data-title="图片管理" href="javascript:void(0)">图片管理</a></li>
                 </ul>
             </dd>
         </dl>
@@ -143,7 +143,7 @@
             <dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="system/code/code-list.html" data-title="代码维护" href="javascript:void(0)">代码维护</a></li>
+                    <li><a data-href="/admin/system/code/list" data-title="代码维护" href="javascript:void(0)">代码维护</a></li>
                     <li><a data-href="system/system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
                     <li><a data-href="system/system-category.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
                     <li><a data-href="system/system-data.html" data-title="数据字典" href="javascript:void(0)">数据字典</a></li>
@@ -223,7 +223,7 @@
     }
 
     /*资讯-添加*/
-    function article_add(title, url) {
+    function car_add(title, url) {
         var index = layer.open({
             type: 2,
             title: title,

@@ -1,13 +1,8 @@
 package com.berg.fastsearch.account.service.impl;
 
 import com.berg.fastsearch.FastsearchApplicationTests;
-import com.berg.fastsearch.account.entity.UserRole;
-import com.berg.fastsearch.account.service.IUserRoleService;
-import org.junit.Assert;
-import org.junit.Test;
+import com.berg.fastsearch.core.account.service.IUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 /**
  * <p>用户角色服务测试</p>

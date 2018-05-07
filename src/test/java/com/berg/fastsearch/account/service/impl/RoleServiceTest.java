@@ -1,8 +1,8 @@
 package com.berg.fastsearch.account.service.impl;
 
 import com.berg.fastsearch.FastsearchApplicationTests;
-import com.berg.fastsearch.account.web.dto.RoleDto;
-import com.berg.fastsearch.account.service.IRoleService;
+import com.berg.fastsearch.core.account.web.dto.RoleDto;
+import com.berg.fastsearch.core.account.service.IRoleService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

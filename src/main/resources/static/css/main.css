@@ -939,7 +939,7 @@ body {
 }
 
 .savesearch .icon {
-    background: url(/static/images/save-bg.png) -15px -77px;
+    background: url(/static/images/user/save-bg.png) -15px -77px;
     width: 16px;
     height: 11px;
     position: absolute;
@@ -970,7 +970,7 @@ body {
 }
 
 .savesearch span label {
-    background: url(/static/images/save-bg.png) -3px -79px;
+    background: url(/static/images/user/save-bg.png) -3px -79px;
     width: 10px;
     height: 6px;
     display: block;
@@ -980,7 +980,7 @@ body {
 }
 
 .savesearch span label.down {
-    background: url(/static/images/save-bg.png) -3px -92px
+    background: url(/static/images/user/save-bg.png) -3px -92px
 }
 
 .savesearch i {

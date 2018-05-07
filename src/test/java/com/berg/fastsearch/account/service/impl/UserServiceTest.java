@@ -1,14 +1,8 @@
 package com.berg.fastsearch.account.service.impl;
 
 import com.berg.fastsearch.FastsearchApplicationTests;
-import com.berg.fastsearch.account.entity.User;
-import com.berg.fastsearch.account.service.IUserService;
-import org.junit.Assert;
-import org.junit.Test;
+import com.berg.fastsearch.core.account.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-
-import java.util.List;
 
 /**
  * <p>用户服务测试</p>
