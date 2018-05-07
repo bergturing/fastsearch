@@ -3,8 +3,8 @@
 <head>
     <div th:include="admin/common :: head"></div>
     <link rel="stylesheet" type="text/css" href="/static/lib/webuploader/0.1.5/webuploader.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/admin/car/edit.css">
-    <title>车辆编辑 - 车辆管理 </title>
+    <link rel="stylesheet" type="text/css" href="/static/css/admin/system/code/add.css">
+    <title>添加编码 - 系统管理 </title>
 </head>
 <body>
 <article class="page-container">
@@ -152,6 +152,37 @@
             </div>
         </div>
 
+        <div class="uploader-list-container" style=" width: 60%; height: 30%; position: relative;
+                margin-left:17%;">
+            <div class="queueList">
+                <div id="dndArea" class="placeholder">
+                    <div id="filePicker-2"></div>
+                    <p>或将照片拖到这里，单次最多可选5张</p>
+                </div>
+            </div>
+            <div class="statusBar" style="display:none;">
+                <div class="progress"><span class="text">0%</span> <span class="percentage"></span></div>
+                <div class="info"></div>
+                <div class="btns">
+                    <div id="filePicker2"></div>
+                    <div class="uploadBtn">开始上传</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">封面：</label>
+            <div id="upload-cover-container" class="formControls col-xs-8 col-sm-9">
+                <!-- 封面列表 -->
+                <span class="cover-desc">请先上传图片，从中选择封面</span>
+            </div>
+            <!--<input id="cover" type="hidden" value=""/>-->
+        </div>
+
+        <div class="upload-photo-ids-container">
+            <!--这里放上传OK图片的信息 在表单中一起上传-->
+        </div>
+
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
                 <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
@@ -171,9 +202,11 @@
 <script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/lib/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="/static/js/admin/upload.js"></script>
 
 
-<script type="text/javascript" src="/static/js/admin/car/edit.js"></script>
+<script type="text/javascript" src="/static/js/admin/system/code/add.js"></script>
 
 </body>
 </html>
