@@ -4,6 +4,7 @@ import com.berg.fastsearch.core.car.entity.Car;
 import com.berg.fastsearch.core.car.repository.CarRepository;
 import com.berg.fastsearch.core.car.service.ICarService;
 import com.berg.fastsearch.core.car.web.dto.CarDto;
+import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,7 +20,7 @@ import java.util.Date;
  * @apiNote Created on 18-5-5
  */
 @Service
-public class CarServiceImpl extends AbstractBaseServiceImpl<CarDto, Car, Long> implements ICarService {
+public class CarServiceImpl extends AbstractBaseServiceImpl<Long, CarDto, Car, CarQueryCondition> implements ICarService {
 
     @Autowired
     private CarRepository carRepository;

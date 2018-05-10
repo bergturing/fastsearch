@@ -5,6 +5,7 @@ import com.berg.fastsearch.core.system.code.entity.CodeValue;
 import com.berg.fastsearch.core.system.code.repository.CodeValueRepository;
 import com.berg.fastsearch.core.system.code.service.ICodeValueService;
 import com.berg.fastsearch.core.system.code.web.dto.CodeValueDto;
+import com.berg.fastsearch.core.system.code.web.dto.CodeValueQueryCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,9 @@ import org.springframework.stereotype.Service;
  * @apiNote Created on 18-3-18
  */
 @Service
-public class CodeValueServiceImpl extends AbstractBaseServiceImpl<CodeValueDto, CodeValue, Long> implements ICodeValueService {
+public class CodeValueServiceImpl
+        extends AbstractBaseServiceImpl<Long, CodeValueDto, CodeValue, CodeValueQueryCondition>
+        implements ICodeValueService {
     @Autowired
     private CodeValueRepository codeValueRepository;
 

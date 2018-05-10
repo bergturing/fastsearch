@@ -1,6 +1,5 @@
 package com.berg.fastsearch.core.car.web.controller;
 
-import com.berg.fastsearch.core.car.entity.Car;
 import com.berg.fastsearch.core.car.service.ICarService;
 import com.berg.fastsearch.core.car.web.dto.CarDto;
 import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
@@ -19,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping(value = {"/car"})
 @RestController
-public class CarController extends BaseController<Long, CarDto, Car, CarQueryCondition> {
+public class CarController extends BaseController<Long, CarDto, CarQueryCondition> {
 
     @Autowired
     private ICarService carService;
 
     @Override
-    protected IBaseService<CarDto, Car, Long> getService() {
+    protected IBaseService<Long, CarDto, CarQueryCondition> getService() {
         return carService;
     }
 }

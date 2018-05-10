@@ -1,5 +1,10 @@
 package com.berg.fastsearch.core.system.base.service;
 
+import com.berg.fastsearch.core.system.base.entity.BaseEntity;
+import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
+import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,12 +14,16 @@ import java.util.List;
  * @version v1.0
  * @apiNote Created on 18-5-3
  */
-public interface IBaseService<DTO, ENTITY, ID> {
+public interface IBaseService<
+        ID extends Serializable,
+        DTO extends BaseDto<ID>,
+        CONDITION extends BaseQueryCondition> {
+
     /**
      * 查询所有的数据
      * @return  查询到的所有的数据
      */
-    List<DTO> findAll();
+    List<DTO> findAll(CONDITION condition);
 
     /**
      * 根据主键查询数据

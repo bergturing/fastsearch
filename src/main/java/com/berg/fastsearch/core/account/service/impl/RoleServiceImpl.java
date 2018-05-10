@@ -1,6 +1,7 @@
 package com.berg.fastsearch.core.account.service.impl;
 
 import com.berg.fastsearch.core.account.web.dto.RoleDto;
+import com.berg.fastsearch.core.account.web.dto.RoleQueryCondition;
 import com.berg.fastsearch.core.account.web.dto.UserRoleDto;
 import com.berg.fastsearch.core.account.entity.Role;
 import com.berg.fastsearch.core.account.repository.RoleRepository;
@@ -26,7 +27,9 @@ import java.util.List;
  * @apiNote Created on 18-3-18
  */
 @Service
-public class RoleServiceImpl extends AbstractBaseServiceImpl<RoleDto, Role, Long> implements IRoleService {
+public class RoleServiceImpl
+        extends AbstractBaseServiceImpl<Long, RoleDto, Role, RoleQueryCondition>
+        implements IRoleService {
 
     @Autowired
     private RoleRepository roleRepository;

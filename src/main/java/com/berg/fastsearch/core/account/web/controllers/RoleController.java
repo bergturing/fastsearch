@@ -1,6 +1,5 @@
 package com.berg.fastsearch.core.account.web.controllers;
 
-import com.berg.fastsearch.core.account.entity.Role;
 import com.berg.fastsearch.core.account.service.IRoleService;
 import com.berg.fastsearch.core.account.web.dto.RoleDto;
 import com.berg.fastsearch.core.account.web.dto.RoleQueryCondition;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping(value = {"/account/role"})
 @RestController
-public class RoleController extends BaseController<Long, RoleDto, Role, RoleQueryCondition> {
+public class RoleController extends BaseController<Long, RoleDto, RoleQueryCondition> {
     /**
      * 用户的服务
      */
@@ -27,7 +26,7 @@ public class RoleController extends BaseController<Long, RoleDto, Role, RoleQuer
 
 
     @Override
-    protected IBaseService<RoleDto, Role, Long> getService() {
+    protected IBaseService<Long, RoleDto, RoleQueryCondition> getService() {
         return roleService;
     }
 }

@@ -36,3 +36,8 @@ qiniu:
   Bucket: lakers
   cdn:
     prefix: http://7xo6gy.com1.z0.glb.clouddn.com/
+elasticsearch:
+  cluster:
+    name: xunwu
+  host: 192.168.2.81
+  port: 9300

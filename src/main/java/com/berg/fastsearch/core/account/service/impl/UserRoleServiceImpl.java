@@ -1,9 +1,11 @@
 package com.berg.fastsearch.core.account.service.impl;
 
+import com.berg.fastsearch.core.account.web.dto.UserQueryCondition;
 import com.berg.fastsearch.core.account.web.dto.UserRoleDto;
 import com.berg.fastsearch.core.account.entity.UserRole;
 import com.berg.fastsearch.core.account.repository.UserRoleRepository;
 import com.berg.fastsearch.core.account.service.IUserRoleService;
+import com.berg.fastsearch.core.account.web.dto.UserRoleQueryCondition;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,7 +21,9 @@ import java.util.List;
  * @apiNote Created on 18-3-18
  */
 @Service
-public class UserRoleServiceImpl extends AbstractBaseServiceImpl<UserRoleDto, UserRole, Long> implements IUserRoleService {
+public class UserRoleServiceImpl
+        extends AbstractBaseServiceImpl<Long, UserRoleDto, UserRole, UserRoleQueryCondition>
+        implements IUserRoleService {
     /**
      * 角色服务
      */

@@ -3,7 +3,12 @@ package com.berg.fastsearch.core.system.base.service.impl;
 import com.berg.fastsearch.core.system.base.entity.BaseEntity;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
+import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.util.CollectionUtils;
 
@@ -19,12 +24,22 @@ import java.util.List;
  * @apiNote Created on 18-5-3
  */
 public abstract class AbstractBaseServiceImpl<
-        DTO extends BaseDto,
+        ID extends Serializable,
+        DTO extends BaseDto<ID>,
         ENTITY extends BaseEntity,
-        ID extends Serializable> implements IBaseService<DTO, ENTITY, ID> {
+        CONDITION extends BaseQueryCondition> implements IBaseService<ID, DTO, CONDITION> {
 
     @Override
-    public final List<DTO> findAll(){
+    public final List<DTO> findAll(CONDITION condition){
+
+//        //构建排序对象
+//        Sort sort = new Sort(Sort.Direction.fromString(condition.getDirection()), condition.getOrderBy());
+//
+//        //构建分页对象
+//        Pageable pageable = new PageRequest(condition.getPage(), condition.getPageSize(), sort);
+//
+//        Specification<ENTITY> specification;
+
         return transform2D(getRepository().findAll());
     }
 

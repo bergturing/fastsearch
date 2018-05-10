@@ -20,7 +20,6 @@ import java.io.Serializable;
 public abstract class BaseController<
         ID extends Serializable,
         DTO extends BaseDto<ID>,
-        ENTITY extends BaseEntity,
         CONDITION extends BaseQueryCondition>{
 
     /**
@@ -29,7 +28,7 @@ public abstract class BaseController<
      */
     @GetMapping
     public ResponseData query(CONDITION condition){
-        return ResponseData.ofSuccess(getService().findAll());
+        return ResponseData.ofSuccess(getService().findAll(condition));
     }
 
     /**
@@ -73,5 +72,5 @@ public abstract class BaseController<
      * 获取服务对象
      * @return      返回服务对象
      */
-    protected abstract IBaseService<DTO, ENTITY, ID> getService();
+    protected abstract IBaseService<ID, DTO, CONDITION> getService();
 }

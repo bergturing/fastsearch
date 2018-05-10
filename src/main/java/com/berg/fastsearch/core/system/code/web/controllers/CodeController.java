@@ -2,7 +2,6 @@ package com.berg.fastsearch.core.system.code.web.controllers;
 
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 import com.berg.fastsearch.core.system.base.web.controller.BaseController;
-import com.berg.fastsearch.core.system.code.entity.Code;
 import com.berg.fastsearch.core.system.code.service.ICodeService;
 import com.berg.fastsearch.core.system.code.web.dto.CodeDto;
 import com.berg.fastsearch.core.system.code.web.dto.CodeQueryCondition;
@@ -19,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping(value = {"/system/code"})
 @RestController
-public class CodeController extends BaseController<Long, CodeDto, Code, CodeQueryCondition> {
+public class CodeController extends BaseController<Long, CodeDto, CodeQueryCondition> {
 
     @Autowired
     private ICodeService codeService;
 
     @Override
-    protected IBaseService<CodeDto, Code, Long> getService() {
+    protected IBaseService<Long, CodeDto, CodeQueryCondition> getService() {
         return codeService;
     }
 }

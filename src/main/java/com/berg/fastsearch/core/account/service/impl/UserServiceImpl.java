@@ -6,6 +6,7 @@ import com.berg.fastsearch.core.account.repository.UserRepository;
 import com.berg.fastsearch.core.account.service.IRoleService;
 import com.berg.fastsearch.core.account.service.IUserRoleService;
 import com.berg.fastsearch.core.account.service.IUserService;
+import com.berg.fastsearch.core.account.web.dto.UserQueryCondition;
 import com.berg.fastsearch.core.enums.account.UserStatus;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import org.apache.commons.lang.StringUtils;
@@ -24,7 +25,9 @@ import java.util.Date;
  * @apiNote Created on 18-3-18
  */
 @Service
-public class UserServiceImpl extends AbstractBaseServiceImpl<UserDto, User, Long> implements IUserService {
+public class UserServiceImpl
+        extends AbstractBaseServiceImpl<Long, UserDto, User, UserQueryCondition>
+        implements IUserService {
 
     /**
      * 用户的repository对象

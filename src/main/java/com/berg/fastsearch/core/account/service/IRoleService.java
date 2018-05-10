@@ -1,7 +1,7 @@
 package com.berg.fastsearch.core.account.service;
 
-import com.berg.fastsearch.core.account.entity.Role;
 import com.berg.fastsearch.core.account.web.dto.RoleDto;
+import com.berg.fastsearch.core.account.web.dto.RoleQueryCondition;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @version v1.0
  * @apiNote Created on 18-3-18
  */
-public interface IRoleService extends IBaseService<RoleDto, Role, Long> {
+public interface IRoleService extends IBaseService<Long, RoleDto, RoleQueryCondition> {
 
     /**
      * 根据用户的id来查找其所拥有的权限对象

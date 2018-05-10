@@ -2,6 +2,7 @@ package com.berg.fastsearch.core.car.service;
 
 import com.berg.fastsearch.core.car.entity.Car;
 import com.berg.fastsearch.core.car.web.dto.CarDto;
+import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 
 /**
@@ -11,5 +12,5 @@ import com.berg.fastsearch.core.system.base.service.IBaseService;
  * @version v1.0
  * @apiNote Created on 18-5-5
  */
-public interface ICarService extends IBaseService<CarDto, Car, Long> {
+public interface ICarService extends IBaseService<Long, CarDto, CarQueryCondition> {
 }

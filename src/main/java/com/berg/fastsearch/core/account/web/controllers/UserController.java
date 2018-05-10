@@ -1,6 +1,5 @@
 package com.berg.fastsearch.core.account.web.controllers;
 
-import com.berg.fastsearch.core.account.entity.User;
 import com.berg.fastsearch.core.account.service.IUserService;
 import com.berg.fastsearch.core.account.web.dto.UserDto;
 import com.berg.fastsearch.core.account.web.dto.UserQueryCondition;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping(value = {"/account/user"})
 @RestController
-public class UserController extends BaseController<Long, UserDto, User, UserQueryCondition> {
+public class UserController extends BaseController<Long, UserDto, UserQueryCondition> {
 
     /**
      * 用户的服务
@@ -28,7 +27,7 @@ public class UserController extends BaseController<Long, UserDto, User, UserQuer
 
 
     @Override
-    protected IBaseService<UserDto, User, Long> getService() {
+    protected IBaseService<Long, UserDto, UserQueryCondition> getService() {
         return userService;
     }
 }
