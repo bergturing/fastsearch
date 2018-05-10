@@ -1,7 +1,7 @@
 .left-region {
-    height: 620px;
+    height: 900px;
     float: left;
-    width: 376px;
+    width: 20%;
 }
 
 .left-region .r-hd {
@@ -376,8 +376,8 @@
 
 
 #allmap {
-    width: 900px;
-    height: 620px;
+    width: 80%;
+    height: 900px;
     overflow: hidden;
     margin: 0;
     font-family: "微软雅黑";

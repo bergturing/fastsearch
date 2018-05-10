@@ -2,6 +2,7 @@ package com.berg.fastsearch.user.system.base.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * <p></p>
@@ -10,13 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @version v1.0
  * @apiNote Created on 18-5-7
  */
+@RequestMapping(value = {"", "/user"})
 @Controller
 public class UserBaseUrlController {
     /**
      * 用户登录界面
      * @return  用户登录界面
      */
-    @GetMapping(value = {"/login", "/user/login"})
+    @GetMapping("/login")
     public String userLoginPage(){
         return "user/login";
     }
@@ -25,7 +27,7 @@ public class UserBaseUrlController {
      * 用户主页
      * @return  用户主页
      */
-    @GetMapping(value = {"/index", "/user/index"})
+    @GetMapping("/index")
     public String userIndexPage(){
         return "user/index";
     }

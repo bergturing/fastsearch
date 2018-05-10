@@ -2,75 +2,62 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>用户登录</title>
+    <script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link href="/static/css/common.css" rel='stylesheet' type='text/css'/>
+    <link href="/static/css/user/common.css" rel='stylesheet' type='text/css'/>
     <link href="/static/css/main.css" rel="stylesheet" type="text/css"/>
     <link href="/static/lib/layui/layui.css" rel="stylesheet" type="text/css">
+
     <link rel="stylesheet" type="text/css" href="/static/css/user/login.css">
 </head>
+
 <body>
-<div class="xunwu-container">
-    <!--<header class="xunwu-header">-->
-    <!--<h1>寻屋</h1>-->
-    <!--</header>-->
-
-    <div class="login-form form-bg" style="padding: 90px 0;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-offset-3 col-md-6">
-                    <form class="form-horizontal" action="#" th:action="@{/login}" method="post">
-                        <div class="heading">
-                            <a><span class="select" data-bind="phone">免密登录&nbsp;&nbsp;&nbsp;</span></a>|
-                            <a><span class="" data-bind="password">&nbsp;&nbsp;&nbsp;密码登录</span></a>
-                        </div>
-                        <span class="error-message" style="color: red;">
-                        </span>
-                        <div class="phone-panel">
-                            <div class="form-group">
-                                <input name="telephone" type="tel" class="form-control phone" id="phone"
-                                       placeholder="手机号">
-                                <i class="fa fa-user"></i>
-                            </div>
-                            <div class="form-group help">
-                                <input name="smsCode" type="text" class="form-control password" id="validateCode"
-                                       placeholder="6位验证码">
-                                <i class="fa fa-lock"></i>
-                                <!--<a href="#" class="fa fa-question-circle"></a>-->
-                                <button id="smsCodeBtn" type="button" class="valide-code btn btn-default">获取验证码
-                                </button>
-
-                            </div>
-                        </div>
-                        <div class="password-panel" style="display: none;">
-                            <!--<span class="heading">免注册登录</span>-->
-                            <div class="form-group">
-                                <input name="username" type="text" class="form-control username" id="nameOrPhone"
-                                       placeholder="用户名/手机号">
-                                <i class="fa fa-user"></i>
-                            </div>
-                            <div class="form-group help">
-                                <input name="password" type="password" class="form-control code" id="password"
-                                       placeholder="密码">
-                                <i class="fa fa-lock"></i>
-                                <!--<a href="#" class="fa fa-question-circle"></a>-->
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <!--<div class="main-checkbox">-->
-                            <!--<input type="checkbox" value="None" id="checkbox1" name="check"/>-->
-                            <!--<label for="checkbox1"></label>-->
-                            <!--</div>-->
-                            <!--<span class="text">Remember me</span>-->
-                            <button id="submit-btn" type="submit" class="btn btn-default">登录</button>
-                        </div>
-                    </form>
+<div class="container">
+    <div class="loginWraper">
+        <div id="loginform" class="login-form">
+            <form class="form form-horizontal" action="#" th:action="@{/authentication/form}" method="post">
+                <div class="heading">
+                    <a><span class="select" data-bind="phone">免密登录&nbsp;&nbsp;&nbsp;</span></a>|
+                    <a><span class="" data-bind="password">&nbsp;&nbsp;&nbsp;密码登录</span></a>
                 </div>
-            </div>
+                <span class="error-message" style="color: red;"></span>
+                <div class="phone-panel">
+                    <div class="form-group">
+                        <input name="telephone" type="tel" class="form-control phone" id="phone"
+                               placeholder="手机号">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="form-group help">
+                        <input name="smsCode" type="text" class="form-control password" id="validateCode"
+                               placeholder="6位验证码">
+                        <i class="fa fa-lock"></i>
+                        <button id="smsCodeBtn" type="button" class="valide-code btn btn-default">获取验证码
+                        </button>
+
+                    </div>
+                </div>
+                <div class="password-panel" style="display: none;">
+                    <div class="form-group">
+                        <input name="username" type="text" class="form-control username" id="nameOrPhone"
+                               placeholder="用户名/手机号">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="form-group help">
+                        <input name="password" type="password" class="form-control code" id="password"
+                               placeholder="密码">
+                        <i class="fa fa-lock"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button id="submit-btn" type="submit" class="btn btn-default">登录</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
 <div th:include="user/common :: footer"></div>
 
 <script type="text/javascript" src="/static/lib/layui/layui.js"></script>
@@ -131,7 +118,7 @@
 
                 var smsCode = $('.login-form form').find('input[name="smsCode"]').val();
                 if (smsCode.length !== 6) {
-                    layer.msg('请输入4位验证码', {icon: 5, time: 2000});
+                    layer.msg('请输入6位验证码', {icon: 5, time: 2000});
                     return false;
                 }
             } else {
@@ -197,4 +184,5 @@
 
 </script>
 </body>
+
 </html>

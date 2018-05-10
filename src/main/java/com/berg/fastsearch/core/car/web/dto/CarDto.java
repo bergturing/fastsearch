@@ -2,8 +2,10 @@ package com.berg.fastsearch.core.car.web.dto;
 
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * <p></p>
@@ -127,6 +129,12 @@ public class CarDto extends BaseDto<Long> {
      * 描述
      */
     private String description;
+
+    /**
+     * 上次更新记录时间
+     */
+    @Column
+    private Date lastUpdateTime;
 
     public Long getDeployeeId() {
         return deployeeId;
@@ -286,5 +294,13 @@ public class CarDto extends BaseDto<Long> {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }

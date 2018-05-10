@@ -7,22 +7,21 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="applicable-device" content="pc">
 
-    <title>寻屋</title>
-    <meta name="description" content="方便快捷寻屋"/>
-    <meta name="keywords" content="寻屋"/>
+    <title>车辆详情</title>
     <link href="/static/css/main.css" rel='stylesheet' type='text/css'/>
     <link href="/static/css/list.css" rel='stylesheet' type='text/css'/>
     <link href="/static/lib/layui/layui.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/user/common.css" rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="/static/css/detail.css" type="text/css"/>
 </head>
 <body>
-<header th:replace="common :: header"></header>
+<header th:replace="user/common :: header"></header>
 <!-- NAV头部搜索模块 -->
 <div class="searchs">
     <div class="wrapper">
         <div class="fl" log-mod="search">
             <div class="search-txt">
-                <form class="clear" id="searchForm" action="#" th:action="@{/rent/house}" method="post">
+                <form class="clear" id="searchForm" action="#" th:action="@{/user/car/list}" method="post">
                     <div class="search-tab"><i class="icon" data-bl="switch"></i>
                         <div data-bl="switch" class="check">关键词</div>
 
@@ -39,9 +38,9 @@
         </div>
         <div class="fr last">
             <div class="ditu fr">
-                <a th:href="@{/rent/house/map(cityEnName=${city.enName})}" target="_blank">
+                <a th:href="@{/user/car/map(cityEnName=${city.enName})}" target="_blank">
                     <i></i>
-                    地图找房
+                    地图找车
                 </a>
             </div>
         </div>
@@ -66,12 +65,12 @@
     <div class="title-wrapper">
         <div class="content">
             <div class="title">
-                <h1 class="main" th:text="${house.title}"></h1>
-                <div class="sub" th:text="${house.houseDetail.description}">这个经纪人很懒，没写核心卖点</div>
+                <h1 class="main" th:text="${car.title}"></h1>
+                <div class="sub" th:text="${car.description}">这个经纪人很懒，没写核心卖点</div>
             </div>
             <div class="btnContainer ">
-                <button id="subscribe" th:switch="${house.subscribeStatus}"
-                        th:attr="data-bind=${house.subscribeStatus}" th:style="${house.subscribeStatus != 0} ? 'background-color: #6a7b8c; color: black;'">
+                <button id="subscribe" th:switch="${car.description}"
+                        th:attr="data-bind=${car.description}" th:style="${car.description != 0} ? 'background-color: #6a7b8c; color: black;'">
                     <span th:case="1">已加入待看</span>
                     <span th:case="2">已预约时间</span>
                     <span th:case="3">已看过此房</span>
@@ -84,15 +83,15 @@
         <div class="img" id="topImg">
             <div class="imgContainer layui-carousel" id="overview-photos">
                 <div carousel-item>
-                    <div th:each="picture : ${house.pictures}">
-                        <img th:src="${picture.cdnPrefix + picture.path}"/>
+                    <div th:each="picture : ${car.description}">
+                        <!--<img th:src="${picture.cdnPrefix + picture.path}"/>-->
                     </div>
                 </div>
             </div>
         </div>
         <div class="content zf-content">
             <div class="price ">
-                <span class="total" th:text="${house.price}">-</span>
+                <span class="total" th:text="${car.price}">-</span>
                 <span class="unit">
         <span>元/月</span>
       </span>
@@ -102,16 +101,16 @@
                 <div class="removeIcon"></div>
             </div>
             <div class="zf-room">
-                <p class="lf"><i>面积：</i><span th:text="${house.area}"></span>平米</p>
+                <p class="lf"><i>面积：</i><span th:text="${car.description}"></span>平米</p>
                 <p class="lf"><i>房屋户型：</i>
-                    <span th:text="${house.room}"></span>室<span th:text="${house.parlour}"></span>厅<span
-                            th:text="${house.bathroom}"></span>卫
+                    <span th:text="${car.description}"></span>室<span th:text="${car.description}"></span>厅<span
+                            th:text="${car.description}"></span>卫
                     <span
-                            th:text="${house.houseDetail.rentWay == 0} ? '整租' : '合租'">租住方式</span></p>
-                <p class="lf"><i>楼层：</i><span th:text="${house.floor}"></span>层 (共<span
-                        th:text="${house.totalFloor}">0</span>层)</p>
+                            <!--th:text="${car.carDetail.rentWay == 0} ? '整租' : '合租'">租住方式</span></p>-->
+                <p class="lf"><i>楼层：</i><span th:text="${car.description}"></span>层 (共<span
+                        th:text="${car.description}">0</span>层)</p>
                 <p class="lf"><i>房屋朝向：</i>
-                    <span th:switch="${house.direction}">
+                    <span th:switch="${car.description}">
                         <span th:case="1">朝东</span>
                         <span th:case="2">朝南</span>
                         <span th:case="3">朝西</span>
@@ -122,22 +121,22 @@
                 </p>
                 <div class="clear"></div>
                 <p><i>地铁：</i>
-                    <span th:if="${house.distanceToSubway > -1}">
-                        距地铁<span th:text="${house.houseDetail.subwayLineName}">线</span>
-                        <span th:text="${house.houseDetail.subwayStationName}">站点</span>
-                        站<span th:text="${house.distanceToSubway}">0</span>米
-                    </span>
-                    <span th:if="${house.distanceToSubway < 0}">暂无数据</span>
+                    <!--<span th:if="${car.distanceToSubway > -1}">-->
+                        <!--距地铁<span th:text="${car.houseDetail.subwayLineName}">线</span>-->
+                        <!--<span th:text="${car.houseDetail.subwayStationName}">站点</span>-->
+                        <!--站<span th:text="${car.distanceToSubway}">0</span>米-->
+                    <!--</span>-->
+                    <!--<span th:if="${car.distanceToSubway < 0}">暂无数据</span>-->
                 </p>
                 <p><i>小区：</i>
-                    <a href="/xiaoqu/1111027382235/" th:text="${house.district}">小区</a>
-                    - <a href="/zufang/c1111027382235/"><span th:text="${houseCountInDistrict}"></span>套出租中</a>
+                    <a href="/xiaoqu/1111027382235/" th:text="${car.description}">小区</a>
+                    - <a href="/zufang/c1111027382235/"><span th:text="${car.description}"></span>套出租中</a>
                 </p>
                 <p><i>位置：</i>
                     <a href="/zufang/chaoyang/" th:text="${region.cnName}">地区</a>
                 </p>
                 <p class="lf"><i>发布时间：</i>
-                    <span th:text="${#dates.format(house.lastUpdateTime, 'yyyy-MM-dd')}">时间</span>
+                    <span th:text="${#dates.format(car.lastUpdateTime, 'yyyy-MM-dd')}">时间</span>
                 </p>
                 <div class="clear"></div>
             </div>
@@ -157,14 +156,14 @@
                         </a>
                     </div>
                     <div class="evaluate">
-                        <span class="time">本房带看：<span th:text="${house.watchTimes}">0</span>次</span>
+                        <span class="time">本房带看：<span th:text="${car.watchTimes}">0</span>次</span>
                     </div>
                     <div class="phone" th:text="${agent.phoneNumber}">
                     </div>
                 </div>
             </div>
             <div class="houseRecord">
-                <span class="houseNum">寻屋编号：<span th:text="${house.id}"></span></span>
+                <span class="houseNum">寻屋编号：<span th:text="${car.id}"></span></span>
                 <div class="right">
                     <span class="detail">真实房源，假一赔亿！</span>
                 </div>
@@ -193,7 +192,7 @@
                 <div class="content">
                     <ul>
                         <li><span class="label">租赁方式：</span>
-                            <span th:text="${house.houseDetail.rentWay == 0 ? '整租' : '合租'}"></span>
+                            <!--<span th:text="${car.houseDetail.rentWay == 0 ? '整租' : '合租'}"></span>-->
                         </li>
                         <li>
                             <span class="label">付款方式：</span>
@@ -201,7 +200,7 @@
                         </li>
                         <li>
                             <span class="label">房屋现状：</span>
-                            <span th:switch="${house.status}">
+                            <span th:switch="${car.status}">
                                 <span th:case="0">暂未上架</span>
                                 <span th:case="1">目前出租</span>
                                 <span th:case="2">已出租</span>
@@ -209,7 +208,7 @@
                             </span>
                         </li>
                         <li><span class="label">房屋朝向：</span>
-                            <span th:switch="${house.direction}">
+                            <span th:switch="${car.description}">
                                 <span th:case="1">朝东</span>
                                 <span th:case="2">朝南</span>
                                 <span th:case="3">朝西</span>
@@ -304,15 +303,15 @@
                     <ul>
                         <li>
                             <span class="label">户型介绍：</span>
-                            <span class="text" th:text="${house.houseDetail.layoutDesc}">暂无描述</span>
+                            <span class="text" th:text="${car.description}">暂无描述</span>
                         </li>
                         <li>
                             <span class="label">交通出行：</span>
-                            <span class="text" th:text="${house.houseDetail.traffic}">暂无描述</span>
+                            <span class="text" th:text="${car.description}">暂无描述</span>
                         </li>
                         <li>
                             <span class="label">周边配套：</span>
-                            <span class="text" th:text="${house.houseDetail.roundService}">暂无描述</span>
+                            <span class="text" th:text="${car.description}">暂无描述</span>
                         </li>
                     </ul>
                 </div>
@@ -323,7 +322,7 @@
 </div>
 
 <div id="only" data-city="bj" data-page="zufang_view"></div>
-<div th:include="common :: footer"></div>
+<!--<div th:include="common :: footer"></div>-->
 <script type='text/javascript'>
     (function(m, ei, q, i, a, j, s) {
         m[i] = m[i] || function() {
@@ -355,7 +354,7 @@
     });
 
     $(function () {
-        var houseId = [[${house.id}]],
+        var carId = [[${car.id}]],
             subscribeBtn = $('#subscribe');
         subscribeBtn.on('click', function () {
             var subscribeStatus = subscribeBtn.attr('data-bind');
@@ -376,7 +375,7 @@
                 $.ajax({
                     url: '/api/user/house/subscribe',
                     data: {
-                        'house_id': houseId
+                        'car_id': carId
                     },
                     type: 'POST',
                     success: function (data) {
@@ -406,7 +405,7 @@
                     btn: ['确认', '取消'] //按钮
                 }, function () {
                     $.ajax({
-                        url: '/api/user/house/subscribe?house_id=' + houseId,
+                        url: '/api/user/house/subscribe?car_id=' + carId,
                         type: 'DELETE',
                         success: function (data) {
                             if (data.code === 200) {

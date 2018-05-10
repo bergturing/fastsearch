@@ -7,13 +7,13 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="applicable-device" content="pc">
 
-    <title>寻屋</title>
-    <meta name="description" content="方便快捷寻屋"/>
-    <meta name="keywords" content="寻屋"/>
+    <title>寻车</title>
     <link href="/static/css/main.css" rel='stylesheet' type='text/css'/>
     <link href="/static/css/list.css" rel='stylesheet' type='text/css'/>
     <link href="/static/lib/layui/layui.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/user/common.css" rel='stylesheet' type='text/css'/>
     <link href="/static/lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
 
@@ -30,7 +30,7 @@
                         <div class="txt-search">
                             <input class="left txt" name="keyword" autocomplete="off"
                                    placeholder="如小区名、地铁站等" id="keyword-box"
-                                    th:value="${searchBody.keywords != null} ? ${searchBody.keywords} : ''"/>
+                                   th:value="${searchBody.keywords != null} ? ${searchBody.keywords} : ''"/>
                         </div>
                     </div>
                     <button type="submit" class="act-search btn home-ico ico-search LOGCLICKEVTID">
@@ -41,9 +41,9 @@
         </div>
         <div class="fr last">
             <div class="ditu fr">
-                <a th:href="@{/rent/house/map(cityEnName=${searchBody.cityEnName})}" target="_blank">
+                <a th:href="@{/user/car/map(cityEnName=${searchBody.cityEnName})}" target="_blank">
                     <i></i>
-                    地图找房
+                    地图找车
                 </a>
             </div>
         </div>
@@ -53,9 +53,9 @@
 <!-- 面包屑模块 -->
 <div class="intro clear" mod-id="lj-common-bread">
     <div class="container">
-        <div class="fl l-txt"><i class="icon"></i>&nbsp;<a href="/">寻屋</a><span
+        <div class="fl l-txt"><i class="icon"></i>&nbsp;<a href="/">寻车</a><span
                 class="stp">&nbsp;&gt;&nbsp;</span>[<a href="/" title="选择城市">
-            <span th:text="${currentCity.cnName}">城市</span></a>]租房
+            <span th:text="${currentCity.cnName}">城市</span></a>]找车
         </div>
         <div class="fr r-txt"></div>
     </div>
@@ -65,10 +65,10 @@
     <div class="filter-box">
         <div class="hd clear">
             <ul class="tab-lst">
-                <li class="on"><a th:href="@{/rent/house(cityEnName=${searchBody.cityEnName})}"><span>全部租房</span></a>
+                <li class="on"><a th:href="@{/rent/house(cityEnName=${searchBody.cityEnName})}"><span>全部找车</span></a>
                 </li>
             </ul>
-            <div class="info"><span class="num">真实房源，假一赔亿！</span></div>
+            <div class="info"><span class="num">真实车源，假一赔亿！</span></div>
         </div>
         <div>
             <div class="bd" id="filter-options">
@@ -87,7 +87,7 @@
                     </dd>
                 </dl>
                 <dl class="dl-lst clear">
-                    <dt>租金：</dt>
+                    <dt>价格：</dt>
                     <dd data-index="1">
                         <div class="option-list price-select">
                             <a data-bind="*" href="javascript:void(0);"
@@ -99,24 +99,6 @@
                                    th:text="${priceBlock.value.min < 0} ? (${priceBlock.value.max} + '元以下' ):
                                     (${priceBlock.value.max < 0} ? ${priceBlock.value.min} + '元以上' :
                                      ${priceBlock.value.min} + '-' + ${priceBlock.value.max} + '元')">
-                                </a>
-                            </tr>
-                        </div>
-                    </dd>
-                </dl>
-                <dl class="dl-lst clear">
-                    <dt>面积：</dt>
-                    <dd data-index="2">
-                        <div class="option-list area-select">
-                            <a data-bind="*" href="javascript:void(0);"
-                               onclick="changeSimpleCondition('areaBlock', '*')">不限
-                            </a>
-                            <tr th:each="areaBlock : ${areaBlocks}">
-                                <a th:attr="data-bind=${areaBlock.key}" href="javascript:void(0);"
-                                   th:onclick="'changeSimpleCondition(\'areaBlock\',\'' + ${areaBlock.key} + '\')'"
-                                   th:text="${areaBlock.value.min < 0} ? (${areaBlock.value.max} + '平以下' ):
-                                    (${areaBlock.value.max < 0} ? ${areaBlock.value.min} + '平以上' :
-                                     ${areaBlock.value.min} + '-' + ${areaBlock.value.max} + '平')">
                                 </a>
                             </tr>
                         </div>
@@ -191,7 +173,7 @@
                     </div>
                     <div class="sort-parent" data-bind="price">
                         <a href="javascript:void(0);" onclick="changeSort('price', 'asc')">
-                            <span>租金低</span>
+                            <span>价格低</span>
                         </a>
                     </div>
                     <div class="sort-parent" data-bind="area">
@@ -215,11 +197,11 @@
         <div id="sem_card"></div>
         <div class="con-box">
             <div class="list-head clear">
-                <h2>共有<span th:text="${total}">18364</span>套<span th:text="${currentCity.cnName}"></span>在租房源</h2>
+                <h2>共有<span th:text="${total}">18364</span>套<span th:text="${currentCity.cnName}"></span>在售车源</h2>
                 <div class="view-type" id="viewType">
                     <div class="modeshows modeshow">
                     <span class="l-show view-mod" data-type="real" id="lshow"><i></i>
-                        <span th:text="${currentCity.cnName} + '房源'"></span>
+                        <span th:text="${currentCity.cnName} + '车源'"></span>
                     </span>
                     </div>
                 </div>
@@ -227,78 +209,35 @@
             <div class="list-wrap">
 
                 <ul id="house-lst" class="house-lst">
-                    <tr th:each="house, houseStat: ${houses}">
+                    <tr th:each="car, carStat: ${cars}">
                         <li>
                             <div class="pic-panel">
-                                <a target="_blank" th:href="'/rent/house/show/' + ${house.id}">
-                                    <img th:src="${house.cover}" th:alt="${house.title}"/>
+                                <a target="_blank" th:href="'/user/car/detail/' + ${car.id}">
+                                    <img th:src="${car.vocer}" th:alt="${car.title}"/>
                                 </a>
                             </div>
                             <div class="info-panel">
                                 <div>
                                     <h2>
-                                        <a target="_blank" th:href="'/rent/house/show/' + ${house.id}"
-                                           th:title="${house.title}" th:text="${house.title}">
+                                        <a target="_blank" th:href="'/user/car/detail/' + ${car.id}"
+                                           th:title="${car.title}" th:text="${car.title}">
 
                                         </a>
                                     </h2>
                                 </div>
-                                <div class="col-1">
-                                    <div class="where">
-                                        <a th:href="@{/rent/house(cityEnName=${searchBody.cityEnName}, search=${house.district})}"
-                                           class="laisuzhou">
-                                            <span class="region" th:text="${house.district} + '&nbsp;&nbsp;'"></span>
-                                        </a>
-                                        <span class="zone">
-                                            <span th:text="${house.room} + '室' + ${house.parlour} + '厅&nbsp;&nbsp;'"></span>
-                                        </span>
-                                        <span class="meters" th:text="${house.area} + '平米&nbsp;&nbsp;'"></span>
-                                        <span>朝向</span>
-                                    </div>
-                                    <div class="other">
-                                        <div class="con">
-                                            <span th:text="${house.floor} + '楼(共' + ${house.totalFloor} + '层)'">
-                                            </span>
-                                            <span>/</span>
-                                            <span th:text="${house.buildYear} + '年建'"></span>
-                                        </div>
-                                    </div>
-                                    <div class="chanquan">
-                                        <div class="left agency">
-                                            <div class="view-label left">
-                                                <span th:if="${house.houseDetail.subwayLineName != null}">
-                                                    <span class="fang-subway"></span>
-                                                    <span class="fang-subway-ex">
-                                                        <span>距离地铁
-                                                            <span th:text="${house.houseDetail.subwayLineName}"></span>
-                                                            <span th:text="${house.houseDetail.subwayStationName}"></span>站
-                                                            <span th:text="${house.distanceToSubway}"></span>米</span>
-                                                    </span>
-                                                </span>
-                                                <span th:each="tag: ${house.tags}">
-                                                    <span class="decoration"></span>
-                                                    <span class="decoration-ex">
-                                                        <span th:text="${tag}"></span>
-                                                    </span>
-                                                </span>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-3">
-                                    <div class="price"><span class="num" th:text="${house.price}">价格</span>元/月
+                                    <div class="price"><span class="num" th:text="${car.price}">价格</span>元
                                     </div>
                                     <div class="price-pre">
-                                            <span th:text="${#dates.format(house.lastUpdateTime, 'yyyy.MM.dd')} + ' 更新'">
+                                            <span th:text="${#dates.format(car.lastUpdateTime, 'yyyy.MM.dd')} + ' 更新'">
                                                 更新时间
                                             </span>
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="square">
-                                        <div><span class="num" th:text="${house.watchTimes}">0</span>人</div>
-                                        <div class="col-look">看过此房</div>
+                                        <div><span class="num" th:text="${car.watchTimes}">0</span>人</div>
+                                        <div class="col-look">看过此车</div>
                                     </div>
                                 </div>
                             </div>
@@ -307,22 +246,23 @@
                 </ul>
             </div>
 
-            <div th:if="${!houses.isEmpty()}" id="pageable" class="page-box house-lst-page-box">
+            <div th:if="${!cars.isEmpty()}" id="pageable" class="page-box house-lst-page-box">
             </div>
-            <div th:if="${houses.isEmpty()}" class="page-box house-lst-page-box">
+            <div th:if="${cars.isEmpty()}" class="page-box house-lst-page-box">
                 没有找到相关结果>_<，换个姿势去搜索相关数据吧~
             </div>
         </div>
     </div>
 </div>
 </div>
-<div th:include="common :: footer"></div>
+<!--<div th:include="user/common :: footer"></div>-->
+
 <script type="text/javascript" src="/static/lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type='text/javascript'>
     (function(m, ei, q, i, a, j, s) {
         m[i] = m[i] || function() {
-                (m[i].a = m[i].a || []).push(arguments)
-            };
+            (m[i].a = m[i].a || []).push(arguments)
+        };
         j = ei.createElement(q),
             s = ei.getElementsByTagName(q)[0];
         j.async = true;

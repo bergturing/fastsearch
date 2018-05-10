@@ -7,16 +7,15 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="applicable-device" content="pc">
 
-    <title>寻屋地图</title>
-    <meta name="description" content="方便快捷寻屋"/>
-    <meta name="keywords" content="寻屋"/>
+    <title>寻车地图</title>
     <link href="/static/css/main.css" rel='stylesheet' type='text/css'/>
     <link href="/static/lib/layui/layui.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/user/common.css" rel='stylesheet' type='text/css'/>
     <link href="/static/css/rent-map.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
 </head>
 <body>
-<header th:replace="common :: header"></header>
+<header th:replace="user/common :: header"></header>
 <div>
     <div class="left-region">
         <input id="cityEnName" th:value="${city.enName}" type="hidden">
@@ -35,7 +34,7 @@
         <div class="r-hd3" style="display: block;">
             <div class="r-hd3-content">
                 <ol class="i-card i-card-1">
-                    <li class="i-card-name" th:text="${city.CnName}">北京市</li>
+                    <li class="i-card-name" th:text="${city.cnName}">北京市</li>
                     <li class=""><span th:text="${total}">0</span>套正在出租</li>
                     <li>共<span th:text="${#lists.size(regions)}"></span>个区域</li>
                 </ol>

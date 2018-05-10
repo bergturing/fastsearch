@@ -2,14 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:fragment="head">
     <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-    <link href="/static/css/common.css" rel='stylesheet' type='text/css'/>
+
+    <link href="/static/css/user/common.css" rel='stylesheet' type='text/css'/>
 </div>
 
-<header th:fragment="header" class="xunwu-header">
+<header th:fragment="header" class="search-header">
     <div class="nav-wrap">
         <div class="wrapper ">
             <div class="fl">
-                <a class="logo" href="/" title="寻屋">
+                <a class="logo" href="/index" title="寻车">
                     <!--<img src="/static/images/user/logo.png">-->
                 </a>
             </div>
@@ -17,10 +18,10 @@
                 <div class="fl">
                     <ul>
                         <li>
-                            <a class="index-page" href="/">首页</a>
+                            <a class="index-page" href="/index">首页</a>
                         </li>
                         <li>
-                            <a class="rent-page" href="/rent/house">租房</a>
+                            <a class="rent-page" href="/user/car/list">买车</a>
                         </li>
                         <li>
                             <a class="center-page" href="/user/center">个人中心</a>
@@ -67,9 +68,9 @@
                 <div class="fl">
                     <ul>
                         <li><a href="/" rel="nofollow" target="_blank">首页</a></li>
-                        <li><a href="/" rel="nofollow" target="_blank">了解寻屋</a></li>
-                        <li><a href="/" rel="nofollow" target="_blank">关于寻屋</a></li>
-                        <li><a href="/" rel="nofollow" target="_blank">联系瓦力老师</a></li>
+                        <li><a href="/" rel="nofollow" target="_blank">了解Fast Search</a></li>
+                        <li><a href="/" rel="nofollow" target="_blank">关于Fast Search</a></li>
+                        <li><a href="/" rel="nofollow" target="_blank">联系管理员</a></li>
                         <li><a href="/admin/login" rel="nofollow" target="_blank">管理员登录</a></li>
                     </ul>
                 </div>
@@ -78,11 +79,13 @@
             <div class="clear"></div>
         </div>
         <div class="bottom">
-            <div class="copyright fl">Copyright &copy; 2017. 瓦力老师 All rights reserved.</div>
+            <div class="copyright fl">Copyright &copy; 2017. Berg Turing All rights reserved.</div>
         </div>
+    </div>
     </div>
     <script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="/static/lib/layer/2.4/layer.js"></script>
-    <script type="text/javascript" src="/static/js/common.js"></script>
+
+    <script type="text/javascript" src="/static/js/user/common.js"></script>
 </div>
 </html>

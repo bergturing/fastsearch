@@ -5,6 +5,8 @@ import com.berg.fastsearch.core.car.web.dto.CarDto;
 import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 
+import java.util.List;
+
 /**
  * <p></p>
  *
@@ -13,4 +15,11 @@ import com.berg.fastsearch.core.system.base.service.IBaseService;
  * @apiNote Created on 18-5-5
  */
 public interface ICarService extends IBaseService<Long, CarDto, CarQueryCondition> {
+
+//    /**
+//     * 全地图查询
+//     * @param carQueryCondition
+//     * @return
+//     */
+//    List<CarDto> wholeMapQuery(CarQueryCondition carQueryCondition);
 }
