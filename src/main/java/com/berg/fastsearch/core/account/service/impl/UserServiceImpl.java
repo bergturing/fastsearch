@@ -74,7 +74,7 @@ public class UserServiceImpl
     }
 
     @Override
-    protected void create(User entity) {
+    protected void processEntity(User entity) {
         //处理用户的密码
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         //处理用户状态
@@ -90,7 +90,7 @@ public class UserServiceImpl
     }
 
     @Override
-    protected void update(User entity) {
+    protected void updateEntity(User entity) {
         //处理用户的密码
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         //处理用户状态

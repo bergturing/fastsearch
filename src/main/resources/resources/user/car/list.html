@@ -87,8 +87,82 @@
                     </dd>
                 </dl>
                 <dl class="dl-lst clear">
-                    <dt>价格：</dt>
+                    <dt>品牌：</dt>
                     <dd data-index="1">
+                        <div class="option-list room-select">
+                            <!--th:class="${searchBody.layout == 0} ? 'on' : ''"-->
+                            <a data-bind="0" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 0)">不限</a>
+                            <a data-bind="1" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 1)">大众</a>
+                            <a data-bind="2" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 2)">福特</a>
+                            <a data-bind="3" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 3)">别克</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">宝马</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">奔驰</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">雪佛兰</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">奥迪</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">现代</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">标志</a>
+                            <a data-bind="5" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('room', 5)">长安</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">日产</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">丰田</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">哈弗</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">本田</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">雪铁龙</a>
+                        </div>
+                    </dd>
+                </dl>
+                <dl class="dl-lst clear">
+                    <dt>车系：</dt>
+                    <dd data-index="2">
+                        <div class="option-list room-select">
+                            <!--th:class="${searchBody.layout == 0} ? 'on' : ''"-->
+                            <a data-bind="0" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 0)">福克斯</a>
+                            <a data-bind="1" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 1)">大众POLO</a>
+                            <a data-bind="2" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 2)">宝来</a>
+                            <a data-bind="3" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 3)">高尔夫</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">速腾</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">迈腾</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">朗讯</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">途观</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">捷达</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">哈弗H6</a>
+                            <a data-bind="5" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('room', 5)">英朗</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">凯越</a>
+                            <a data-bind="4" href="javascript:void(0);"
+                               onclick="changeSimpleCondition('layout', 4)">科鲁兹</a>
+                        </div>
+                    </dd>
+                </dl>
+                <dl class="dl-lst clear">
+                    <dt>价格：</dt>
+                    <dd data-index="3">
                         <div class="option-list price-select">
                             <a data-bind="*" href="javascript:void(0);"
                                onclick="changeSimpleCondition('priceBlock', '*')">不限
@@ -101,59 +175,6 @@
                                      ${priceBlock.value.min} + '-' + ${priceBlock.value.max} + '元')">
                                 </a>
                             </tr>
-                        </div>
-                    </dd>
-                </dl>
-                <dl class="dl-lst clear">
-                    <dt>房型：</dt>
-                    <dd data-index="3">
-                        <div class="option-list room-select">
-                            <!--th:class="${searchBody.layout == 0} ? 'on' : ''"-->
-                            <a data-bind="0" href="javascript:void(0);"
-                               onclick="changeSimpleCondition('layout', 0)">不限</a>
-                            <a data-bind="1" href="javascript:void(0);"
-                               onclick="changeSimpleCondition('layout', 1)">一室</a>
-                            <a data-bind="2" href="javascript:void(0);"
-                               onclick="changeSimpleCondition('layout', 2)">二室</a>
-                            <a data-bind="3" href="javascript:void(0);"
-                               onclick="changeSimpleCondition('layout', 3)">三室</a>
-                            <a data-bind="4" href="javascript:void(0);"
-                               onclick="changeSimpleCondition('layout', 4)">四室</a>
-                            <a data-bind="5" href="javascript:void(0);" onclick="changeSimpleCondition('room', 5)">五室及以上
-                            </a>
-                        </div>
-                    </dd>
-                </dl>
-                <dl class="dl-lst clear">
-                    <dt>朝向：</dt>
-                    <dd data-index="4">
-                        <div class="option-list direction-select">
-                            <!--th:class="${searchBody.direction == 0} ? 'on' : ''-->
-                            <a data-bind="0" href="javascript:void(0);" onclick="changeSimpleCondition('direction', 0)">
-                                不限</a>
-                            <a data-bind="1" href="javascript:void(0);" onclick="changeSimpleCondition('direction', 1)">
-                                朝东</a>
-                            <a data-bind="2" href="javascript:void(0);" onclick="changeSimpleCondition('direction', 2)">
-                                朝南</a>
-                            <a data-bind="3" href="javascript:void(0);" onclick="changeSimpleCondition('direction', 3)">
-                                朝西</a>
-                            <a data-bind="4" href="javascript:void(0);" onclick="changeSimpleCondition('direction', 4)">
-                                朝北</a>
-                            <a data-bind="5" href="javascript:void(0);" onclick="changeSimpleCondition('direction', 5)">
-                                南北</a>
-                        </div>
-                    </dd>
-                </dl>
-                <dl class="dl-lst clear">
-                    <dt>租赁方式：</dt>
-                    <dd data-index="5">
-                        <div class="option-list rent-way-select">
-                            <a data-bind="-1" href="javascript:void(0);" onclick="changeSimpleCondition('rentWay',
-                            -1)">不限</a>
-                            <a data-bind="0" href="javascript:void(0);"
-                               onclick="changeSimpleCondition('rentWay', 0)">整租</a>
-                            <a data-bind="1" href="javascript:void(0);"
-                               onclick="changeSimpleCondition('rentWay', 1)">合租</a>
                         </div>
                     </dd>
                 </dl>
@@ -174,18 +195,6 @@
                     <div class="sort-parent" data-bind="price">
                         <a href="javascript:void(0);" onclick="changeSort('price', 'asc')">
                             <span>价格低</span>
-                        </a>
-                    </div>
-                    <div class="sort-parent" data-bind="area">
-                        <span>面积</span><i></i>
-                        <ul class="sort-children">
-                            <li><a href="javascript:void(0);" onclick="changeSort('area', 'asc')">面积从小到大</a></li>
-                            <li><a href="javascript:void(0);" onclick="changeSort('area', 'desc')">面积从大到小</a></li>
-                        </ul>
-                    </div>
-                    <div class="sort-parent" data-bind="distanceToSubway">
-                        <a href="javascript:void(0);" onclick="changeSort('distanceToSubway', 'asc')">
-                            <span>地铁距离近</span>
                         </a>
                     </div>
                 </div>
@@ -213,7 +222,7 @@
                         <li>
                             <div class="pic-panel">
                                 <a target="_blank" th:href="'/user/car/detail/' + ${car.id}">
-                                    <img th:src="${car.vocer}" th:alt="${car.title}"/>
+                                    <img th:src="${car.cover}" th:alt="${car.title}"/>
                                 </a>
                             </div>
                             <div class="info-panel">

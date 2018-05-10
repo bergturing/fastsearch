@@ -19,4 +19,6 @@ public class AdminCarUrlController extends BaseUrlController<Long>{
     protected String getPrefix() {
         return "admin/car";
     }
+
+
 }

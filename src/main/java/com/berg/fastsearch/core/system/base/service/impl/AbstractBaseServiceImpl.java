@@ -52,20 +52,30 @@ public abstract class AbstractBaseServiceImpl<
     public final DTO create(DTO dto) {
         ENTITY entity = transform2E(dto);
         //子类的额外处理
-        create(entity);
+        processEntity(entity);
+
+        dto = transform2D(getRepository().save(entity));
+
+        //子类的额外处理
+        processDto(dto);
 
         //保存并返回对象
-        return transform2D(getRepository().save(entity));
+        return dto;
     }
 
     @Override
     public final DTO update(DTO dto) {
         ENTITY entity = transform2E(dto);
         //子类的额外处理
-        update(entity);
+        updateEntity(entity);
+
+        dto = transform2D(getRepository().save(entity));
+
+        //子类的额外处理
+        updateDto(dto);
 
         //保存并返回对象
-        return transform2D(getRepository().save(entity));
+        return dto;
     }
 
     @Override
@@ -168,13 +178,25 @@ public abstract class AbstractBaseServiceImpl<
 
     /**
      * 给子类实现的对新增数据时候的额外处理
+     * @param dto        实体对象
+     */
+    protected void processDto(final DTO dto){ }
+
+    /**
+     * 给子类实现的对新增数据时候的额外处理
      * @param entity        实体对象
      */
-    protected void create(final ENTITY entity){ }
+    protected void processEntity(final ENTITY entity){ }
+
+    /**
+     * 给子类实现的对更新数据时候的额外处理
+     * @param dto        实体对象
+     */
+    protected void updateDto(final DTO dto){ }
 
     /**
      * 给子类实现的对更新数据时候的额外处理
      * @param entity        实体对象
      */
-    protected void update(final ENTITY entity){ }
+    protected void updateEntity(final ENTITY entity){ }
 }

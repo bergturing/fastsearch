@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p></p>
@@ -118,7 +119,7 @@ public class CarDto extends BaseDto<Long> {
     /**
      * 封面
      */
-    private String vocer;
+    private String cover;
 
     /**
      * 汽车的状态
@@ -133,8 +134,12 @@ public class CarDto extends BaseDto<Long> {
     /**
      * 上次更新记录时间
      */
-    @Column
     private Date lastUpdateTime;
+
+    /**
+     * 车辆的照片
+     */
+    private List<Photo> photos;
 
     public Long getDeployeeId() {
         return deployeeId;
@@ -272,12 +277,12 @@ public class CarDto extends BaseDto<Long> {
         this.address = address;
     }
 
-    public String getVocer() {
-        return vocer;
+    public String getCover() {
+        return cover;
     }
 
-    public void setVocer(String vocer) {
-        this.vocer = vocer;
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public String getStatus() {
@@ -302,5 +307,13 @@ public class CarDto extends BaseDto<Long> {
 
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
     }
 }

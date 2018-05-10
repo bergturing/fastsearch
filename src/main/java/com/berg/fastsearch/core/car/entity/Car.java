@@ -133,7 +133,7 @@ public class Car extends BaseEntity {
      * 封面
      */
     @Column
-    private String vocer;
+    private String cover;
 
     /**
      * 汽车的状态
@@ -303,12 +303,12 @@ public class Car extends BaseEntity {
         this.address = address;
     }
 
-    public String getVocer() {
-        return vocer;
+    public String getCover() {
+        return cover;
     }
 
-    public void setVocer(String vocer) {
-        this.vocer = vocer;
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public String getStatus() {

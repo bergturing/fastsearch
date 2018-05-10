@@ -12,7 +12,7 @@ var FastSearchCar = (function(){
     var _carAdd = function(){
         var title = '添加车辆';
         var url = '/admin/car/add';
-        var width = '800';
+        var width = '900';
         var height;
 
         layer_show(title, url, width, height);
@@ -24,7 +24,7 @@ var FastSearchCar = (function(){
     var _carEdit = function(){
         var title = '编辑车辆';
         var url = '/admin/car/edit?id=' + $(this).attr("car_id");
-        var width = '800';
+        var width = '900';
         var height;
 
         layer_show(title, url, width, height);
