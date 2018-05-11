@@ -234,6 +234,49 @@
                                         </a>
                                     </h2>
                                 </div>
+                                <div class="col-1">
+                                    <div class="where">
+                                        <a th:href="@{/user/car/list(cityEnName=${searchBody.cityEnName}, search=${car.district})}"
+                                           class="laisuzhou">
+                                            <span class="region" th:text="${car.district} + '&nbsp;&nbsp;'"></span>
+                                        </a>
+                                        <span class="zone">
+                                            <span th:text="${car.room} + '室' + ${car.parlour} + '厅&nbsp;&nbsp;'"></span>
+                                        </span>
+                                        <span class="meters" th:text="${car.area} + '平米&nbsp;&nbsp;'"></span>
+                                        <span>朝向</span>
+                                    </div>
+                                    <div class="other">
+                                        <div class="con">
+                                            <span th:text="${car.floor} + '楼(共' + ${car.totalFloor} + '层)'">
+                                            </span>
+                                            <span>/</span>
+                                            <span th:text="${car.buildYear} + '年建'"></span>
+                                        </div>
+                                    </div>
+                                    <div class="chanquan">
+                                        <div class="left agency">
+                                            <div class="view-label left">
+                                                <span th:if="${car.houseDetail.subwayLineName != null}">
+                                                    <span class="fang-subway"></span>
+                                                    <span class="fang-subway-ex">
+                                                        <span>距离地铁
+                                                            <span th:text="${car.houseDetail.subwayLineName}"></span>
+                                                            <span th:text="${car.houseDetail.subwayStationName}"></span>站
+                                                            <span th:text="${car.distanceToSubway}"></span>米</span>
+                                                    </span>
+                                                </span>
+                                                <span th:each="tag: ${car.tags}">
+                                                    <span class="decoration"></span>
+                                                    <span class="decoration-ex">
+                                                        <span th:text="${tag}"></span>
+                                                    </span>
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-3">
                                     <div class="price"><span class="num" th:text="${car.price}">价格</span>元
                                     </div>
