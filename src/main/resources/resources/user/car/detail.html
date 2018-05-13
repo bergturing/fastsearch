@@ -10,8 +10,9 @@
     <title>车辆详情</title>
     <link href="/static/css/main.css" rel='stylesheet' type='text/css'/>
     <link href="/static/css/list.css" rel='stylesheet' type='text/css'/>
-    <link href="/static/lib/layui/layui.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/lib/layui/css/layui.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/user/common.css" rel='stylesheet' type='text/css'/>
+    <script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/detail.css" type="text/css"/>
 </head>
 <body>
@@ -27,7 +28,7 @@
 
                         <div class="txt-search">
                             <input class="left txt" name="keyword" autocomplete="off"
-                                   placeholder="如小区名、地铁站、房屋朝向等" id="keyword-box">
+                                   placeholder="如品牌、系列、车名等" id="keyword-box">
                         </div>
                     </div>
                     <button type="submit" class="act-search btn home-ico ico-search LOGCLICKEVTID">
@@ -52,10 +53,10 @@
     <div class="container">
         <div class="fl l-txt">
             <i class="icon"></i>&nbsp;
-            <a href="/">寻屋</a>
+            <a href="/">寻车</a>
             <span class="stp">&nbsp;&gt;&nbsp;</span>[<a href="/" title="选择城市">
-            <span th:text="${city.cnName}">城市</span></a>]租房
-            <span class="stp">&nbsp;&gt;&nbsp;</span>当前房源
+            <span th:text="${city.cnName}">城市</span></a>]找车
+            <span class="stp">&nbsp;&gt;&nbsp;</span>当前车源
         </div>
         <div class="fr r-txt"></div>
     </div>
@@ -69,12 +70,12 @@
                 <div class="sub" th:text="${car.description}">这个经纪人很懒，没写核心卖点</div>
             </div>
             <div class="btnContainer ">
-                <button id="subscribe" th:switch="${car.description}"
-                        th:attr="data-bind=${car.description}" th:style="${car.description != 0} ? 'background-color: #6a7b8c; color: black;'">
-                    <span th:case="1">已加入待看</span>
-                    <span th:case="2">已预约时间</span>
-                    <span th:case="3">已看过此房</span>
-                    <span th:case="0">预约看房</span>
+                <button id="subscribe" th:switch="${car.status}"
+                        th:attr="data-bind=${car.status}" th:style="${car.status != null} ? 'background-color: #6a7b8c; color: black;'">
+                    <span th:case="ADDED">已加入待看</span>
+                    <span th:case="SUBSCRIBED">已预约时间</span>
+                    <span th:case="SAW">已看过此车</span>
+                    <span th:default>预约看车</span>
                 </button>
             </div>
         </div>
@@ -83,8 +84,8 @@
         <div class="img" id="topImg">
             <div class="imgContainer layui-carousel" id="overview-photos">
                 <div carousel-item>
-                    <div th:each="picture : ${car.description}">
-                        <!--<img th:src="${picture.cdnPrefix + picture.path}"/>-->
+                    <div th:each="picture : ${car.pictures}">
+                        <img th:src="${picture.cdnPrefix + picture.path}"/>
                     </div>
                 </div>
             </div>
@@ -93,44 +94,23 @@
             <div class="price ">
                 <span class="total" th:text="${car.price}">-</span>
                 <span class="unit">
-        <span>元/月</span>
-      </span>
+                    <span>元</span>
+                </span>
 
-
-                <span class="tips decoration">精装修</span>
+                <span class="tips decoration">8成新</span>
                 <div class="removeIcon"></div>
             </div>
             <div class="zf-room">
-                <p class="lf"><i>面积：</i><span th:text="${car.description}"></span>平米</p>
-                <p class="lf"><i>房屋户型：</i>
-                    <span th:text="${car.description}"></span>室<span th:text="${car.description}"></span>厅<span
-                            th:text="${car.description}"></span>卫
-                    <span
-                            <!--th:text="${car.carDetail.rentWay == 0} ? '整租' : '合租'">租住方式</span></p>-->
-                <p class="lf"><i>楼层：</i><span th:text="${car.description}"></span>层 (共<span
-                        th:text="${car.description}">0</span>层)</p>
-                <p class="lf"><i>房屋朝向：</i>
-                    <span th:switch="${car.description}">
-                        <span th:case="1">朝东</span>
-                        <span th:case="2">朝南</span>
-                        <span th:case="3">朝西</span>
-                        <span th:case="4">朝北</span>
-                        <span th:case="5">南 北</span>
-                        <span th:case="*">其他</span>
-                    </span>
-                </p>
+                <p class="lf"><i>座位数：</i><span th:text="${car.seats}"></span>座</p>
+                <p class="lf"><i>排量：</i><span th:text="${car.displacement}"></span>L</p>
+                <p class="lf"><i>里程：</i><span th:text="${car.mileage}"></span>km</p>
+                <p class="lf"><i>车龄：</i><span th:text="${car.age}"></span>年</p>
+                <p class="lf"><i>车型：</i><span th:text="${car.style}"></span></p>
+                <p class="lf"><i>颜色：</i><span th:text="${car.color}"></span></p>
                 <div class="clear"></div>
-                <p><i>地铁：</i>
-                    <!--<span th:if="${car.distanceToSubway > -1}">-->
-                        <!--距地铁<span th:text="${car.houseDetail.subwayLineName}">线</span>-->
-                        <!--<span th:text="${car.houseDetail.subwayStationName}">站点</span>-->
-                        <!--站<span th:text="${car.distanceToSubway}">0</span>米-->
-                    <!--</span>-->
-                    <!--<span th:if="${car.distanceToSubway < 0}">暂无数据</span>-->
-                </p>
-                <p><i>小区：</i>
-                    <a href="/xiaoqu/1111027382235/" th:text="${car.description}">小区</a>
-                    - <a href="/zufang/c1111027382235/"><span th:text="${car.description}"></span>套出租中</a>
+                <p><i>类型：</i>
+                        <a href="/xiaoqu/1111027382235/" th:text="${car.brand}">品牌</a>
+                    - <a href="/zufang/c1111027382235/"><span th:text="${car.series}"></span>系列</a>
                 </p>
                 <p><i>位置：</i>
                     <a href="/zufang/chaoyang/" th:text="${region.cnName}">地区</a>
@@ -156,16 +136,16 @@
                         </a>
                     </div>
                     <div class="evaluate">
-                        <span class="time">本房带看：<span th:text="${car.watchTimes}">0</span>次</span>
+                        <span class="time">本车带看：<span th:text="${car.watchTimes}">0</span>次</span>
                     </div>
                     <div class="phone" th:text="${agent.phoneNumber}">
                     </div>
                 </div>
             </div>
             <div class="houseRecord">
-                <span class="houseNum">寻屋编号：<span th:text="${car.id}"></span></span>
+                <span class="houseNum">寻车编号：<span th:text="${car.id}"></span></span>
                 <div class="right">
-                    <span class="detail">真实房源，假一赔亿！</span>
+                    <span class="detail">真实车源，假一赔亿！</span>
                 </div>
             </div>
         </div>
@@ -175,7 +155,7 @@
 <div class="detailPageTab">
     <ul style="position: relative; top: 0px; z-index: 1000; width: 1000px;">
         <li>
-            <a class="force" href="#introduction">房源介绍</a>
+            <a class="force" href="#introduction">车源介绍</a>
         </li>
         <li>
             <a href="#around" class="">周边配套</a>
@@ -185,43 +165,74 @@
 
 <div class="content-wrapper introduction-wrapper" id="introduction">
     <div class="introduction">
-        <div class="title">房源介绍</div>
+        <div class="title">车源介绍</div>
         <div class="introContent">
             <div class="base">
                 <div class="name">基本属性</div>
                 <div class="content">
                     <ul>
-                        <li><span class="label">租赁方式：</span>
-                            <!--<span th:text="${car.houseDetail.rentWay == 0 ? '整租' : '合租'}"></span>-->
+                        <li>
+                            <span class="label">品牌：</span>
+                            <a href="/xiaoqu/1111027382235/" th:text="${car.brand}">品牌</a>
                         </li>
                         <li>
-                            <span class="label">付款方式：</span>
-                            季付
+                            <span class="label">系列：</span>
+                            <a href="/xiaoqu/1111027382235/" th:text="${car.series}">系列</a>
+                        </li><li></li><li></li>
+                        <li>
+                            <span class="label">位置：</span>
+                            <a href="/xiaoqu/1111027382235/" th:text="${region.cnName}">地区</a>
+                        </li><li></li><li></li><li></li>
+                        <li>
+                            <span class="label">价格：</span>
+                            <span th:text="${car.price} + '元'"></span>
                         </li>
                         <li>
-                            <span class="label">房屋现状：</span>
-                            <span th:switch="${car.status}">
-                                <span th:case="0">暂未上架</span>
-                                <span th:case="1">目前出租</span>
-                                <span th:case="2">已出租</span>
-                                <span th:case="3">已下架</span>
-                            </span>
+                            <span class="label">座位数：</span>
+                            <span th:text="${car.seats} + '座'"></span>
                         </li>
-                        <li><span class="label">房屋朝向：</span>
-                            <span th:switch="${car.description}">
-                                <span th:case="1">朝东</span>
-                                <span th:case="2">朝南</span>
-                                <span th:case="3">朝西</span>
-                                <span th:case="4">朝北</span>
-                                <span th:case="5">南 北</span>
-                                <span th:case="*">其他</span>
-                            </span>
+                        <li>
+                            <span class="label">排量：</span>
+                            <span th:text="${car.displacement} + 'L'"></span>
                         </li>
+                        <li>
+                            <span class="label">里程：</span>
+                            <span th:text="${car.mileage} + 'km'"></span>
+                        </li>
+                        <li>
+                            <span class="label">车龄：</span>
+                            <span th:text="${car.age} + '年'"></span>
+                        </li>
+                        <li>
+                            <span class="label">变速箱：</span>
+                            <span th:text="${car.gearBox}"></span>
+                        </li>
+                        <li>
+                            <span class="label">颜色：</span>
+                            <span th:text="${car.color}"></span>
+                        </li>
+                        <li>
+                            <span class="label">驱动类型：</span>
+                            <span th:text="${car.driveType}"></span>
+                        </li>
+                        <li>
+                            <span class="label">排放标准：</span>
+                            <span th:text="${car.emissionStandard}"></span>
+                        </li>
+                        <li>
+                            <span class="label">车型：</span>
+                            <span th:text="${car.style}"></span>
+                        </li>
+                        <li>
+                            <span class="label">燃油类型：</span>
+                            <span th:text="${car.fuelType}"></span>
+                        </li>
+
                     </ul>
                 </div>
             </div>
             <div class="feature">
-                <div class="name">房源特色</div>
+                <div class="name">车源特色</div>
                 <div class="zf-tag">
                     <ul class="se">
                         <li class="tag1 tags">
@@ -306,13 +317,14 @@
                             <span class="text" th:text="${car.description}">暂无描述</span>
                         </li>
                         <li>
-                            <span class="label">交通出行：</span>
-                            <span class="text" th:text="${car.description}">暂无描述</span>
+                            <span class="label">详细地址：</span>
+                            <span class="text" th:text="${car.address}">暂无描述</span>
                         </li>
                         <li>
-                            <span class="label">周边配套：</span>
+                            <span class="label">描述：</span>
                             <span class="text" th:text="${car.description}">暂无描述</span>
                         </li>
+
                     </ul>
                 </div>
             </div>

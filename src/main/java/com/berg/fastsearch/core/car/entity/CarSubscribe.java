@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * <p></p>
+ * <p>车辆预约实例</p>
  *
  * @author bo.he02@hand-china.com
  * @version v1.0

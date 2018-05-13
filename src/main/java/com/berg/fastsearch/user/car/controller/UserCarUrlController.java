@@ -8,9 +8,7 @@ import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
 import com.berg.fastsearch.core.car.service.ICarService;
 import com.berg.fastsearch.core.car.web.dto.CarDto;
 import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
-import com.berg.fastsearch.core.system.base.web.controller.BaseUrlController;
 import com.berg.fastsearch.core.system.base.web.dto.ResponseData;
-import com.berg.fastsearch.user.car.dto.CarSearch;
 import com.berg.fastsearch.user.car.dto.MapSearch;
 import com.berg.fastsearch.user.car.dto.ValueBlock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +44,7 @@ public class UserCarUrlController{
     private IUserService userService;
 
     @GetMapping("/list")
-    public String list(@ModelAttribute CarSearch searchBody,
+    public String list(@ModelAttribute CarQueryCondition searchBody,
                        Model model, HttpSession session,
                        RedirectAttributes redirectAttributes){
 

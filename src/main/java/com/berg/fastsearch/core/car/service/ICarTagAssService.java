@@ -4,6 +4,8 @@ import com.berg.fastsearch.core.car.web.dto.CarTagAssDto;
 import com.berg.fastsearch.core.car.web.dto.CarTagAssQueryCondition;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 
+import java.util.List;
+
 /**
  * <p></p>
  *
@@ -12,4 +14,11 @@ import com.berg.fastsearch.core.system.base.service.IBaseService;
  * @apiNote Created on 18-5-11
  */
 public interface ICarTagAssService extends IBaseService<Long, CarTagAssDto, CarTagAssQueryCondition> {
+
+    /**
+     * 通过carId寻找carTagAssDto对象
+     * @param carId     车辆主键
+     * @return          找到的carTagAssDto对象
+     */
+    List<CarTagAssDto> findByCarId(Long carId);
 }

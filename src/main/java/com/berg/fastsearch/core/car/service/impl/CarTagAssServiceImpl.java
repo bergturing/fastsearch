@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p></p>
  *
@@ -38,5 +40,10 @@ public class CarTagAssServiceImpl
     @Override
     protected CarTagAss createEntity() {
         return new CarTagAss();
+    }
+
+    @Override
+    public List<CarTagAssDto> findByCarId(Long carId) {
+        return transform2D(carTagAssRepository.findByCarId(carId));
     }
 }

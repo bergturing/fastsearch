@@ -2,12 +2,11 @@ package com.berg.fastsearch.core.car.service.impl;
 
 import com.berg.fastsearch.core.car.entity.Car;
 import com.berg.fastsearch.core.car.repository.CarRepository;
-import com.berg.fastsearch.core.car.service.ICarPictureService;
-import com.berg.fastsearch.core.car.service.ICarService;
+import com.berg.fastsearch.core.car.service.*;
 import com.berg.fastsearch.core.car.web.dto.CarDto;
 import com.berg.fastsearch.core.car.web.dto.CarPictureDto;
 import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
-import com.berg.fastsearch.core.car.web.dto.Photo;
+import com.berg.fastsearch.core.enums.car.*;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,6 +38,24 @@ public class CarServiceImpl extends AbstractBaseServiceImpl<Long, CarDto, Car, C
     @Autowired
     private ICarPictureService carPictureService;
 
+    /**
+     * 汽车品牌服务对象
+     */
+    @Autowired
+    private ICarBrandService carBrandService;
+
+    /**
+     * 汽车系列服务对象
+     */
+    @Autowired
+    private ICarSeriesService carSeriesService;
+
+    /**
+     * 车辆标签的服务对象
+     */
+    @Autowired
+    private ICarTagService carTagService;
+
     @Value("${qiniu.cdn.prefix}")
     private String cdnPrefix;
 
@@ -58,41 +75,61 @@ public class CarServiceImpl extends AbstractBaseServiceImpl<Long, CarDto, Car, C
     }
 
     @Override
-    protected void processDto(CarDto dto) {
-        //处理照片的数据
-        List<Photo> photos = dto.getPhotos();
+    protected void transform2D(Car entity, CarDto dto) {
+        //设置品牌名字
+        dto.setBrand(carBrandService.findOne(entity.getBrandId()).getName());
+        //设置系列名字
+        dto.setSeries(carSeriesService.findOne(entity.getSeriesId()).getName());
+        //设置车辆标签
+        dto.setTags(carTagService.findByCarId(entity.getId()));
+        //设置车辆图片
+        dto.setPictures(carPictureService.findByCarId(entity.getId()));
 
-        photos.forEach(photo -> {
-            CarPictureDto carPictureDto = new CarPictureDto();
+        //车辆颜色
+        Color color = Color.get(entity.getColor());
+        dto.setColorMeaning(color.getName());
+        dto.setColorHex(color.getHex());
+        //车辆驱动类型
+        dto.setDriveTypeMeaning(DriveType.get(entity.getDriveType()).getName());
+        //车辆排放标准
+        dto.setEmissionStandardMeaning(EmissionStandard.get(entity.getEmissionStandard()).getName());
+        //车辆燃油类型
+        dto.setFuelTypeMeaning(FuelType.get(entity.getFuelType()).getName());
+        //车辆变速箱类型
+        dto.setGearBoxMeaning(GearBox.get(entity.getGearBox()).getName());
+        //车辆类型
+        dto.setStyleMeaning(Style.get(entity.getStyle()).getName());
+
+        
+    }
+
+    @Override
+    protected void transform2E(CarDto dto, Car entity) {
+        //处理照片的数据
+        List<CarPictureDto> carPictureDtos = dto.getPictures();
+        carPictureDtos.forEach(carPictureDto -> {
             carPictureDto.setCarId(dto.getId());
-            carPictureDto.setPath(photo.getPath());
-            carPictureDto.setHeight(photo.getHeight());
-            carPictureDto.setWidth(photo.getWidth());
             carPictureDto.setCdnPrefix(cdnPrefix);
             carPictureService.create(carPictureDto);
         });
-    }
 
-    @Override
-    protected void processEntity(Car entity) {
-        //处理创建时间
-        entity.setCreateTime(new Date());
-        //处理最后更新时间
-        entity.setLastUpdateTime(new Date());
 
-        entity.setCityEnName("bj");
-        entity.setRegionEnName("cpq");
-        entity.setDeployeeId(1L);
-        entity.setStatus("NEW");
-    }
+        if(dto.getId()==null || dto.getId()<=0){
+            //新建
 
-    @Override
-    protected void updateDto(CarDto dto) {
-        super.updateDto(dto);
-    }
+            //处理创建时间
+            entity.setCreateTime(new Date());
 
-    @Override
-    protected void updateEntity(Car entity) {
+            entity.setCityEnName("bj");
+            entity.setRegionEnName("bj");
+            entity.setDeployeeId(1L);
+            entity.setStatus("NEW");
+        }else{
+            //更新
+
+        }
+
+        //新建和更新都需要处理的
         //处理最后更新时间
         entity.setLastUpdateTime(new Date());
     }

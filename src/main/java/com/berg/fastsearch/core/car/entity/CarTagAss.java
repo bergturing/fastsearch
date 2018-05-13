@@ -5,7 +5,7 @@ import com.berg.fastsearch.core.system.base.entity.BaseEntity;
 import javax.persistence.*;
 
 /**
- * <p></p>
+ * <p>车辆标签关联实例</p>
  *
  * @author bo.he02@hand-china.com
  * @version v1.0

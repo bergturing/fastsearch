@@ -10,7 +10,7 @@
     <title>寻车</title>
     <link href="/static/css/main.css" rel='stylesheet' type='text/css'/>
     <link href="/static/css/list.css" rel='stylesheet' type='text/css'/>
-    <link href="/static/lib/layui/layui.css" rel="stylesheet" type="text/css" />
+    <link href="/static/lib/layui/css/layui.css" rel="stylesheet" type="text/css" />
     <link href="/static/css/user/common.css" rel='stylesheet' type='text/css'/>
     <link href="/static/lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 
@@ -29,7 +29,7 @@
                         <div data-bl="switch" class="check">关键词</div>
                         <div class="txt-search">
                             <input class="left txt" name="keyword" autocomplete="off"
-                                   placeholder="如小区名、地铁站等" id="keyword-box"
+                                   placeholder="如品牌、系列等" id="keyword-box"
                                    th:value="${searchBody.keywords != null} ? ${searchBody.keywords} : ''"/>
                         </div>
                     </div>
@@ -206,7 +206,7 @@
         <div id="sem_card"></div>
         <div class="con-box">
             <div class="list-head clear">
-                <h2>共有<span th:text="${total}">18364</span>套<span th:text="${currentCity.cnName}"></span>在售车源</h2>
+                <h2>共有<span th:text="${total}">18364</span>辆<span th:text="${currentCity.cnName}"></span>在售车源</h2>
                 <div class="view-type" id="viewType">
                     <div class="modeshows modeshow">
                     <span class="l-show view-mod" data-type="real" id="lshow"><i></i>
@@ -236,40 +236,39 @@
                                 </div>
                                 <div class="col-1">
                                     <div class="where">
-                                        <a th:href="@{/user/car/list(cityEnName=${searchBody.cityEnName}, search=${car.district})}"
+                                        <a th:href="@{/user/car/list(cityEnName=${searchBody.cityEnName}, search=${car.brand})}"
                                            class="laisuzhou">
-                                            <span class="region" th:text="${car.district} + '&nbsp;&nbsp;'"></span>
+                                            <span class="region" th:text="${car.brand} + '&nbsp;&nbsp;'"></span>
                                         </a>
                                         <span class="zone">
-                                            <span th:text="${car.room} + '室' + ${car.parlour} + '厅&nbsp;&nbsp;'"></span>
+                                            <span th:text="${car.brand} + '-' + ${car.series} + '系列&nbsp;&nbsp;'"></span>
                                         </span>
-                                        <span class="meters" th:text="${car.area} + '平米&nbsp;&nbsp;'"></span>
-                                        <span>朝向</span>
+                                        <span class="meters" th:text="${car.seats} + '座&nbsp;&nbsp;'"></span>
                                     </div>
                                     <div class="other">
                                         <div class="con">
-                                            <span th:text="${car.floor} + '楼(共' + ${car.totalFloor} + '层)'">
+                                            <span th:text="${car.mileage} + 'km'">
                                             </span>
                                             <span>/</span>
-                                            <span th:text="${car.buildYear} + '年建'"></span>
+                                            <span th:text="${car.age} + '年'"></span>
                                         </div>
                                     </div>
                                     <div class="chanquan">
                                         <div class="left agency">
                                             <div class="view-label left">
-                                                <span th:if="${car.houseDetail.subwayLineName != null}">
+                                                <!--<span th:if="${car.seats != null}">-->
                                                     <span class="fang-subway"></span>
                                                     <span class="fang-subway-ex">
-                                                        <span>距离地铁
-                                                            <span th:text="${car.houseDetail.subwayLineName}"></span>
-                                                            <span th:text="${car.houseDetail.subwayStationName}"></span>站
-                                                            <span th:text="${car.distanceToSubway}"></span>米</span>
+                                                        <span>
+                                                            <span th:text="'排量: ' + ${car.displacement} + 'L'"></span>
+                                                            <span th:text="'车型: ' + ${car.style}"></span>
+                                                        </span>
                                                     </span>
-                                                </span>
+                                                <!--</span>-->
                                                 <span th:each="tag: ${car.tags}">
                                                     <span class="decoration"></span>
                                                     <span class="decoration-ex">
-                                                        <span th:text="${tag}"></span>
+                                                        <span th:text="${tag.name}"></span>
                                                     </span>
                                                 </span>
 

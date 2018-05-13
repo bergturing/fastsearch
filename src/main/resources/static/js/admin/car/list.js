@@ -74,7 +74,7 @@ var FastSearchCar = (function(){
             $("#car_count").html('共有数据：<strong>' + data.length +'</strong> 条');
 
             var target = $("#car_list>tbody");
-            var _template = target.html();
+            var _template = $("#car_template>tbody").html().replace(" style=\"display: none\"", "");
 
             var _html = "";
 
@@ -87,12 +87,12 @@ var FastSearchCar = (function(){
                     .replace("{{displacement}}", item.displacement)
                     .replace("{{mileage}}", item.mileage)
                     .replace("{{age}}", item.age)
-                    .replace("{{gearBox}}", item.gearBox)
-                    .replace("{{color}}", item.color)
-                    .replace("{{driveType}}", item.driveType)
-                    .replace("{{emissionStandard}}", item.emissionStandard)
-                    .replace("{{style}}", item.style)
-                    .replace("{{fuelType}}", item.fuelType)
+                    .replace("{{gearBox}}", item.gearBoxMeaning)
+                    .replace("{{color}}", item.colorMeaning)
+                    .replace("{{driveType}}", item.driveTypeMeaning)
+                    .replace("{{emissionStandard}}", item.emissionStandardMeaning)
+                    .replace("{{style}}", item.styleMeaning)
+                    .replace("{{fuelType}}", item.fuelTypeMeaning)
                     .replace("{{watchTimes}}", item.watchTimes)
                     .replace("{{address}}", item.address)
                     .replace("{{status}}", item.status)

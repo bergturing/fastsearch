@@ -540,9 +540,9 @@
                 photo_width = response.data.width,
                 photo_height = response.data.height,
                 $photo_container = $('.upload-photo-ids-container');
-            $photo_container.off().append('<input type="hidden" name="photos[' + photo_sequence + '].path" value="' +
-                photo_path + '" />').append('<input type="hidden" name="photos[' + photo_sequence + '].width" value="' +
-                photo_width + '"/>').append('<input type="hidden" name="photos[' + photo_sequence + '].height" value="' +
+            $photo_container.off().append('<input type="hidden" name="pictures[' + photo_sequence + '].path" value="' +
+                photo_path + '" />').append('<input type="hidden" name="pictures[' + photo_sequence + '].width" value="' +
+                photo_width + '"/>').append('<input type="hidden" name="pictures[' + photo_sequence + '].height" value="' +
                 photo_height + '"/>');
 
             $("#upload-cover-container").append(

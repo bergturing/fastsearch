@@ -50,32 +50,12 @@ public abstract class AbstractBaseServiceImpl<
 
     @Override
     public final DTO create(DTO dto) {
-        ENTITY entity = transform2E(dto);
-        //子类的额外处理
-        processEntity(entity);
-
-        dto = transform2D(getRepository().save(entity));
-
-        //子类的额外处理
-        processDto(dto);
-
-        //保存并返回对象
-        return dto;
+        return transform2D(getRepository().save(transform2E(dto)));
     }
 
     @Override
     public final DTO update(DTO dto) {
-        ENTITY entity = transform2E(dto);
-        //子类的额外处理
-        updateEntity(entity);
-
-        dto = transform2D(getRepository().save(entity));
-
-        //子类的额外处理
-        updateDto(dto);
-
-        //保存并返回对象
-        return dto;
+        return transform2D(getRepository().save(transform2E(dto)));
     }
 
     @Override
@@ -99,6 +79,9 @@ public abstract class AbstractBaseServiceImpl<
         if(entity != null){
             DTO dto = createDto();
             BeanUtils.copyProperties(entity, dto);
+
+            transform2D(entity, dto);
+
             return dto;
         }else{
             return null;
@@ -133,6 +116,9 @@ public abstract class AbstractBaseServiceImpl<
         if(dto!=null){
             ENTITY entity = createEntity();
             BeanUtils.copyProperties(dto, entity);
+
+            transform2E(dto, entity);
+
             return entity;
         }else{
             return null;
@@ -177,26 +163,17 @@ public abstract class AbstractBaseServiceImpl<
     protected abstract ENTITY createEntity();
 
     /**
-     * 给子类实现的对新增数据时候的额外处理
-     * @param dto        实体对象
+     * entity转换成dto的额外操作
+     * @param entity    entity对象
+     * @param dto       dto对象
      */
-    protected void processDto(final DTO dto){ }
+    protected void transform2D(final ENTITY entity, final DTO dto){ }
 
     /**
-     * 给子类实现的对新增数据时候的额外处理
-     * @param entity        实体对象
+     * dto转换成entity的额外操作
+     * @param dto       dto对象
+     * @param entity    entity对象
      */
-    protected void processEntity(final ENTITY entity){ }
+    protected void transform2E(final DTO dto, final ENTITY entity){ }
 
-    /**
-     * 给子类实现的对更新数据时候的额外处理
-     * @param dto        实体对象
-     */
-    protected void updateDto(final DTO dto){ }
-
-    /**
-     * 给子类实现的对更新数据时候的额外处理
-     * @param entity        实体对象
-     */
-    protected void updateEntity(final ENTITY entity){ }
 }

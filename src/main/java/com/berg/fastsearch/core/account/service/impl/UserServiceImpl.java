@@ -74,29 +74,26 @@ public class UserServiceImpl
     }
 
     @Override
-    protected void processEntity(User entity) {
-        //处理用户的密码
-        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-        //处理用户状态
-        if(StringUtils.isBlank(entity.getStatus())){
-            entity.setStatus(UserStatus.NORMAL.getValue());
-        }
-        //处理创建时间
-        entity.setCreateTime(new Date());
-        //处理最近登录时间
-        entity.setLastLoginTime(new Date());
-        //处理最后更新时间
-        entity.setLastUpdateTime(new Date());
-    }
+    protected void transform2E(UserDto dto, User entity) {
+        if(dto.getId()==null || dto.getId()<=0){
+            //新增
 
-    @Override
-    protected void updateEntity(User entity) {
+
+            //处理创建时间
+            entity.setCreateTime(new Date());
+            //处理最近登录时间
+            entity.setLastLoginTime(new Date());
+        }else{
+            //更新
+        }
+
         //处理用户的密码
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         //处理用户状态
         if(StringUtils.isBlank(entity.getStatus())){
             entity.setStatus(UserStatus.NORMAL.getValue());
         }
+        //新增与更新共同的操作
         //处理最后更新时间
         entity.setLastUpdateTime(new Date());
     }

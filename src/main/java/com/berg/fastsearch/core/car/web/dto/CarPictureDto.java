@@ -2,11 +2,6 @@ package com.berg.fastsearch.core.car.web.dto;
 
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 /**
  * <p></p>
  *

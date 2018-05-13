@@ -74,7 +74,7 @@ var FastSearchCode = (function(){
             $("#code_count").html('共有数据：<strong>' + data.length +'</strong> 条');
 
             var target = $("#code_list>tbody");
-            var _template = target.html();
+            var _template = $("#code_template>tbody").html().replace(" style=\"display: none\"", "");
 
             var _html = "";
 

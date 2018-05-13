@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * <p></p>
+ * <p>车辆对象实体</p>
  *
  * @author bo.he02@hand-china.com
  * @version v1.0
@@ -26,6 +26,16 @@ public class Car extends BaseEntity {
             strategy = GenerationType.IDENTITY
     )
     private Long id;
+
+    /**
+     * 车辆的品牌主键
+     */
+    private Long brandId;
+
+    /**
+     * 车辆的系列主键
+     */
+    private Long seriesId;
 
     /**
      * 发布者的id,用户表(sys_users)的主键
@@ -165,6 +175,22 @@ public class Car extends BaseEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
+    }
+
+    public Long getSeriesId() {
+        return seriesId;
+    }
+
+    public void setSeriesId(Long seriesId) {
+        this.seriesId = seriesId;
     }
 
     public Long getDeployeeId() {
