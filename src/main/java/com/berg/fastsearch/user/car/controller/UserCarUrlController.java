@@ -8,6 +8,7 @@ import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
 import com.berg.fastsearch.core.car.service.ICarService;
 import com.berg.fastsearch.core.car.web.dto.CarDto;
 import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
+import com.berg.fastsearch.core.enums.address.Level;
 import com.berg.fastsearch.core.system.base.web.dto.ResponseData;
 import com.berg.fastsearch.user.car.dto.MapSearch;
 import com.berg.fastsearch.user.car.dto.ValueBlock;
@@ -106,11 +107,11 @@ public class UserCarUrlController{
             return "404";
         }
 
-        Map<SupportAddress.Level, SupportAddressDto>
+        Map<Level, SupportAddressDto>
                 addressMap = supportAddressService.findCityAndRegion(carDto.getCityEnName(), carDto.getRegionEnName());
 
-        SupportAddressDto city = addressMap.get(SupportAddress.Level.CITY);
-        SupportAddressDto region = addressMap.get(SupportAddress.Level.REGION);
+        SupportAddressDto city = addressMap.get(Level.CITY);
+        SupportAddressDto region = addressMap.get(Level.REGION);
 
         model.addAttribute("city", city);
         model.addAttribute("region", region);

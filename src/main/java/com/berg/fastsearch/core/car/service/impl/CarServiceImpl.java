@@ -8,6 +8,7 @@ import com.berg.fastsearch.core.car.web.dto.CarPictureDto;
 import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.enums.car.*;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
+import com.berg.fastsearch.core.system.search.service.ISearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,7 +25,9 @@ import java.util.List;
  * @apiNote Created on 18-5-5
  */
 @Service
-public class CarServiceImpl extends AbstractBaseServiceImpl<Long, CarDto, Car, CarQueryCondition> implements ICarService {
+public class CarServiceImpl
+        extends AbstractBaseServiceImpl<Long, CarDto, Car, CarQueryCondition>
+        implements ICarService {
 
     /**
      *
@@ -56,8 +59,16 @@ public class CarServiceImpl extends AbstractBaseServiceImpl<Long, CarDto, Car, C
     @Autowired
     private ICarTagService carTagService;
 
+    @Autowired
+    private ICarSearchService carSearchService;
+
     @Value("${qiniu.cdn.prefix}")
     private String cdnPrefix;
+
+    @Override
+    protected ISearchService<Long> getSearchService() {
+        return carSearchService;
+    }
 
     @Override
     protected JpaRepository<Car, Long> getRepository() {
@@ -100,7 +111,7 @@ public class CarServiceImpl extends AbstractBaseServiceImpl<Long, CarDto, Car, C
         //车辆类型
         dto.setStyleMeaning(Style.get(entity.getStyle()).getName());
 
-        
+
     }
 
     @Override

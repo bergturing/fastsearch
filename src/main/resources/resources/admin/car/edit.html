@@ -13,42 +13,42 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>标题：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input name="title" type="text" class="input-text" value="" placeholder="请输入标题" required>
+                <input th:value="${car.title}" name="title" type="text" class="input-text" value="" placeholder="请输入标题" required>
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>价格：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input name="price" style="width: 150px" type="number" class="input-text" placeholder="请输入价格(元)" required>
+                <input th:value="${car.price}" name="price" style="width: 150px" type="number" class="input-text" placeholder="请输入价格(元)" required>
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>座位数：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input name="seats" style="width: 150px" type="number" class="input-text" placeholder="请输入座位数">
+                <input th:value="${car.seats}" name="seats" style="width: 150px" type="number" class="input-text" placeholder="请输入座位数">
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>排量：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input name="displacement" style="width: 150px" type="number" class="input-text" placeholder="请输入排量(L)">
+                <input th:value="${car.displacement}" name="displacement" style="width: 150px" type="number" class="input-text" placeholder="请输入排量(L)">
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>里程：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input name="mileage" style="width: 150px" type="number" class="input-text" placeholder="请输入里程(km)">
+                <input th:value="${car.mileage}" name="mileage" style="width: 150px" type="number" class="input-text" placeholder="请输入里程(km)">
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>车龄：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input name="age" style="width: 150px" type="number" class="input-text" placeholder="请输入车龄">
+                <input th:value="${car.age}" name="age" style="width: 150px" type="number" class="input-text" placeholder="请输入车龄">
             </div>
         </div>
 
@@ -57,10 +57,10 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="gearBox" size="1">
-                        <option value="0">变速箱 1</option>
-                        <option value="1">变速箱 2</option>
-                        <option value="2">变速箱 3</option>
-                        <option value="3">变速箱 4</option>
+                        <option th:each="gearBox:${gearBoxs}"
+                                th:value="${gearBox.code}" th:text="${gearBox.name}"
+                                th:selected="${car.gearBox==gearBox.code}">
+                        </option>
                     </select>
 			    </span>
             </div>
@@ -71,10 +71,10 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="color" size="1">
-                        <option value="0">颜色 1</option>
-                        <option value="1">颜色 2</option>
-                        <option value="2">颜色 3</option>
-                        <option value="3">颜色 4</option>
+                        <option th:each="color:${colors}"
+                                th:value="${color.code}" th:text="${color.name}" th:color="${color.hex}"
+                                th:selected="${car.color==color.code}">
+                        </option>
                     </select>
 			    </span>
             </div>
@@ -85,10 +85,10 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="driveType" size="1">
-                        <option value="0">驱动 1</option>
-                        <option value="1">驱动 2</option>
-                        <option value="2">驱动 3</option>
-                        <option value="3">驱动 4</option>
+                        <option th:each="driveType:${driveTypes}"
+                                th:value="${driveType.code}" th:text="${driveType.name}"
+                                th:selected="${car.driveType==driveType.code}">
+                        </option>
                     </select>
 			    </span>
             </div>
@@ -99,10 +99,10 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="emissionStandard" size="1">
-                        <option value="0">排放标准 1</option>
-                        <option value="1">排放标准 2</option>
-                        <option value="2">排放标准 3</option>
-                        <option value="3">排放标准 4</option>
+                        <option th:each="emissionStandard:${emissionStandards}"
+                                th:value="${emissionStandard.code}" th:text="${emissionStandard.name}"
+                                th:selected="${car.emissionStandard==emissionStandard.code}">
+                        </option>
                     </select>
 			    </span>
             </div>
@@ -113,10 +113,10 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="style" size="1">
-                        <option value="0">车型 1</option>
-                        <option value="1">车型 2</option>
-                        <option value="2">车型 3</option>
-                        <option value="3">车型 4</option>
+                        <option th:each="style:${styles}"
+                                th:value="${style.code}" th:text="${style.name}"
+                                th:selected="${car.style==style.code}">
+                        </option>
                     </select>
 			    </span>
             </div>
@@ -127,10 +127,37 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="fuelType" size="1">
-                        <option value="0">燃油类型 1</option>
-                        <option value="1">燃油类型 2</option>
-                        <option value="2">燃油类型 3</option>
-                        <option value="3">燃油类型 4</option>
+                        <option th:each="fuelType:${fuelTypes}"
+                                th:value="${fuelType.code}" th:text="${fuelType.name}"
+                                th:selected="${car.fuelType==fuelType.code}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>城市：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="fuelType" size="1">
+                        <option th:each="city:${citys}"
+                                th:value="${city.id}" th:text="${city.cnName}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>燃油类型：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="fuelType" size="1">
+                        <option th:each="fuelType:${fuelTypes}"
+                                th:value="${fuelType.code}" th:text="${fuelType.name}"
+                                th:selected="${car.fuelType==fuelType.code}">
+                        </option>
                     </select>
 			    </span>
             </div>
@@ -139,14 +166,14 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>详细地址：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input name="address" type="text" class="input-text" value="" placeholder="请输入详细地址">
+                <input th:value="${car.address}" name="address" type="text" class="input-text" value="" placeholder="请输入详细地址">
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">描述：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <textarea name="description" cols="" rows="" class="textarea" placeholder="说点什么...100个字符以内" dragonfly="true"
+                <textarea th:text="${car.description}" name="description" cols="" rows="" class="textarea" placeholder="说点什么...100个字符以内" dragonfly="true"
                           onKeyUp="$.Huitextarealength(this,100)"></textarea>
                 <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
             </div>
@@ -208,8 +235,10 @@
 <script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/lib/webuploader/0.1.5/webuploader.min.js"></script>
 
 
+<script type="text/javascript" src="/static/js/admin/upload.js"></script>
 <script type="text/javascript" src="/static/js/admin/car/edit.js"></script>
 
 </body>

@@ -1,6 +1,5 @@
 package com.berg.fastsearch.core.system.base.service;
 
-import com.berg.fastsearch.core.system.base.entity.BaseEntity;
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
 

@@ -46,7 +46,7 @@ public abstract class BaseController<
      * @return          新增之后的数据
      */
     @PostMapping
-    public ResponseData create(@Valid @RequestBody DTO roleDto){
+    public ResponseData create(@Valid @RequestBody DTO roleDto) throws Exception {
         return ResponseData.ofSuccess(getService().create(roleDto));
     }
 

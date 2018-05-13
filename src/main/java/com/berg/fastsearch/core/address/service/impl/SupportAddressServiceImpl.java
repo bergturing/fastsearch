@@ -5,6 +5,7 @@ import com.berg.fastsearch.core.address.repository.SupportAddressRepository;
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressQueryCondition;
+import com.berg.fastsearch.core.enums.address.Level;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -51,10 +52,10 @@ public class SupportAddressServiceImpl
             return null;
         }
 
-        List<SupportAddress> regions = supportAddressRepository.findAllByLevelAndBelongTo(SupportAddress.Level.REGION
+        List<SupportAddress> regions = supportAddressRepository.findAllByLevelAndBelongTo(Level.REGION
                 .getValue(), cityName);
 
-        return transform2D(supportAddressRepository.findAllByLevelAndBelongTo(SupportAddress.Level.REGION
+        return transform2D(supportAddressRepository.findAllByLevelAndBelongTo(Level.REGION
                 .getValue(), cityName));
     }
 
@@ -64,7 +65,7 @@ public class SupportAddressServiceImpl
             return null;
         }
 
-        SupportAddress supportAddress = supportAddressRepository.findByEnNameAndLevel(cityEnName, SupportAddress.Level.CITY.getValue());
+        SupportAddress supportAddress = supportAddressRepository.findByEnNameAndLevel(cityEnName, Level.CITY.getValue());
         if (supportAddress == null) {
             return null;
         }
@@ -73,15 +74,20 @@ public class SupportAddressServiceImpl
     }
 
     @Override
-    public Map<SupportAddress.Level, SupportAddressDto> findCityAndRegion(String cityEnName, String regionEnName) {
-        Map<SupportAddress.Level, SupportAddressDto> result = new HashMap<>();
+    public Map<Level, SupportAddressDto> findCityAndRegion(String cityEnName, String regionEnName) {
+        Map<Level, SupportAddressDto> result = new HashMap<>();
 
-        SupportAddress city = supportAddressRepository.findByEnNameAndLevel(cityEnName, SupportAddress.Level.CITY
+        SupportAddress city = supportAddressRepository.findByEnNameAndLevel(cityEnName, Level.CITY
                 .getValue());
         SupportAddress region = supportAddressRepository.findByEnNameAndBelongTo(regionEnName, city.getEnName());
 
-        result.put(SupportAddress.Level.CITY, transform2D(city));
-        result.put(SupportAddress.Level.REGION, transform2D(region));
+        result.put(Level.CITY, transform2D(city));
+        result.put(Level.REGION, transform2D(region));
         return result;
+    }
+
+    @Override
+    public List<SupportAddressDto> findByLevel(String level) {
+        return transform2D(supportAddressRepository.findByLevel(level));
     }
 }

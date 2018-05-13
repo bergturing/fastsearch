@@ -57,8 +57,9 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="gearBox" size="1">
-                        <option value="HAND">手动</option>
-                        <option value="AUTO">自动</option>
+                        <option th:each="gearBox:${gearBoxs}"
+                                th:value="${gearBox.code}" th:text="${gearBox.name}">
+                        </option>
                     </select>
 			    </span>
             </div>
@@ -69,17 +70,9 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="color" size="1">
-                        <option value="BLACK">黑色</option>
-                        <option value="WHITE">白色</option>
-                        <option value="SILVER_GRAY">银灰色</option>
-                        <option value="DARK_GRAY">深灰色</option>
-                        <option value="RED">红色</option>
-                        <option value="GREEN">绿色</option>
-                        <option value="ORANGE">橙色</option>
-                        <option value="BLUE">蓝色</option>
-                        <option value="YELLOW">黄色</option>
-                        <option value="COFFEE">咖啡色</option>
-                        <option value="NATURE">香槟色</option>
+                        <option th:each="color:${colors}"
+                                th:value="${color.code}" th:text="${color.name}" th:color="${color.hex}">
+                        </option>
                     </select>
 			    </span>
             </div>
@@ -90,8 +83,9 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="driveType" size="1">
-                        <option value="TWO_DRIVER">两驱</option>
-                        <option value="TWO_DRIVER">四驱</option>
+                        <option th:each="driveType:${driveTypes}"
+                                th:value="${driveType.code}" th:text="${driveType.name}">
+                        </option>
                     </select>
 			    </span>
             </div>
@@ -102,10 +96,9 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="emissionStandard" size="1">
-                        <option value="LEVEL_TWO">国二标准</option>
-                        <option value="LEVEL_THREE">国三标准</option>
-                        <option value="LEVEL_FOUR">国四标准</option>
-                        <option value="LEVEL_FIVE">国五标准</option>
+                        <option th:each="emissionStandard:${emissionStandards}"
+                                th:value="${emissionStandard.code}" th:text="${emissionStandard.name}">
+                        </option>
                     </select>
 			    </span>
             </div>
@@ -116,13 +109,9 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="style" size="1">
-                        <option value="HATCHBACK">两厢轿车</option>
-                        <option value="THREE">三厢轿车</option>
-                        <option value="SPORT">跑车</option>
-                        <option value="SUV">SUV</option>
-                        <option value="MPV">MPV</option>
-                        <option value="MICROBUS">面包车</option>
-                        <option value="PICKUP">皮卡</option>
+                        <option th:each="style:${styles}"
+                                th:value="${style.code}" th:text="${style.name}">
+                        </option>
                     </select>
 			    </span>
             </div>
@@ -133,11 +122,9 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="fuelType" size="1">
-                        <option value="GASOLINE">汽油</option>
-                        <option value="DIESEL_OIL">柴油</option>
-                        <option value="ELECTRIC_POWER">电动</option>
-                        <option value="MIX">油电混合</option>
-                        <option value="OTHER">其他</option>
+                        <option th:each="fuelType:${fuelTypes}"
+                                th:value="${fuelType.code}" th:text="${fuelType.name}">
+                        </option>
                     </select>
 			    </span>
             </div>

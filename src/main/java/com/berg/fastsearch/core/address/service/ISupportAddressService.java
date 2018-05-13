@@ -3,6 +3,7 @@ package com.berg.fastsearch.core.address.service;
 import com.berg.fastsearch.core.address.entity.SupportAddress;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressQueryCondition;
+import com.berg.fastsearch.core.enums.address.Level;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 
 import java.util.List;
@@ -37,5 +38,12 @@ public interface ISupportAddressService extends IBaseService<Long, SupportAddres
      * @param regionEnName
      * @return
      */
-    Map<SupportAddress.Level, SupportAddressDto> findCityAndRegion(String cityEnName, String regionEnName);
+    Map<Level, SupportAddressDto> findCityAndRegion(String cityEnName, String regionEnName);
+
+    /**
+     *
+     * @param level
+     * @return
+     */
+    List<SupportAddressDto> findByLevel(String level);
 }

@@ -37,4 +37,11 @@ public interface SupportAddressRepository extends JpaRepository<SupportAddress, 
      * @return
      */
     SupportAddress findByEnNameAndBelongTo(String enName, String belongTo);
+
+    /**
+     *
+     * @param level
+     * @return
+     */
+    List<SupportAddress> findByLevel(String level);
 }

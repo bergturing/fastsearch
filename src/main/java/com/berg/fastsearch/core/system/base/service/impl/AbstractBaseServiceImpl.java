@@ -4,6 +4,7 @@ import com.berg.fastsearch.core.system.base.entity.BaseEntity;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
+import com.berg.fastsearch.core.system.search.service.ISearchService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -50,7 +51,12 @@ public abstract class AbstractBaseServiceImpl<
 
     @Override
     public final DTO create(DTO dto) {
-        return transform2D(getRepository().save(transform2E(dto)));
+        dto = transform2D(getRepository().save(transform2E(dto)));
+
+        //建立索引
+        getSearchService().index(dto.getId());
+
+        return dto;
     }
 
     @Override
@@ -142,6 +148,10 @@ public abstract class AbstractBaseServiceImpl<
 
             return entityList;
         }
+    }
+
+    protected ISearchService<ID> getSearchService(){
+        return null;
     }
 
     /**

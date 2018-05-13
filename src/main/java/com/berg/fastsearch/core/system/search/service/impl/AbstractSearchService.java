@@ -47,11 +47,11 @@ public abstract class AbstractSearchService<
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private static final String INDEX_NAME = "xunwu";
+    private static final String INDEX_NAME = "fastsearch";
 
-    private static final String INDEX_TYPE = "house";
+    private static final String INDEX_TYPE = "car";
 
-    private static final String INDEX_TOPIC = "house_build";
+    private static final String INDEX_TOPIC = "car_build";
 
 
     @Autowired
@@ -239,7 +239,11 @@ public abstract class AbstractSearchService<
 
     @Override
     public final void index(ID id) {
-
+        try {
+            index(id, BaseIndexMessage.MAX_RETRY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
