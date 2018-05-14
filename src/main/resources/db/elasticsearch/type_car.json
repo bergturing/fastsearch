@@ -1,0 +1,104 @@
+{
+  "mappings": {
+    "car": {
+      "dynamic": false,
+      "properties": {
+        "id":{
+          "type": "long"
+        },
+        "title": {
+          "type": "text"
+        },
+        "brandId": {
+          "type": "long"
+        },
+        "seriesId": {
+          "type": "long"
+        },
+        "deployeeId": {
+          "type": "long"
+        },
+        "price": {
+          "type": "integer"
+        },
+        "seats": {
+          "type": "integer"
+        },
+        "displacement": {
+          "type": "double"
+        },
+        "mileage": {
+          "type": "double"
+        },
+        "age": {
+          "type": "integer"
+        },
+        "gearBox": {
+          "type": "keyword"
+        },
+        "color": {
+          "type": "keyword"
+        },
+        "driveType": {
+          "type": "keyword"
+        },
+        "emissionStandard": {
+          "type": "keyword"
+        },
+        "style": {
+          "type": "keyword"
+        },
+        "fuelType": {
+          "type": "keyword"
+        },
+        "watchTimes": {
+          "type": "long"
+        },
+        "cityId": {
+          "type": "long"
+        },
+        "regionId": {
+          "type": "long"
+        },
+        "address": {
+          "type": "text"
+        },
+        "status": {
+          "type": "keyword"
+        },
+        "description": {
+          "type": "text"
+        },
+        "createTime": {
+          "type": "date",
+          "format": "strict_date_optional_time||epoch_millis"
+        },
+        "lastUpdateTime": {
+          "type": "date",
+          "format": "strict_date_optional_time||epoch_millis"
+        },
+        "cityEnName": {
+          "type": "keyword"
+        },
+        "regionEnName": {
+          "type": "keyword"
+        },
+        "cityCnName": {
+          "type": "keyword"
+        },
+        "regionCnName": {
+          "type": "keyword"
+        },
+        "tags": {
+          "type": "text"
+        },
+        "brand": {
+          "type": "text"
+        },
+        "series": {
+          "type": "text"
+        }
+      }
+    }
+  }
+}

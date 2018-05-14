@@ -1,9 +1,7 @@
 package com.berg.fastsearch.admin.car.controller;
 
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
-import com.berg.fastsearch.core.car.service.ICarPictureService;
-import com.berg.fastsearch.core.car.service.ICarService;
-import com.berg.fastsearch.core.car.service.ICarTagService;
+import com.berg.fastsearch.core.car.service.*;
 import com.berg.fastsearch.core.enums.address.Level;
 import com.berg.fastsearch.core.enums.car.*;
 import com.berg.fastsearch.core.system.base.web.controller.BaseUrlController;
@@ -37,6 +35,12 @@ public class AdminCarUrlController{
     @Autowired
     private ISupportAddressService supportAddressService;
 
+    @Autowired
+    private ICarBrandService carBrandService;
+
+    @Autowired
+    private ICarSeriesService carSeriesService;
+
     /**
      * 列表界面
      * @return      列表界面的路径
@@ -52,22 +56,8 @@ public class AdminCarUrlController{
      */
     @GetMapping("/add")
     public String add(Model model){
-        //颜色
-        model.addAttribute("colors", Color.values());
-        //驱动类型
-        model.addAttribute("driveTypes", DriveType.values());
-        //排放标准
-        model.addAttribute("emissionStandards", EmissionStandard.values());
-        //燃油类型
-        model.addAttribute("fuelTypes", FuelType.values());
-        //变速箱类型
-        model.addAttribute("gearBoxs", GearBox.values());
-        //车型
-        model.addAttribute("styles", Style.values());
-        //所有的标签
-        model.addAttribute("allTags", carTagService.findAll(null));
-        //所有的城市
-        model.addAttribute("citys", supportAddressService.findByLevel(Level.CITY.getValue()));
+        //设置基本属性
+        baseData(model);
 
         return "admin/car/add";
     }
@@ -78,22 +68,8 @@ public class AdminCarUrlController{
      */
     @GetMapping("/edit")
     public String edit(Long id, Model model){
-        //颜色
-        model.addAttribute("colors", Color.values());
-        //驱动类型
-        model.addAttribute("driveTypes", DriveType.values());
-        //排放标准
-        model.addAttribute("emissionStandards", EmissionStandard.values());
-        //燃油类型
-        model.addAttribute("fuelTypes", FuelType.values());
-        //变速箱类型
-        model.addAttribute("gearBoxs", GearBox.values());
-        //车型
-        model.addAttribute("styles", Style.values());
-        //所有的标签
-        model.addAttribute("allTags", carTagService.findAll(null));
-        //所有的城市
-        model.addAttribute("citys", supportAddressService.findByLevel(Level.CITY.getValue()));
+        //设置基本属性
+        baseData(model);
 
         //查询当前汽车的标签
         model.addAttribute("tags", carTagService.findByCarId(id));
@@ -126,5 +102,11 @@ public class AdminCarUrlController{
         model.addAttribute("allTags", carTagService.findAll(null));
         //所有的城市
         model.addAttribute("citys", supportAddressService.findByLevel(Level.CITY.getValue()));
+        //所有的区域
+        model.addAttribute("regions", supportAddressService.findByLevel(Level.REGION.getValue()));
+        //品牌的信息
+        model.addAttribute("brands", carBrandService.findAll(null));
+        //系列的信息
+        model.addAttribute("series", carSeriesService.findAll(null));
     }
 }

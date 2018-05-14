@@ -20,7 +20,7 @@ public class SupportAddress extends BaseEntity{
 
     // 上一级行政单位
     @Column
-    private String belongTo;
+    private Long belongTo;
 
     @Column
     private String enName;
@@ -45,11 +45,11 @@ public class SupportAddress extends BaseEntity{
         this.id = id;
     }
 
-    public String getBelongTo() {
+    public Long getBelongTo() {
         return belongTo;
     }
 
-    public void setBelongTo(String belongTo) {
+    public void setBelongTo(Long belongTo) {
         this.belongTo = belongTo;
     }
 

@@ -13,7 +13,7 @@ public class SupportAddressDto extends BaseDto<Long>{
     private static final long serialVersionUID = -3795339942715588313L;
 
     // 上一级行政单位
-    private String belongTo;
+    private Long belongTo;
 
 
     private String enName;
@@ -26,11 +26,11 @@ public class SupportAddressDto extends BaseDto<Long>{
 
     private double baiduMapLat;
 
-    public String getBelongTo() {
+    public Long getBelongTo() {
         return belongTo;
     }
 
-    public void setBelongTo(String belongTo) {
+    public void setBelongTo(Long belongTo) {
         this.belongTo = belongTo;
     }
 

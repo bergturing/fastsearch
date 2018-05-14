@@ -1,5 +1,6 @@
 package com.berg.fastsearch.core.car.service.impl;
 
+import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.car.entity.Car;
 import com.berg.fastsearch.core.car.repository.CarRepository;
 import com.berg.fastsearch.core.car.service.*;
@@ -62,6 +63,9 @@ public class CarServiceImpl
     @Autowired
     private ICarSearchService carSearchService;
 
+    @Autowired
+    private ISupportAddressService supportAddressService;
+
     @Value("${qiniu.cdn.prefix}")
     private String cdnPrefix;
 
@@ -111,7 +115,10 @@ public class CarServiceImpl
         //车辆类型
         dto.setStyleMeaning(Style.get(entity.getStyle()).getName());
 
-
+        //设置城市名
+        dto.setCityCnName(supportAddressService.findOne(entity.getCityId()).getEnName());
+        //设置地区名
+        dto.setRegionCnName(supportAddressService.findOne(entity.getRegionId()).getEnName());
     }
 
     @Override
@@ -131,8 +138,6 @@ public class CarServiceImpl
             //处理创建时间
             entity.setCreateTime(new Date());
 
-            entity.setCityEnName("bj");
-            entity.setRegionEnName("bj");
             entity.setDeployeeId(1L);
             entity.setStatus("NEW");
         }else{

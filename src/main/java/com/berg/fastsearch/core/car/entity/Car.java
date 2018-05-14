@@ -122,16 +122,16 @@ public class Car extends BaseEntity {
     private Long watchTimes;
 
     /**
-     * 城市标记缩写 如 北京bj
+     * 城市Id
      */
     @Column
-    private String cityEnName;
+    private Long cityId;
 
     /**
-     * 地区英文简写 如昌平区 cpq
+     * 地区Id
      */
     @Column
-    private String regionEnName;
+    private Long regionId;
 
     /**
      * 详细地址
@@ -305,20 +305,20 @@ public class Car extends BaseEntity {
         this.watchTimes = watchTimes;
     }
 
-    public String getCityEnName() {
-        return cityEnName;
+    public Long getCityId() {
+        return cityId;
     }
 
-    public void setCityEnName(String cityEnName) {
-        this.cityEnName = cityEnName;
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
     }
 
-    public String getRegionEnName() {
-        return regionEnName;
+    public Long getRegionId() {
+        return regionId;
     }
 
-    public void setRegionEnName(String regionEnName) {
-        this.regionEnName = regionEnName;
+    public void setRegionId(Long regionId) {
+        this.regionId = regionId;
     }
 
     public String getAddress() {

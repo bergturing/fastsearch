@@ -34,11 +34,11 @@ public interface ISupportAddressService extends IBaseService<Long, SupportAddres
 
     /**
      * 根据英文简写获取具体区域的信息
-     * @param cityEnName
-     * @param regionEnName
+     * @param cityId
+     * @param regionId
      * @return
      */
-    Map<Level, SupportAddressDto> findCityAndRegion(String cityEnName, String regionEnName);
+    Map<Level, SupportAddressDto> findCityAndRegion(Long cityId, Long regionId);
 
     /**
      *

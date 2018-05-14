@@ -74,12 +74,11 @@ public class SupportAddressServiceImpl
     }
 
     @Override
-    public Map<Level, SupportAddressDto> findCityAndRegion(String cityEnName, String regionEnName) {
+    public Map<Level, SupportAddressDto> findCityAndRegion(Long cityId, Long regionId) {
         Map<Level, SupportAddressDto> result = new HashMap<>();
 
-        SupportAddress city = supportAddressRepository.findByEnNameAndLevel(cityEnName, Level.CITY
-                .getValue());
-        SupportAddress region = supportAddressRepository.findByEnNameAndBelongTo(regionEnName, city.getEnName());
+        SupportAddress city = supportAddressRepository.findOne(cityId);
+        SupportAddress region = supportAddressRepository.findOne(regionId);
 
         result.put(Level.CITY, transform2D(city));
         result.put(Level.REGION, transform2D(region));

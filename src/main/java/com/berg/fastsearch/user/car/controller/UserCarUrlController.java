@@ -108,7 +108,7 @@ public class UserCarUrlController{
         }
 
         Map<Level, SupportAddressDto>
-                addressMap = supportAddressService.findCityAndRegion(carDto.getCityEnName(), carDto.getRegionEnName());
+                addressMap = supportAddressService.findCityAndRegion(carDto.getCityId(), carDto.getRegionId());
 
         SupportAddressDto city = addressMap.get(Level.CITY);
         SupportAddressDto region = addressMap.get(Level.REGION);

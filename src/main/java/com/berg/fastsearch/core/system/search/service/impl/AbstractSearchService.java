@@ -248,7 +248,11 @@ public abstract class AbstractSearchService<
 
     @Override
     public final void remove(ID id) {
-
+        try {
+            remove(id, BaseIndexMessage.MAX_RETRY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -264,6 +268,27 @@ public abstract class AbstractSearchService<
 
         MESSAGE message = getIndexMessageClass().newInstance();
         message.init(id, BaseIndexMessage.INDEX, retry);
+        try {
+            kafkaTemplate.send(INDEX_TOPIC, objectMapper.writeValueAsString(message));
+        } catch (JsonProcessingException e) {
+            logger.error("Json encode error for " + message);
+        }
+
+    }
+
+    /**
+     *
+     * @param id
+     * @param retry
+     */
+    private void remove(ID id, Integer retry) throws Exception {
+        if (retry > BaseIndexMessage.MAX_RETRY) {
+            logger.error("Retry index times over 3 for id: " + id + " Please check it!");
+            return;
+        }
+
+        MESSAGE message = getIndexMessageClass().newInstance();
+        message.init(id, BaseIndexMessage.REMOVE, retry);
         try {
             kafkaTemplate.send(INDEX_TOPIC, objectMapper.writeValueAsString(message));
         } catch (JsonProcessingException e) {

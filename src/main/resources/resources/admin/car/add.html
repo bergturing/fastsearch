@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+﻿﻿<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:include="admin/common :: head"></div>
@@ -14,6 +14,34 @@
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>标题：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input name="title" type="text" class="input-text" value="" placeholder="请输入标题" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>品牌：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="brandId" size="1">
+                        <option></option>
+                        <option th:each="brand:${brands}"
+                                th:value="${brand.id}" th:text="${brand.name}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>系列：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="seriesId" size="1">
+                        <option></option>
+                        <option th:each="ser:${series}"
+                                th:value="${ser.id}" th:text="${ser.name}">
+                        </option>
+                    </select>
+			    </span>
             </div>
         </div>
 
@@ -57,6 +85,7 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="gearBox" size="1">
+                        <option></option>
                         <option th:each="gearBox:${gearBoxs}"
                                 th:value="${gearBox.code}" th:text="${gearBox.name}">
                         </option>
@@ -70,6 +99,7 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="color" size="1">
+                        <option></option>
                         <option th:each="color:${colors}"
                                 th:value="${color.code}" th:text="${color.name}" th:color="${color.hex}">
                         </option>
@@ -83,6 +113,7 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="driveType" size="1">
+                        <option></option>
                         <option th:each="driveType:${driveTypes}"
                                 th:value="${driveType.code}" th:text="${driveType.name}">
                         </option>
@@ -96,6 +127,7 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="emissionStandard" size="1">
+                        <option></option>
                         <option th:each="emissionStandard:${emissionStandards}"
                                 th:value="${emissionStandard.code}" th:text="${emissionStandard.name}">
                         </option>
@@ -109,6 +141,7 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="style" size="1">
+                        <option></option>
                         <option th:each="style:${styles}"
                                 th:value="${style.code}" th:text="${style.name}">
                         </option>
@@ -122,8 +155,37 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="fuelType" size="1">
+                        <option></option>
                         <option th:each="fuelType:${fuelTypes}"
                                 th:value="${fuelType.code}" th:text="${fuelType.name}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>城市：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="cityId" size="1">
+                        <option></option>
+                        <option th:each="city:${citys}"
+                                th:value="${city.id}" th:text="${city.cnName}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>区域：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="regionId" size="1">
+                        <option></option>
+                        <option th:each="region:${regions}"
+                                th:value="${region.id}" th:text="${region.cnName}">
                         </option>
                     </select>
 			    </span>

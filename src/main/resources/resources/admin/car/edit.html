@@ -18,6 +18,34 @@
         </div>
 
         <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>品牌：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="brandId" size="1">
+                        <option th:each="brand:${brands}"
+                                th:value="${brand.id}" th:text="${brand.name}"
+                                th:selected="${car.brandId==brand.id}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>系列：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="seriesId" size="1">
+                        <option th:each="ser:${series}"
+                                th:value="${ser.id}" th:text="${ser.name}"
+                                th:selected="${car.seriesId==ser.id}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>价格：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input th:value="${car.price}" name="price" style="width: 150px" type="number" class="input-text" placeholder="请输入价格(元)" required>
@@ -140,7 +168,7 @@
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>城市：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
-                    <select class="select" name="fuelType" size="1">
+                    <select class="select" name="cityId" size="1">
                         <option th:each="city:${citys}"
                                 th:value="${city.id}" th:text="${city.cnName}">
                         </option>
@@ -150,13 +178,13 @@
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>燃油类型：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>区域：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box" style="width:150px;">
-                    <select class="select" name="fuelType" size="1">
-                        <option th:each="fuelType:${fuelTypes}"
-                                th:value="${fuelType.code}" th:text="${fuelType.name}"
-                                th:selected="${car.fuelType==fuelType.code}">
+                    <select class="select" name="regionId" size="1">
+                        <option th:each="region:${regions}"
+                                th:value="${region.id}" th:text="${region.cnName}"
+                                th:selected="${car.regionId==region.id}">
                         </option>
                     </select>
 			    </span>

@@ -6,10 +6,6 @@ import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.util.CollectionUtils;
 
@@ -51,17 +47,30 @@ public abstract class AbstractBaseServiceImpl<
 
     @Override
     public final DTO create(DTO dto) {
+        //创建数据
         dto = transform2D(getRepository().save(transform2E(dto)));
 
         //建立索引
-        getSearchService().index(dto.getId());
+        if(getSearchService()!=null){
+            getSearchService().index(dto.getId());
+        }
 
+        //返回结果
         return dto;
     }
 
     @Override
     public final DTO update(DTO dto) {
-        return transform2D(getRepository().save(transform2E(dto)));
+        //更新数据
+        dto = transform2D(getRepository().save(transform2E(dto)));
+
+        //建立索引
+        if(getSearchService()!=null){
+            getSearchService().index(dto.getId());
+        }
+
+        //返回结果
+        return dto;
     }
 
     @Override
@@ -71,6 +80,11 @@ public abstract class AbstractBaseServiceImpl<
 
         //删除数据
         getRepository().delete(id);
+
+        //删除索引
+        if(getSearchService()!=null){
+            getSearchService().remove(dto.getId());
+        }
 
         //返回删除的数据
         return dto;

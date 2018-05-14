@@ -112,14 +112,14 @@ public class CarDto extends BaseDto<Long> {
     private Long watchTimes;
 
     /**
-     * 城市标记缩写 如 北京bj
+     * 城市主键
      */
-    private String cityEnName;
+    private Long cityId;
 
     /**
-     * 地区英文简写 如昌平区 cpq
+     * 地区主键
      */
-    private String regionEnName;
+    private Long regionId;
 
     /**
      * 详细地址
@@ -203,6 +203,16 @@ public class CarDto extends BaseDto<Long> {
      * 车型的含义
      */
     private String styleMeaning;
+
+    /**
+     * 车辆城市的中文名
+     */
+    private String cityCnName;
+
+    /**
+     * 车辆区域的中文名
+     */
+    private String regionCnName;
 
     public Long getBrandId() {
         return brandId;
@@ -332,20 +342,20 @@ public class CarDto extends BaseDto<Long> {
         this.watchTimes = watchTimes;
     }
 
-    public String getCityEnName() {
-        return cityEnName;
+    public Long getCityId() {
+        return cityId;
     }
 
-    public void setCityEnName(String cityEnName) {
-        this.cityEnName = cityEnName;
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
     }
 
-    public String getRegionEnName() {
-        return regionEnName;
+    public Long getRegionId() {
+        return regionId;
     }
 
-    public void setRegionEnName(String regionEnName) {
-        this.regionEnName = regionEnName;
+    public void setRegionId(Long regionId) {
+        this.regionId = regionId;
     }
 
     public String getAddress() {
@@ -474,5 +484,21 @@ public class CarDto extends BaseDto<Long> {
 
     public void setStyleMeaning(String styleMeaning) {
         this.styleMeaning = styleMeaning;
+    }
+
+    public String getCityCnName() {
+        return cityCnName;
+    }
+
+    public void setCityCnName(String cityCnName) {
+        this.cityCnName = cityCnName;
+    }
+
+    public String getRegionCnName() {
+        return regionCnName;
+    }
+
+    public void setRegionCnName(String regionCnName) {
+        this.regionCnName = regionCnName;
     }
 }
