@@ -11,6 +11,9 @@ import com.berg.fastsearch.core.enums.car.*;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -71,7 +74,7 @@ public class CarServiceImpl
     private String cdnPrefix;
 
     @Override
-    protected ISearchService<Long> getSearchService() {
+    protected ISearchService<Long, CarQueryCondition> getSearchService() {
         return carSearchService;
     }
 
@@ -117,9 +120,9 @@ public class CarServiceImpl
         dto.setStyleMeaning(Style.get(entity.getStyle()).getName());
 
         //设置城市名
-        dto.setCityCnName(supportAddressService.findOne(entity.getCityId()).getEnName());
+        dto.setCityCnName(supportAddressService.findOne(entity.getCityId()).getCnName());
         //设置地区名
-        dto.setRegionCnName(supportAddressService.findOne(entity.getRegionId()).getEnName());
+        dto.setRegionCnName(supportAddressService.findOne(entity.getRegionId()).getCnName());
     }
 
     @Override
@@ -148,6 +151,8 @@ public class CarServiceImpl
             //更新
             dto = this.findOne(dto.getId());
             entity.setId(dto.getId());
+            entity.setCover(dto.getCover());
+            entity.setWatchTimes(dto.getWatchTimes());
             entity.setCreateTime(dto.getCreateTime());
             entity.setDeployeeId(dto.getDeployeeId());
             entity.setStatus(dto.getStatus());

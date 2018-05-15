@@ -1,5 +1,6 @@
 package com.berg.fastsearch.core.system.search.service.impl;
 
+import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
 import com.berg.fastsearch.core.system.search.support.BaseIndexMessage;
 import com.berg.fastsearch.core.system.search.template.BaseTemplate;
@@ -19,6 +20,7 @@ import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.DeleteByQueryAction;
 import org.elasticsearch.index.reindex.DeleteByQueryRequestBuilder;
 import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +44,11 @@ import java.util.List;
 @Service
 public abstract class AbstractSearchService<
         ID extends Serializable,
+        CONDITION extends BaseQueryCondition,
         MESSAGE extends BaseIndexMessage<ID>,
-        TEMPLATE extends BaseTemplate> implements ISearchService<ID> {
+        TEMPLATE extends BaseTemplate> implements ISearchService<ID, CONDITION> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
-    private static final String INDEX_NAME = "fastsearch";
-
-    private static final String INDEX_TYPE = "car";
 
     private static final String INDEX_TOPIC = "car_build";
 
@@ -89,7 +88,7 @@ public abstract class AbstractSearchService<
 
         TEMPLATE template = map(id);
 
-        SearchRequestBuilder requestBuilder = this.esClient.prepareSearch(INDEX_NAME).setTypes(INDEX_TYPE)
+        SearchRequestBuilder requestBuilder = this.esClient.prepareSearch(getIndexName()).setTypes(getTypeName())
                 .setQuery(QueryBuilders.termQuery(BaseTemplate.FIELD_ID, id));
 
         logger.debug(requestBuilder.toString());
@@ -119,12 +118,8 @@ public abstract class AbstractSearchService<
     }
 
     private boolean create(TEMPLATE template) {
-        if (!updateSuggest(template)) {
-            return false;
-        }
-
         try {
-            IndexResponse response = this.esClient.prepareIndex(INDEX_NAME, INDEX_TYPE)
+            IndexResponse response = this.esClient.prepareIndex(getIndexName(), getTypeName())
                     .setSource(objectMapper.writeValueAsBytes(template), XContentType.JSON).get();
 
 //            logger.debug("Create index with house: " + template.getId());
@@ -140,12 +135,8 @@ public abstract class AbstractSearchService<
     }
 
     private boolean update(String id, TEMPLATE template) {
-        if (!updateSuggest(template)) {
-            return false;
-        }
-
         try {
-            UpdateResponse response = this.esClient.prepareUpdate(INDEX_NAME, INDEX_TYPE, id)
+            UpdateResponse response = this.esClient.prepareUpdate(getIndexName(), getTypeName(), id)
                     .setDoc(objectMapper.writeValueAsBytes(template), XContentType.JSON).get();
 
             logger.debug("Update index with house: " + template.getId());
@@ -160,48 +151,11 @@ public abstract class AbstractSearchService<
         }
     }
 
-    private boolean updateSuggest(TEMPLATE template) {
-//        AnalyzeRequestBuilder requestBuilder = new AnalyzeRequestBuilder(
-//                this.esClient, AnalyzeAction.INSTANCE, INDEX_NAME, indexTemplate.getTitle(),
-//                indexTemplate.getLayoutDesc(), indexTemplate.getRoundService(),
-//                indexTemplate.getDescription(), indexTemplate.getSubwayLineName(),
-//                indexTemplate.getSubwayStationName());
-//
-//        requestBuilder.setAnalyzer("ik_smart");
-//
-//        AnalyzeResponse response = requestBuilder.get();
-//        List<AnalyzeResponse.AnalyzeToken> tokens = response.getTokens();
-//        if (tokens == null) {
-//            logger.warn("Can not analyze token for house: " + indexTemplate.getHouseId());
-//            return false;
-//        }
-//
-//        List<HouseSuggest> suggests = new ArrayList<>();
-//        for (AnalyzeResponse.AnalyzeToken token : tokens) {
-//            // 排序数字类型 & 小于2个字符的分词结果
-//            if ("<NUM>".equals(token.getType()) || token.getTerm().length() < 2) {
-//                continue;
-//            }
-//
-//            HouseSuggest suggest = new HouseSuggest();
-//            suggest.setInput(token.getTerm());
-//            suggests.add(suggest);
-//        }
-//
-//        // 定制化小区自动补全
-//        HouseSuggest suggest = new HouseSuggest();
-//        suggest.setInput(indexTemplate.getDistrict());
-//        suggests.add(suggest);
-//
-//        indexTemplate.setSuggest(suggests);
-        return true;
-    }
-
     private boolean deleteAndCreate(long totalHit, TEMPLATE template) {
         DeleteByQueryRequestBuilder builder = DeleteByQueryAction.INSTANCE
                 .newRequestBuilder(esClient)
                 .filter(QueryBuilders.termQuery(BaseTemplate.FIELD_ID, template.getId()))
-                .source(INDEX_NAME);
+                .source(getIndexName());
 
         logger.debug("Delete by query for house: " + builder);
 
@@ -220,21 +174,13 @@ public abstract class AbstractSearchService<
         DeleteByQueryRequestBuilder builder = DeleteByQueryAction.INSTANCE
                 .newRequestBuilder(esClient)
                 .filter(QueryBuilders.termQuery(BaseTemplate.FIELD_ID, id))
-                .source(INDEX_NAME);
+                .source(getIndexName());
 
         logger.debug("Delete by query for house: " + builder);
 
         BulkByScrollResponse response = builder.get();
         long deleted = response.getDeleted();
         logger.debug("Delete total " + deleted);
-
-//        ServiceResult serviceResult = addressService.removeLbs(houseId);
-//
-//        if (!serviceResult.isSuccess() || deleted <= 0) {
-//            logger.warn("Did not remove data from es for response: " + response);
-//            // 重新加入消息队列
-//            this.remove(houseId, message.getRetry() + 1);
-//        }
     }
 
     @Override
@@ -253,6 +199,25 @@ public abstract class AbstractSearchService<
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public final List<ID> query(CONDITION condition) {
+        List<ID> list = new ArrayList<>();
+
+        SearchRequestBuilder searchRequestBuilder = buildQuery(this.esClient.prepareSearch(getIndexName()).setTypes(getTypeName()), condition);
+
+        logger.debug(searchRequestBuilder.toString());
+        SearchResponse searchResponse = searchRequestBuilder.get();
+
+        SearchHit[] hits = searchResponse.getHits().getHits();
+
+        //获取结果
+        for (SearchHit searchHitFields : hits){
+            list.add(objectMapper.convertValue(searchHitFields.getSource(), getIndexMessageClass()).getId());
+        }
+
+        return list;
     }
 
     /**
@@ -310,4 +275,23 @@ public abstract class AbstractSearchService<
      */
     protected abstract Class<MESSAGE> getIndexMessageClass();
 
+    /**
+     * 构建查询对象
+     * @param searchRequestBuilder  查询条件对象
+     * @param condition             查询条件
+     * @return                      构建的查询对象
+     */
+    protected abstract SearchRequestBuilder buildQuery(SearchRequestBuilder searchRequestBuilder, CONDITION condition);
+
+    /**
+     * 获取索引名
+     * @return  返回索引名
+     */
+    protected abstract String getIndexName();
+
+    /**
+     * 获取类型名
+     * @return  返回类型名
+     */
+    protected abstract String getTypeName();
 }

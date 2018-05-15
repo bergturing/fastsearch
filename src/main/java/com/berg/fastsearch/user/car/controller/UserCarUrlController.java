@@ -68,14 +68,14 @@ public class UserCarUrlController{
         }
         model.addAttribute("currentCity", city);
 
-        List<SupportAddressDto> addressResult = supportAddressService.findAllRegionsByCityName(searchBody.getCityEnName());
+        List<SupportAddressDto> addressResult = supportAddressService.findAllRegionsByCityEnName(searchBody.getCityEnName());
 
         if (addressResult == null) {
             redirectAttributes.addAttribute("msg", "must_chose_city");
             return "redirect:/index";
         }
 
-        List<CarDto> cars = carService.findAll(null);
+        List<CarDto> cars = carService.findAll(searchBody);
 
         model.addAttribute("total", cars.size());
         model.addAttribute("cars", cars);
@@ -143,7 +143,7 @@ public class UserCarUrlController{
             model.addAttribute("city", city);
         }
 
-        List<SupportAddressDto> regions = supportAddressService.findAllRegionsByCityName(cityEnName);
+        List<SupportAddressDto> regions = supportAddressService.findAllRegionsByCityEnName(cityEnName);
 
 
 //        ServiceMultiResult<HouseBucketDTO> serviceResult = searchService.mapAggregate(cityEnName);

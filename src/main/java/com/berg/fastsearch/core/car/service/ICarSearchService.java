@@ -1,5 +1,6 @@
 package com.berg.fastsearch.core.car.service;
 
+import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
 
 /**
@@ -9,5 +10,5 @@ import com.berg.fastsearch.core.system.search.service.ISearchService;
  * @version v1.0
  * @apiNote Created on 18-5-7
  */
-public interface ICarSearchService extends ISearchService<Long>{
+public interface ICarSearchService extends ISearchService<Long, CarQueryCondition>{
 }

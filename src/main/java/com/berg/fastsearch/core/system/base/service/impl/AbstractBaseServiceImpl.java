@@ -5,8 +5,11 @@ import com.berg.fastsearch.core.system.base.service.IBaseService;
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
+import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
@@ -20,24 +23,27 @@ import java.util.List;
  * @version v1.0
  * @apiNote Created on 18-5-3
  */
+@Service
 public abstract class AbstractBaseServiceImpl<
         ID extends Serializable,
         DTO extends BaseDto<ID>,
         ENTITY extends BaseEntity,
         CONDITION extends BaseQueryCondition> implements IBaseService<ID, DTO, CONDITION> {
 
+    @Autowired
+    private TransportClient esClient;
+
     @Override
     public final List<DTO> findAll(CONDITION condition){
+        if(null == condition){
+            return transform2D(getRepository().findAll());
+        }
 
-//        //构建排序对象
-//        Sort sort = new Sort(Sort.Direction.fromString(condition.getDirection()), condition.getOrderBy());
-//
-//        //构建分页对象
-//        Pageable pageable = new PageRequest(condition.getPage(), condition.getPageSize(), sort);
-//
-//        Specification<ENTITY> specification;
+        //获取条件查询的ids
+        List<ID> ids = getSearchService().query(condition);
 
-        return transform2D(getRepository().findAll());
+        //查询数据
+        return transform2D(getRepository().findAll(ids));
     }
 
     @Override
@@ -164,7 +170,7 @@ public abstract class AbstractBaseServiceImpl<
         }
     }
 
-    protected ISearchService<ID> getSearchService(){
+    protected ISearchService<ID, CONDITION> getSearchService(){
         return null;
     }
 

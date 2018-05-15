@@ -7,6 +7,8 @@ import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressQueryCondition;
 import com.berg.fastsearch.core.enums.address.Level;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
+import org.apache.commons.lang.StringUtils;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -47,16 +49,14 @@ public class SupportAddressServiceImpl
     }
 
     @Override
-    public List<SupportAddressDto> findAllRegionsByCityName(String cityName) {
-        if (cityName == null) {
+    public List<SupportAddressDto> findAllRegionsByCityEnName(String cityEnName) {
+        if (StringUtils.isBlank(cityEnName)) {
             return null;
         }
 
-        List<SupportAddress> regions = supportAddressRepository.findAllByLevelAndBelongTo(Level.REGION
-                .getValue(), cityName);
+        SupportAddressDto city = findCity(cityEnName);
 
-        return transform2D(supportAddressRepository.findAllByLevelAndBelongTo(Level.REGION
-                .getValue(), cityName));
+        return transform2D(supportAddressRepository.findAllByLevelAndBelongTo(Level.REGION.getValue(), city.getId()));
     }
 
     @Override

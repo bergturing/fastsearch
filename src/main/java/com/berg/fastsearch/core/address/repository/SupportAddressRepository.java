@@ -20,7 +20,7 @@ public interface SupportAddressRepository extends JpaRepository<SupportAddress, 
      * @param belongTo
      * @return
      */
-    List<SupportAddress> findAllByLevelAndBelongTo(String level, String belongTo);
+    List<SupportAddress> findAllByLevelAndBelongTo(String level, Long belongTo);
 
     /**
      *
@@ -29,14 +29,6 @@ public interface SupportAddressRepository extends JpaRepository<SupportAddress, 
      * @return
      */
     SupportAddress findByEnNameAndLevel(String enName, String level);
-
-    /**
-     *
-     * @param enName
-     * @param belongTo
-     * @return
-     */
-    SupportAddress findByEnNameAndBelongTo(String enName, String belongTo);
 
     /**
      *

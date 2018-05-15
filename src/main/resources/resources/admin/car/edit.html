@@ -171,7 +171,8 @@
                 <span class="select-box" style="width:150px;">
                     <select class="select" name="cityId" size="1">
                         <option th:each="city:${citys}"
-                                th:value="${city.id}" th:text="${city.cnName}">
+                                th:value="${city.id}" th:text="${city.cnName}"
+                                th:selected="${car.cityId==city.id}">
                         </option>
                     </select>
 			    </span>

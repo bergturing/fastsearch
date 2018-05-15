@@ -6,6 +6,7 @@ import com.berg.fastsearch.core.system.code.repository.CodeRepository;
 import com.berg.fastsearch.core.system.code.service.ICodeService;
 import com.berg.fastsearch.core.system.code.web.dto.CodeDto;
 import com.berg.fastsearch.core.system.code.web.dto.CodeQueryCondition;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

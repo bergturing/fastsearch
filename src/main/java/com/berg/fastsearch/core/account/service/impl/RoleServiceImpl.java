@@ -8,6 +8,7 @@ import com.berg.fastsearch.core.account.repository.RoleRepository;
 import com.berg.fastsearch.core.account.service.IRoleService;
 import com.berg.fastsearch.core.account.service.IUserRoleService;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.authentication.DisabledException;
@@ -89,4 +90,5 @@ public class RoleServiceImpl
     protected Role createEntity() {
         return new Role();
     }
+
 }

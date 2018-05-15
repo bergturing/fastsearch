@@ -10,6 +10,7 @@ import com.berg.fastsearch.core.account.web.dto.UserQueryCondition;
 import com.berg.fastsearch.core.enums.account.UserStatus;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import org.apache.commons.lang.StringUtils;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;

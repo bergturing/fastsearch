@@ -12,6 +12,10 @@ import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
 public class CarQueryCondition extends BaseQueryCondition {
     private static final long serialVersionUID = 4319051233705555484L;
 
+    public static final String FIELD_CITY_EN_NAME = "cityEnName";
+
+    public static final String FIELD_REGION_EN_NAME = "regionEnName";
+
     /**
      * 城市简写英文名
      */
