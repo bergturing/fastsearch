@@ -41,7 +41,7 @@ public class CarSearchServiceImpl extends AbstractSearchService<Long, CarIndexMe
 
     @Override
     protected Class<CarIndexMessage> getIndexMessageClass() {
-        return null;
+        return CarIndexMessage.class;
     }
 
 

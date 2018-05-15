@@ -17,6 +17,12 @@ spring:
   devtools:
     restart:
       exclude: templates/**,static/**
+  kafka:
+    producer:
+      bootstrap-servers: 192.168.2.101:9092
+    consumer:
+      group-id: fastsearch
+      bootstrap-servers: 192.168.2.101:9092
 
 #spring security
 security:
@@ -36,14 +42,9 @@ qiniu:
   Bucket: lakers
   cdn:
     prefix: http://7xo6gy.com1.z0.glb.clouddn.com/
+
 elasticsearch:
-  cluster:
-    name: elasticsearch
   host: 192.168.2.81
   port: 9300
-
-#spring:
-#  kafka:
-#    bootstrap-servers: 192.168.2.101:9092
-#    consumer:
-#      group-id: fastsearch
+  cluster:
+    name: fastsearch

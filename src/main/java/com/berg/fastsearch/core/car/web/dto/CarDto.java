@@ -143,6 +143,11 @@ public class CarDto extends BaseDto<Long> {
     private String description;
 
     /**
+     * 汽车创建时间
+     */
+    private Date createTime;
+
+    /**
      * 上次更新记录时间
      */
     private Date lastUpdateTime;
@@ -388,6 +393,14 @@ public class CarDto extends BaseDto<Long> {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Date getLastUpdateTime() {

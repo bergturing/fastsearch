@@ -66,8 +66,8 @@ $(function () {
             var idata = JSON.stringify(values);
 
             $.ajax({
-                url: "/car",
-                type: "POST",
+                url: "/car/" + values.id,
+                type: "PUT",
                 contentType: "application/json",
                 data: idata,
                 dataType: "json",

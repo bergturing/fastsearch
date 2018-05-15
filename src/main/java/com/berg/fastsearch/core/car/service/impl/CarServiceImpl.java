@@ -10,6 +10,7 @@ import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.enums.car.*;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -125,12 +126,15 @@ public class CarServiceImpl
     protected void transform2E(CarDto dto, Car entity) {
         //处理照片的数据
         List<CarPictureDto> carPictureDtos = dto.getPictures();
-        carPictureDtos.forEach(carPictureDto -> {
-            carPictureDto.setCarId(dto.getId());
-            carPictureDto.setCdnPrefix(cdnPrefix);
-            carPictureService.create(carPictureDto);
-        });
+        if(CollectionUtils.isNotEmpty(carPictureDtos)){
+            final Long carId = dto.getId();
 
+            carPictureDtos.forEach(carPictureDto -> {
+                carPictureDto.setCarId(carId);
+                carPictureDto.setCdnPrefix(cdnPrefix);
+                carPictureService.create(carPictureDto);
+            });
+        }
 
         if(dto.getId()==null || dto.getId()<=0){
             //新建
@@ -142,7 +146,11 @@ public class CarServiceImpl
             entity.setStatus("NEW");
         }else{
             //更新
-
+            dto = this.findOne(dto.getId());
+            entity.setId(dto.getId());
+            entity.setCreateTime(dto.getCreateTime());
+            entity.setDeployeeId(dto.getDeployeeId());
+            entity.setStatus(dto.getStatus());
         }
 
         //新建和更新都需要处理的
