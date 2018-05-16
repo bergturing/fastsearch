@@ -24,6 +24,9 @@ public class CarBrand extends BaseEntity {
     private Long id;
 
     @Column
+    private String code;
+
+    @Column
     private String name;
 
     public Long getId() {
@@ -32,6 +35,14 @@ public class CarBrand extends BaseEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

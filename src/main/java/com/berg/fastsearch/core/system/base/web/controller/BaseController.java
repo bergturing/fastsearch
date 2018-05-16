@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p></p>
@@ -66,6 +67,17 @@ public abstract class BaseController<
     @DeleteMapping("/{id:\\d+}")
     public ResponseData delete(@PathVariable("id") ID id){
         return ResponseData.ofSuccess(getService().delete(id));
+    }
+
+    @PostMapping("/batch")
+    public ResponseData batchdelete(@RequestBody List<ID> ids){
+        return ResponseData.ofSuccess(getService().batchDelete(ids));
+    }
+
+
+    @GetMapping("/indexAll")
+    public ResponseData indexAll(){
+        return ResponseData.ofSuccess(getService().indexAll());
     }
 
     /**

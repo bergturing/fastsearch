@@ -51,4 +51,16 @@ public interface IBaseService<
      * @return          删除的对象
      */
     DTO delete(ID id);
+
+    /**
+     * 批量删除
+     * @param ids   主键列表
+     * @return      删除的对象
+     */
+    List<DTO> batchDelete(List<ID> ids);
+
+    /**
+     * 索引所有的信息
+     */
+    boolean indexAll();
 }

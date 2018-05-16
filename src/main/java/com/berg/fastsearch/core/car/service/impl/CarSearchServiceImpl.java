@@ -5,15 +5,18 @@ import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
 import com.berg.fastsearch.core.car.entity.CarIndexMessage;
 import com.berg.fastsearch.core.car.entity.CarTemplate;
 import com.berg.fastsearch.core.car.service.ICarSearchService;
-import com.berg.fastsearch.core.car.service.ICarSeriesService;
 import com.berg.fastsearch.core.car.service.ICarService;
 import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
-import com.berg.fastsearch.core.car.web.dto.CarSeriesDto;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
 import com.berg.fastsearch.core.system.search.service.impl.AbstractSearchService;
+import com.berg.fastsearch.user.car.dto.ValueBlock;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,9 +58,9 @@ public class CarSearchServiceImpl
         SupportAddressDto city = supportAddressService.findOne(carTemplate.getCityId());
         carTemplate.setCityEnName(city.getEnName());
 
+        //设置区域数据
         SupportAddressDto region = supportAddressService.findOne(carTemplate.getRegionId());
-        carTemplate.setRegionEnName(city.getEnName());
-
+        carTemplate.setRegionEnName(region.getEnName());
 
         return carTemplate;
     }
@@ -68,21 +71,17 @@ public class CarSearchServiceImpl
     }
 
     @Override
-    protected SearchRequestBuilder buildQuery(SearchRequestBuilder searchRequestBuilder, CarQueryCondition condition) {
+    protected void buildRequest(SearchRequestBuilder searchRequestBuilder, CarQueryCondition condition) {
         //如果查询条件对象为null,就不进行查询条件的构建
         if(null == condition){
-            return null;
+            return;
         }
+
+        //处理排序
+        buildSort(searchRequestBuilder, condition);
 
         //开始构建查询条件
-
-        if(StringUtils.isNotBlank(condition.getCityEnName())){
-            searchRequestBuilder = searchRequestBuilder
-                    .setQuery(QueryBuilders.termQuery(CarQueryCondition.FIELD_CITY_EN_NAME, condition.getCityEnName()));
-        }
-
-
-        return searchRequestBuilder;
+        searchRequestBuilder.setQuery(buildQuery(condition));
     }
 
     @Override
@@ -93,5 +92,80 @@ public class CarSearchServiceImpl
     @Override
     public String getTypeName() {
         return "car";
+    }
+
+    /**
+     * 构建排序
+     * @param searchRequestBuilder      请求对象
+     * @param condition                 查询条件
+     */
+    private void buildSort(final SearchRequestBuilder searchRequestBuilder, final CarQueryCondition condition){
+        String orderBy = condition.getOrderBy();
+        String orderDirection = condition.getOrderDirection();
+
+        if(StringUtils.isNotBlank(orderBy) && StringUtils.isNotBlank(orderDirection)){
+            SortOrder sortOrder = SortOrder.DESC;
+
+            if (StringUtils.equalsIgnoreCase(BaseQueryCondition.ORDER_ASC, orderDirection)){
+                sortOrder = SortOrder.ASC;
+            }
+
+            searchRequestBuilder.addSort(orderBy, sortOrder);
+        }
+
+    }
+
+    /**
+     * 构建查询
+     * @param condition                 查询条件
+     */
+    private QueryBuilder buildQuery(final CarQueryCondition condition){
+        BoolQueryBuilder builder = QueryBuilders.boolQuery();
+
+        //城市
+        String cityEnName = condition.getCityEnName();
+        if(StringUtils.isNotBlank(cityEnName)){
+            builder = builder
+                    .must(QueryBuilders.termQuery(CarQueryCondition.FIELD_CITY_EN_NAME, cityEnName));
+        }
+        //区域
+        String regionEnName = condition.getRegionEnName();
+        if(StringUtils.isNotBlank(regionEnName)){
+            builder = builder
+                    .must(QueryBuilders.termQuery(CarQueryCondition.FIELD_REGION_EN_NAME, regionEnName));
+        }
+        //品牌
+        String brandCode = condition.getBrandCode();
+        if(StringUtils.isNotBlank(brandCode)){
+            builder = builder
+                    .must(QueryBuilders.termQuery(CarQueryCondition.FIELD_BRAND_CODE, brandCode));
+        }
+        //系列
+        String seriesCode = condition.getSeriesCode();
+        if(StringUtils.isNotBlank(seriesCode)){
+            builder = builder
+                    .must(QueryBuilders.termQuery(CarQueryCondition.FIELD_SERIES_CODE, seriesCode));
+        }
+        //价格区间
+        ValueBlock valueBlock = ValueBlock.matchPrice(condition.getPriceBlock());
+        if(valueBlock!=null && valueBlock!=ValueBlock.ALL){
+            //最大值
+            int max = valueBlock.getMax();
+
+            //范围查询
+            RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(CarQueryCondition.FIELD_PRICE)
+                    .gte(valueBlock.getMin());
+
+            //判断最大值是否存在
+            if(max!=-1){
+                rangeQueryBuilder.lte(max);
+            }
+
+            //加入查询条件
+            builder = builder
+                    .must(rangeQueryBuilder);
+        }
+        //返回查询条件
+        return builder;
     }
 }

@@ -12,6 +12,7 @@ import com.berg.fastsearch.core.enums.address.Level;
 import com.berg.fastsearch.core.system.base.web.dto.ResponseData;
 import com.berg.fastsearch.user.car.dto.MapSearch;
 import com.berg.fastsearch.user.car.dto.ValueBlock;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -80,9 +81,24 @@ public class UserCarUrlController{
         model.addAttribute("total", cars.size());
         model.addAttribute("cars", cars);
 
-        if (searchBody.getRegionEnName() == null) {
+        //区域
+        if (StringUtils.isBlank(searchBody.getRegionEnName())) {
             searchBody.setRegionEnName("*");
         }
+        //品牌
+        if (StringUtils.isBlank(searchBody.getBrandCode())) {
+            searchBody.setBrandCode("*");
+        }
+        //系列
+        if (StringUtils.isBlank(searchBody.getSeriesCode())) {
+            searchBody.setSeriesCode("*");
+        }
+        //价格区间
+        if (StringUtils.isBlank(searchBody.getPriceBlock())) {
+            searchBody.setPriceBlock("*");
+        }
+
+
 
         model.addAttribute("searchBody", searchBody);
         model.addAttribute("regions", addressResult);
@@ -102,7 +118,7 @@ public class UserCarUrlController{
             return "404";
         }
 
-        CarDto carDto = carService.findOne(id);
+        CarDto carDto = carService.watchCar(id);
         if (carDto == null) {
             return "404";
         }
@@ -122,8 +138,6 @@ public class UserCarUrlController{
 
 //        ServiceResult<Long> aggResult = searchService.aggregateDistrictHouse(city.getEnName(), region.getEnName(), houseDTO.getDistrict());
 //        model.addAttribute("houseCountInDistrict", aggResult.getResult());
-
-
 
         return "user/car/detail";
     }

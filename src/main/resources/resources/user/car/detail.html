@@ -12,7 +12,6 @@
     <link href="/static/css/list.css" rel='stylesheet' type='text/css'/>
     <link href="/static/lib/layui/css/layui.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/user/common.css" rel='stylesheet' type='text/css'/>
-    <script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/detail.css" type="text/css"/>
 </head>
 <body>
@@ -53,8 +52,8 @@
     <div class="container">
         <div class="fl l-txt">
             <i class="icon"></i>&nbsp;
-            <a href="/">寻车</a>
-            <span class="stp">&nbsp;&gt;&nbsp;</span>[<a href="/" title="选择城市">
+            <a href="/index">寻车</a>
+            <span class="stp">&nbsp;&gt;&nbsp;</span>[<a href="/user/car/list" title="选择城市">
             <span th:text="${city.cnName}">城市</span></a>]找车
             <span class="stp">&nbsp;&gt;&nbsp;</span>当前车源
         </div>
@@ -109,11 +108,11 @@
                 <p class="lf"><i>颜色：</i><span th:text="${car.color}"></span></p>
                 <div class="clear"></div>
                 <p><i>类型：</i>
-                        <a href="/xiaoqu/1111027382235/" th:text="${car.brand}">品牌</a>
-                    - <a href="/zufang/c1111027382235/"><span th:text="${car.series}"></span>系列</a>
+                        <a th:href="@{/user/car/list(brandCode=${car.brandCode})}" th:text="${car.brand}">品牌</a>
+                    - <a th:href="@{/user/car/list(brandCode=${car.brandCode}, seriesCode=${car.seriesCode})}"><span th:text="${car.series}"></span>系列</a>
                 </p>
                 <p><i>位置：</i>
-                    <a href="/zufang/chaoyang/" th:text="${region.cnName}">地区</a>
+                    <a th:href="@{/user/car/list(cityEnName=${city.enName}, regionEnName=${region.enName})}" th:text="${region.cnName}">地区</a>
                 </p>
                 <p class="lf"><i>发布时间：</i>
                     <span th:text="${#dates.format(car.lastUpdateTime, 'yyyy-MM-dd')}">时间</span>
@@ -173,15 +172,15 @@
                     <ul>
                         <li>
                             <span class="label">品牌：</span>
-                            <a href="/xiaoqu/1111027382235/" th:text="${car.brand}">品牌</a>
+                            <a th:href="@{/user/car/list(brandCode=${car.brandCode})}" th:text="${car.brand}">品牌</a>
                         </li>
                         <li>
                             <span class="label">系列：</span>
-                            <a href="/xiaoqu/1111027382235/" th:text="${car.series}">系列</a>
+                            <a th:href="@{/user/car/list(brandCode=${car.brandCode}, seriesCode=${car.seriesCode})}" th:text="${car.series}">系列</a>
                         </li><li></li><li></li>
                         <li>
                             <span class="label">位置：</span>
-                            <a href="/xiaoqu/1111027382235/" th:text="${region.cnName}">地区</a>
+                            <a th:href="@{/user/car/list(cityEnName=${city.enName}, regionEnName=${region.enName})}" th:text="${region.cnName}">地区</a>
                         </li><li></li><li></li><li></li>
                         <li>
                             <span class="label">价格：</span>
@@ -334,6 +333,9 @@
 </div>
 
 <div id="only" data-city="bj" data-page="zufang_view"></div>
+
+<script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
+
 <!--<div th:include="common :: footer"></div>-->
 <script type='text/javascript'>
     (function(m, ei, q, i, a, j, s) {

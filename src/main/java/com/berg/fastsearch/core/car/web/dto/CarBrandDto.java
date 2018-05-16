@@ -12,7 +12,17 @@ import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 public class CarBrandDto extends BaseDto<Long> {
     private static final long serialVersionUID = -1221539576183836216L;
 
+    private String code;
+
     private String name;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getName() {
         return name;

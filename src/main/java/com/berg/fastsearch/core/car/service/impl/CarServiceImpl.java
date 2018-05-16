@@ -4,16 +4,11 @@ import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.car.entity.Car;
 import com.berg.fastsearch.core.car.repository.CarRepository;
 import com.berg.fastsearch.core.car.service.*;
-import com.berg.fastsearch.core.car.web.dto.CarDto;
-import com.berg.fastsearch.core.car.web.dto.CarPictureDto;
-import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
+import com.berg.fastsearch.core.car.web.dto.*;
 import com.berg.fastsearch.core.enums.car.*;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,7 +30,7 @@ public class CarServiceImpl
         implements ICarService {
 
     /**
-     *
+     * 车辆repository对象
      */
     @Autowired
     private CarRepository carRepository;
@@ -64,12 +59,21 @@ public class CarServiceImpl
     @Autowired
     private ICarTagService carTagService;
 
+    /**
+     * 车辆搜索服务
+     */
     @Autowired
     private ICarSearchService carSearchService;
 
+    /**
+     * 地址服务
+     */
     @Autowired
     private ISupportAddressService supportAddressService;
 
+    /**
+     * 图片的前缀
+     */
     @Value("${qiniu.cdn.prefix}")
     private String cdnPrefix;
 
@@ -95,10 +99,20 @@ public class CarServiceImpl
 
     @Override
     protected void transform2D(Car entity, CarDto dto) {
+        //设置品牌信息
+        CarBrandDto brandDto = carBrandService.findOne(entity.getBrandId());
         //设置品牌名字
-        dto.setBrand(carBrandService.findOne(entity.getBrandId()).getName());
+        dto.setBrand(brandDto.getName());
+        //设置品牌代码
+        dto.setBrandCode(brandDto.getCode());
+
+        //设置系列信息
+        CarSeriesDto seriesDto = carSeriesService.findOne(entity.getSeriesId());
         //设置系列名字
-        dto.setSeries(carSeriesService.findOne(entity.getSeriesId()).getName());
+        dto.setSeries(seriesDto.getName());
+        //设置系列代码
+        dto.setSeriesCode(seriesDto.getCode());
+
         //设置车辆标签
         dto.setTags(carTagService.findByCarId(entity.getId()));
         //设置车辆图片
@@ -133,9 +147,16 @@ public class CarServiceImpl
             final Long carId = dto.getId();
 
             carPictureDtos.forEach(carPictureDto -> {
-                carPictureDto.setCarId(carId);
-                carPictureDto.setCdnPrefix(cdnPrefix);
-                carPictureService.create(carPictureDto);
+                Long id = carPictureDto.getId();
+                if(id==null || id<1){
+                    //新建
+                    carPictureDto.setCarId(carId);
+                    carPictureDto.setCdnPrefix(cdnPrefix);
+                    carPictureService.create(carPictureDto);
+                }else{
+                    //更新
+                    carPictureService.update(carPictureDto);
+                }
             });
         }
 
@@ -152,7 +173,14 @@ public class CarServiceImpl
             dto = this.findOne(dto.getId());
             entity.setId(dto.getId());
             entity.setCover(dto.getCover());
-            entity.setWatchTimes(dto.getWatchTimes());
+
+            //查看次数
+            Long watchTimes = entity.getWatchTimes();
+            if(null==watchTimes || watchTimes<1){
+                entity.setWatchTimes(dto.getWatchTimes());
+            }
+
+            //其他未展现的数据
             entity.setCreateTime(dto.getCreateTime());
             entity.setDeployeeId(dto.getDeployeeId());
             entity.setStatus(dto.getStatus());
@@ -161,5 +189,15 @@ public class CarServiceImpl
         //新建和更新都需要处理的
         //处理最后更新时间
         entity.setLastUpdateTime(new Date());
+    }
+
+    @Override
+    public CarDto watchCar(Long id) {
+        CarDto carDto = this.findOne(id);
+
+        //查看车辆数据增加一次
+        carDto.setWatchTimes(carDto.getWatchTimes()+1);
+
+        return this.update(carDto);
     }
 }

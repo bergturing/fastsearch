@@ -9,7 +9,6 @@ import com.berg.fastsearch.core.car.web.dto.CarTagDto;
 import com.berg.fastsearch.core.car.web.dto.CarTagQueryCondition;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import org.apache.commons.collections.CollectionUtils;
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

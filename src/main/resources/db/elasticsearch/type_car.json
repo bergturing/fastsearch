@@ -12,8 +12,14 @@
         "brandId": {
           "type": "long"
         },
+        "brandCode": {
+          "type": "keyword"
+        },
         "seriesId": {
           "type": "long"
+        },
+        "seriesCode": {
+          "type": "keyword"
         },
         "deployeeId": {
           "type": "long"

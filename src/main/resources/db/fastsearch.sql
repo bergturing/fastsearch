@@ -218,18 +218,19 @@ COMMIT;
 DROP TABLE IF EXISTS `fs_car_brands`;
 CREATE TABLE `fs_car_brands`(
 	`ID` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '汽车品牌的id',
+	`CODE` VARCHAR(32) NOT NULL COMMENT '汽车品牌的代码',
     `NAME` VARCHAR(255) NOT NULL COMMENT '汽车品牌的名称',
     PRIMARY KEY (`ID`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='汽车品牌表';
 
 BEGIN;
 INSERT INTO `fast_search`.`fs_car_brands`
-(`ID`, `NAME`)
+(`ID`, `CODE`, `NAME`)
 VALUES
-('1', '奥迪'),
-('2', '宝马'),
-('3', '奔驰'),
-('4', '大众');
+('1', 'ad', '奥迪'),
+('2', 'bm', '宝马'),
+('3', 'bc', '奔驰'),
+('4', 'dz', '大众');
 COMMIT;
 
 
@@ -238,23 +239,24 @@ DROP TABLE IF EXISTS `fs_car_series`;
 CREATE TABLE `fs_car_series`(
 	`ID` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '汽车系列的主键',
     `BRAND_ID` BIGINT(20) UNSIGNED NOT NULL COMMENT '汽车品牌id,汽车品牌表(fs_car_brands)的主键',
+    `CODE` VARCHAR(32) NOT NULL COMMENT '汽车系列的代码',
     `NAME` VARCHAR(255) NOT NULL COMMENT '汽车系列的名称',
     PRIMARY KEY (`ID`)
 )ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='汽车系列表';
 
 BEGIN;
 INSERT INTO `fast_search`.`fs_car_series`
-(`ID`, `BRAND_ID`, `NAME`)
+(`ID`, `BRAND_ID`, `CODE`, `NAME`)
 VALUES
-('1', '1', 'SQ5'),
-('2', '1', 'S7'),
-('3', '1', 'S6'),
-('4', '1', 'S8'),
-('5', '1', 'S5 COUPE'),
-('6', '1', 'S5 四门轿跑车'),
-('7', '1', 'S5 敞篷'),
-('8', '1', 'S4'),
-('9', '1', 'S3 四门轿车');
+('1', '1', 'SQ5', 'SQ5'),
+('2', '1', 'S7', 'S7'),
+('3', '1', 'S6', 'S6'),
+('4', '1', 'S8', 'S8'),
+('5', '1', 'S5_COUPE', 'S5 COUPE'),
+('6', '1', 'S5_SMJPC', 'S5 四门轿跑车'),
+('7', '1', 'S5_CP', 'S5 敞篷'),
+('8', '1', 'S4', 'S4'),
+('9', '1', 'S3_SMJC', 'S3 四门轿车');
 COMMIT;
 
 #汽车图片表
@@ -386,7 +388,15 @@ COMMIT;
 
 
 
-
+#用于记住我功能的表
+DROP TABLE IF EXISTS `persistent_logins`;
+CREATE TABLE `persistent_logins` (
+  `username` varchar(64) NOT NULL,
+  `series` varchar(64) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `last_used` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`series`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 

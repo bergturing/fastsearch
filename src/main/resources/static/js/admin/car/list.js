@@ -19,6 +19,64 @@ var FastSearchCar = (function(){
     };
 
     /**
+     * 内部方法: 批量删除数据
+     * @private
+     */
+    var _carBatchDelete = function(){
+        //处理的值对象
+        var _valus = [];
+
+        //所有选中的对象
+        var _objs = $("#car_list tbody input:checkbox:checked");
+
+        $.each(_objs, function (index, item) {
+            _valus.push($(item).val());
+        });
+
+        //将对象字符串化
+        var _data = JSON.stringify(_valus);
+
+        //提交请求
+        layer.confirm('车辆信息删除须谨慎，确认要删除吗？', function (index) {
+            $.ajax({
+                url: '/car/batch',
+                type: 'POST',
+                contentType: "application/json",
+                data: _data,
+                dataType: 'json',
+                success: function (data) {
+                    $(_objs).parents("tr").remove();
+                    layer.msg('已删除!', {icon: 1, time: 1000});
+                },
+                error: function (data) {
+                    console.log(data.msg);
+                }
+            });
+        });
+    };
+
+    /**
+     * 内部方法: 索引所有数据
+     * @private
+     */
+    var _indexAll = function(){
+        $.ajax({
+            url: '/car/indexAll',
+            type: 'GET',
+            dataType: 'json',
+            success: function () {
+                layer.msg('索引成功!', {icon: 1, time: 1000}, function () {
+                    //重新加载
+                    window.location.href = window.location.href;
+                });
+            },
+            error: function () {
+                layer.msg('未知错误!', {icon: 2, time: 1000});
+            }
+        });
+    };
+
+    /**
      * 内部方法: 编辑车辆信息
      */
     var _carEdit = function(){
@@ -59,6 +117,12 @@ var FastSearchCar = (function(){
         //添加车辆
         $("#car_add").bind("click", _carAdd);
 
+        //批量删除
+        $("#car_batch_delete").bind("click", _carBatchDelete);
+
+        //索引所有数据
+        $("#index_all").bind("click", _indexAll);
+
         //编辑车辆
         $("#car_list").on("click", ".car_edit", _carEdit);
 
@@ -80,6 +144,7 @@ var FastSearchCar = (function(){
 
             $.each(data, function(index, item){
                 _html += _template.replace("{{id}}", item.id)
+                    .replace("{{id}}", item.id)
                     .replace("{{id}}", item.id)
                     .replace("{{title}}", item.title)
                     .replace("{{price}}", item.price)

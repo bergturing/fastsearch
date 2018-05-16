@@ -175,6 +175,16 @@ public class CarDto extends BaseDto<Long> {
     private String series;
 
     /**
+     * 车辆品牌代码
+     */
+    private String brandCode;
+
+    /**
+     * 车辆系列代码
+     */
+    private String seriesCode;
+
+    /**
      * 颜色的含义
      */
     private String colorMeaning;
@@ -441,6 +451,22 @@ public class CarDto extends BaseDto<Long> {
 
     public void setSeries(String series) {
         this.series = series;
+    }
+
+    public String getBrandCode() {
+        return brandCode;
+    }
+
+    public void setBrandCode(String brandCode) {
+        this.brandCode = brandCode;
+    }
+
+    public String getSeriesCode() {
+        return seriesCode;
+    }
+
+    public void setSeriesCode(String seriesCode) {
+        this.seriesCode = seriesCode;
     }
 
     public String getColorMeaning() {

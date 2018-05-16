@@ -15,12 +15,14 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.DeleteByQueryAction;
 import org.elasticsearch.index.reindex.DeleteByQueryRequestBuilder;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.sort.SortBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -205,11 +207,28 @@ public abstract class AbstractSearchService<
     public final List<ID> query(CONDITION condition) {
         List<ID> list = new ArrayList<>();
 
-        SearchRequestBuilder searchRequestBuilder = buildQuery(this.esClient.prepareSearch(getIndexName()).setTypes(getTypeName()), condition);
+        SearchRequestBuilder searchRequestBuilder = this.esClient.prepareSearch(getIndexName()).setTypes(getTypeName());
 
+        //如果查询条件不为空,就构建查询条件
+        if(condition != null){
+            //页码与分页大小
+            Integer page = condition.getPage();
+            Integer pageSize = condition.getPageSize();
+            if(page!=null && page>0 && pageSize!=null && pageSize>0){
+                searchRequestBuilder = searchRequestBuilder
+                        .setFrom((page-1)*pageSize)
+                        .setSize(pageSize);
+            }
+
+            //子类实现的构建的其他查询条件
+            buildRequest(searchRequestBuilder, condition);
+        }
+
+        //开始执行查询
         logger.debug(searchRequestBuilder.toString());
         SearchResponse searchResponse = searchRequestBuilder.get();
 
+        //查询的结果
         SearchHit[] hits = searchResponse.getHits().getHits();
 
         //获取结果
@@ -276,12 +295,12 @@ public abstract class AbstractSearchService<
     protected abstract Class<MESSAGE> getIndexMessageClass();
 
     /**
-     * 构建查询对象
-     * @param searchRequestBuilder  查询条件对象
+     * 构建请求对象
+     * @param searchRequestBuilder  请求对象
      * @param condition             查询条件
      * @return                      构建的查询对象
      */
-    protected abstract SearchRequestBuilder buildQuery(SearchRequestBuilder searchRequestBuilder, CONDITION condition);
+    protected abstract void buildRequest(final SearchRequestBuilder searchRequestBuilder, final CONDITION condition);
 
     /**
      * 获取索引名

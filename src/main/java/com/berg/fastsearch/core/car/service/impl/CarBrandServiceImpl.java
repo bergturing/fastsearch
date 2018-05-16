@@ -6,7 +6,6 @@ import com.berg.fastsearch.core.car.service.ICarBrandService;
 import com.berg.fastsearch.core.car.web.dto.CarBrandDto;
 import com.berg.fastsearch.core.car.web.dto.CarBrandQueryCondition;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

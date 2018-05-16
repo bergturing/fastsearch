@@ -27,6 +27,9 @@ public class CarSeries extends BaseEntity {
     private Long brandId;
 
     @Column
+    private String code;
+
+    @Column
     private String name;
 
     public Long getId() {
@@ -43,6 +46,14 @@ public class CarSeries extends BaseEntity {
 
     public void setBrandId(Long brandId) {
         this.brandId = brandId;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

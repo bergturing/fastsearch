@@ -6,7 +6,6 @@ import com.berg.fastsearch.core.car.service.ICarPictureService;
 import com.berg.fastsearch.core.car.web.dto.CarPictureDto;
 import com.berg.fastsearch.core.car.web.dto.CarPictureQueryCondition;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -41,6 +40,11 @@ public class CarPictureServiceImpl
     @Override
     protected CarPicture createEntity() {
         return new CarPicture();
+    }
+
+    @Override
+    protected void transform2E(CarPictureDto dto, CarPicture entity) {
+        entity.setId(dto.getId());
     }
 
     @Override

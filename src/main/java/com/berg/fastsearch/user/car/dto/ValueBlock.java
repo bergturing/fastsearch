@@ -25,9 +25,11 @@ public class ValueBlock {
 
     static {
         PRICE_BLOCK = ImmutableMap.<String, ValueBlock>builder()
-                .put("*-1000", new ValueBlock("*-1000", -1, 1000))
-                .put("1000-3000", new ValueBlock("1000-3000", 1000, 3000))
-                .put("3000-*", new ValueBlock("3000-*", 3000, -1))
+                .put("*-10000", new ValueBlock("*-10000", -1, 10000))
+                .put("10000-30000", new ValueBlock("10000-30000", 10000, 30000))
+                .put("30000-50000", new ValueBlock("30000-50000", 30000, 50000))
+                .put("50000-100000", new ValueBlock("50000-100000", 50000, 100000))
+                .put("100000-*", new ValueBlock("100000-*", 100000, -1))
                 .build();
     }
 

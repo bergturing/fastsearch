@@ -21,9 +21,19 @@ public class CarTemplate extends BaseTemplate {
     private Long brandId;
 
     /**
+     * 车辆品牌代码
+     */
+    private String brandCode;
+
+    /**
      * 车辆的系列主键
      */
     private Long seriesId;
+
+    /**
+     * 车辆系列代码
+     */
+    private String seriesCode;
 
     /**
      * 发布者的id,用户表(sys_users)的主键
@@ -170,12 +180,28 @@ public class CarTemplate extends BaseTemplate {
         this.brandId = brandId;
     }
 
+    public String getBrandCode() {
+        return brandCode;
+    }
+
+    public void setBrandCode(String brandCode) {
+        this.brandCode = brandCode;
+    }
+
     public Long getSeriesId() {
         return seriesId;
     }
 
     public void setSeriesId(Long seriesId) {
         this.seriesId = seriesId;
+    }
+
+    public String getSeriesCode() {
+        return seriesCode;
+    }
+
+    public void setSeriesCode(String seriesCode) {
+        this.seriesCode = seriesCode;
     }
 
     public Long getDeployeeId() {

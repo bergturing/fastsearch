@@ -1,16 +1,18 @@
 package com.berg.fastsearch.core.system.base.service.impl;
 
+import com.berg.fastsearch.core.car.web.dto.CarDto;
+import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.system.base.entity.BaseEntity;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
+import org.apache.commons.collections.CollectionUtils;
 import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -96,6 +98,38 @@ public abstract class AbstractBaseServiceImpl<
         return dto;
     }
 
+    @Override
+    public List<DTO> batchDelete(List<ID> ids) {
+        final List<DTO> dtoList = new ArrayList<>();
+
+        //判断是否有删除的对象
+        if(CollectionUtils.isNotEmpty(ids)){
+            //删除数据的处理
+            ids.forEach(id -> {
+                dtoList.add(this.delete(id));
+            });
+        }
+
+        //返回处理结果
+        return dtoList;
+    }
+
+    @Override
+    public boolean indexAll() {
+        List<DTO> all = this.findAll(null);
+
+        final ISearchService<ID, CONDITION> searchService = getSearchService();
+        if(searchService != null){
+            if(CollectionUtils.isNotEmpty(all)){
+                all.forEach(dto -> {
+                    searchService.index(dto.getId());
+                });
+            }
+        }
+
+        return true;
+    }
+
     /**
      * 将entity转换成dto
      * @param entity    entity对象
@@ -120,17 +154,16 @@ public abstract class AbstractBaseServiceImpl<
      * @return              dto列表
      */
     protected final List<DTO> transform2D(List<ENTITY> entityList){
-        if(CollectionUtils.isEmpty(entityList)){
-            return null;
-        }else{
-            List<DTO> dtoList = new ArrayList<>();
+        List<DTO> dtoList = new ArrayList<>();
 
+        //不为空才执行
+        if(CollectionUtils.isNotEmpty(entityList)){
             entityList.forEach(entity -> {
                 dtoList.add(transform2D(entity));
             });
-
-            return dtoList;
         }
+
+        return dtoList;
     }
 
     /**

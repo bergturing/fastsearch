@@ -24,7 +24,7 @@
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
                class="input-text Wdate" style="width:120px;">
         <input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" id="" name="">
-        <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+        <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜车辆</button>
     </div>
 
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -36,6 +36,10 @@
             <a id="car_add" class="btn btn-primary radius" href="javascript:;">
                 <i class="Hui-iconfont">&#xe600;</i>
                 添加车辆
+            </a>
+            <a id="index_all" class="btn btn-warning radius" href="javascript:;">
+                <i class="Hui-iconfont">&#xe600;</i>
+                索引所有数据
             </a>
         </span>
         <span id="car_count" class="r">共有数据：<strong>xx</strong> 条</span>
@@ -73,7 +77,7 @@
     <table id="car_template" style="display: none">
         <tbody>
             <tr class="text-c">
-                <td><input type="checkbox" value="" name=""></td>
+                <td><input type="checkbox" value="{{id}}"></td>
                 <td>{{title}}</td>
                 <td>{{price}}</td>
                 <td>{{seats}}</td>
