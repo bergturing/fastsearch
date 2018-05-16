@@ -67,7 +67,7 @@ var FastSearchCar = (function(){
             success: function () {
                 layer.msg('索引成功!', {icon: 1, time: 1000}, function () {
                     //重新加载
-                    window.location.href = window.location.href;
+                    _loadData();
                 });
             },
             error: function () {
@@ -180,6 +180,9 @@ var FastSearchCar = (function(){
      * 内部方法: 加载数据
      */
     var _loadData = function(){
+        //移除所有数据
+        $("#car_list tbody tr").remove();
+
         $.ajax({
             url: '/car',
             type: 'GET',
