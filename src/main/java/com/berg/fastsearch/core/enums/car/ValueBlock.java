@@ -1,4 +1,4 @@
-package com.berg.fastsearch.user.car.dto;
+package com.berg.fastsearch.core.enums.car;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -16,7 +16,6 @@ public class ValueBlock {
      * 价格区间定义
      */
     public static final Map<String, ValueBlock> PRICE_BLOCK;
-
 
     /**
      * 无限制区间

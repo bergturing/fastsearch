@@ -3,6 +3,7 @@ package com.berg.fastsearch.core.address.entity;
 import com.berg.fastsearch.core.system.base.entity.BaseEntity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * <p></p>
@@ -18,24 +19,41 @@ public class SupportAddress extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 上一级行政单位
+    /**
+     * 上一级行政单位
+     */
     @Column
     private Long belongTo;
 
+    /**
+     * 地点英文名
+     */
     @Column
     private String enName;
 
+    /**
+     * 地点中文名
+     */
     @Column
     private String cnName;
 
+    /**
+     * 行政级别
+     */
     @Column
     private String level;
 
+    /**
+     * 百度地图经度
+     */
     @Column
-    private double baiduMapLng;
+    private BigDecimal baiduMapLng;
 
+    /**
+     * 百度地图纬度
+     */
     @Column
-    private double baiduMapLat;
+    private BigDecimal baiduMapLat;
 
     public Long getId() {
         return id;
@@ -77,19 +95,19 @@ public class SupportAddress extends BaseEntity{
         this.level = level;
     }
 
-    public double getBaiduMapLng() {
+    public BigDecimal getBaiduMapLng() {
         return baiduMapLng;
     }
 
-    public void setBaiduMapLng(double baiduMapLng) {
+    public void setBaiduMapLng(BigDecimal baiduMapLng) {
         this.baiduMapLng = baiduMapLng;
     }
 
-    public double getBaiduMapLat() {
+    public BigDecimal getBaiduMapLat() {
         return baiduMapLat;
     }
 
-    public void setBaiduMapLat(double baiduMapLat) {
+    public void setBaiduMapLat(BigDecimal baiduMapLat) {
         this.baiduMapLat = baiduMapLat;
     }
 }

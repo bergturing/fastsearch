@@ -1,4 +1,4 @@
-package com.berg.fastsearch.core.car.entity;
+package com.berg.fastsearch.core.car.web.dto;
 
 import com.berg.fastsearch.core.system.search.template.BaseTemplate;
 
@@ -12,7 +12,7 @@ import java.util.Date;
  * @version v1.0
  * @apiNote Created on 18-5-7
  */
-public class CarTemplate extends BaseTemplate {
+public class CarTemplate extends BaseTemplate<Long> {
     private static final long serialVersionUID = -2006856321242209473L;
 
     /**

@@ -2,11 +2,13 @@ package com.berg.fastsearch.core.address.service.impl;
 
 import com.berg.fastsearch.core.address.entity.SupportAddress;
 import com.berg.fastsearch.core.address.repository.SupportAddressRepository;
+import com.berg.fastsearch.core.address.service.ISupportAddressSearchService;
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressQueryCondition;
 import com.berg.fastsearch.core.enums.address.Level;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
+import com.berg.fastsearch.core.system.search.service.ISearchService;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,14 @@ public class SupportAddressServiceImpl
     @Autowired
     private SupportAddressRepository supportAddressRepository;
 
+    @Autowired
+    private ISupportAddressSearchService supportAddressSearchService;
+
+    @Override
+    protected ISearchService<Long, SupportAddressQueryCondition> getSearchService() {
+        return supportAddressSearchService;
+    }
+
     @Override
     protected JpaRepository<SupportAddress, Long> getRepository() {
         return supportAddressRepository;
@@ -46,6 +56,14 @@ public class SupportAddressServiceImpl
     @Override
     protected SupportAddress createEntity() {
         return new SupportAddress();
+    }
+
+    @Override
+    protected void transform2D(SupportAddress entity, SupportAddressDto dto) {
+        //设置上一行政级别的中文名
+        if(StringUtils.isBlank(dto.getBelongToCnName())){
+            dto.setBelongToCnName(supportAddressRepository.findOne(entity.getBelongTo()).getCnName());
+        }
     }
 
     @Override

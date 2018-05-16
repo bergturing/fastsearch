@@ -102,11 +102,7 @@ public class AdminCarUrlController{
         model.addAttribute("allTags", carTagService.findAll(null));
         //所有的城市
         model.addAttribute("citys", supportAddressService.findByLevel(Level.CITY.getValue()));
-        //所有的区域
-        model.addAttribute("regions", supportAddressService.findByLevel(Level.REGION.getValue()));
         //品牌的信息
         model.addAttribute("brands", carBrandService.findAll(null));
-        //系列的信息
-        model.addAttribute("series", carSeriesService.findAll(null));
     }
 }

@@ -2,6 +2,8 @@ package com.berg.fastsearch.core.address.web.dto;
 
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 
+import java.math.BigDecimal;
+
 /**
  * <p></p>
  *
@@ -12,19 +14,40 @@ import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 public class SupportAddressDto extends BaseDto<Long>{
     private static final long serialVersionUID = -3795339942715588313L;
 
-    // 上一级行政单位
+    /**
+     * 上一级行政单位
+     */
     private Long belongTo;
 
-
+    /**
+     * 地点英文名
+     */
     private String enName;
 
+    /**
+     * 地点中文名
+     */
     private String cnName;
 
+    /**
+     * 行政级别
+     */
     private String level;
 
-    private double baiduMapLng;
+    /**
+     * 百度地图经度
+     */
+    private BigDecimal baiduMapLng;
 
-    private double baiduMapLat;
+    /**
+     * 百度地图纬度
+     */
+    private BigDecimal baiduMapLat;
+
+    /**
+     * 上一行政对象的中文名
+     */
+    private String belongToCnName;
 
     public Long getBelongTo() {
         return belongTo;
@@ -58,19 +81,27 @@ public class SupportAddressDto extends BaseDto<Long>{
         this.level = level;
     }
 
-    public double getBaiduMapLng() {
+    public BigDecimal getBaiduMapLng() {
         return baiduMapLng;
     }
 
-    public void setBaiduMapLng(double baiduMapLng) {
+    public void setBaiduMapLng(BigDecimal baiduMapLng) {
         this.baiduMapLng = baiduMapLng;
     }
 
-    public double getBaiduMapLat() {
+    public BigDecimal getBaiduMapLat() {
         return baiduMapLat;
     }
 
-    public void setBaiduMapLat(double baiduMapLat) {
+    public void setBaiduMapLat(BigDecimal baiduMapLat) {
         this.baiduMapLat = baiduMapLat;
+    }
+
+    public String getBelongToCnName() {
+        return belongToCnName;
+    }
+
+    public void setBelongToCnName(String belongToCnName) {
+        this.belongToCnName = belongToCnName;
     }
 }

@@ -2,7 +2,6 @@ package com.berg.fastsearch.user.car.controller;
 
 import com.berg.fastsearch.core.account.service.IUserService;
 import com.berg.fastsearch.core.account.web.dto.UserDto;
-import com.berg.fastsearch.core.address.entity.SupportAddress;
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
 import com.berg.fastsearch.core.car.service.ICarService;
@@ -11,7 +10,7 @@ import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.enums.address.Level;
 import com.berg.fastsearch.core.system.base.web.dto.ResponseData;
 import com.berg.fastsearch.user.car.dto.MapSearch;
-import com.berg.fastsearch.user.car.dto.ValueBlock;
+import com.berg.fastsearch.core.enums.car.ValueBlock;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

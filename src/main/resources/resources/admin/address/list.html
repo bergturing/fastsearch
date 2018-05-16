@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="admin/common :: head"></div>
+    <link rel="stylesheet" type="text/css" href="/static/lib/webuploader/0.1.5/webuploader.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/admin/address/list.css">
+    <title>添加车辆 - 车辆管理 </title>
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> 地点管理
+    <span class="c-gray en">&gt;</span> 地点列表
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+
+<div class="page-container">
+    <div class="text-c"> 日期范围：
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
+               class="input-text Wdate" style="width:120px;">
+        -
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
+               class="input-text Wdate" style="width:120px;">
+        <input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" id="" name="">
+        <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜车辆</button>
+    </div>
+
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a id="batch_delete" href="javascript:;" class="btn btn-danger radius">
+                <i class="Hui-iconfont">&#xe6e2;</i>
+                批量删除
+            </a>
+            <a id="add" class="btn btn-primary radius" href="javascript:;">
+                <i class="Hui-iconfont">&#xe600;</i>
+                添加地点
+            </a>
+            <a id="index_all" class="btn btn-warning radius" href="javascript:;">
+                <i class="Hui-iconfont">&#xe600;</i>
+                索引所有数据
+            </a>
+        </span>
+        <span id="count" class="r">共有数据：<strong>xx</strong> 条</span>
+    </div>
+    <table id="list" class="table table-border table-bordered table-hover table-bg">
+        <thead>
+        <tr>
+            <th scope="col" colspan="6">车辆列表</th>
+        </tr>
+        <tr class="text-c">
+            <th width="50"><input type="checkbox" value="" name=""></th>
+            <th width="240">上一行政</th>
+            <th width="240">中文名</th>
+            <th width="240">英文名</th>
+            <th width="100">行政级别</th>
+            <th width="300">经度</th>
+            <th width="300">纬度</th>
+            <th width="100">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <table id="template" style="display: none">
+        <tbody>
+        <tr class="text-c">
+            <td><input type="checkbox" value="{{id}}"></td>
+            <td>{{belongToCnName}}</td>
+            <td>{{cnName}}</td>
+            <td>{{enName}}</td>
+            <td>{{level}}</td>
+            <td>{{baiduMapLng}}</td>
+            <td>{{baiduMapLat}}</td>
+            <td class="f-14">
+                <a primaryKey="{{id}}" class="edit" title="编辑" href="javascript:;" style="text-decoration:none">
+                    <i class="Hui-iconfont">&#xe6df;</i>
+                </a>
+                <a primaryKey="{{id}}" class="delete ml-5" title="删除" href="javascript:;" style="text-decoration:none">
+                    <i class="Hui-iconfont">&#xe6e2;</i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/lib/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/lib/h-ui.admin/js/H-ui.admin.js"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+
+<script type="text/javascript" src="/static/js/admin/address/list.js"></script>
+</body>
+</html>

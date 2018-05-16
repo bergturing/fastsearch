@@ -1,4 +1,4 @@
-package com.berg.fastsearch.core.car.entity;
+package com.berg.fastsearch.core.car.web.dto;
 
 import com.berg.fastsearch.core.system.search.support.BaseIndexMessage;
 

@@ -2,14 +2,14 @@ package com.berg.fastsearch.core.car.service.impl;
 
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
-import com.berg.fastsearch.core.car.entity.CarIndexMessage;
-import com.berg.fastsearch.core.car.entity.CarTemplate;
+import com.berg.fastsearch.core.car.web.dto.CarIndexMessage;
+import com.berg.fastsearch.core.car.web.dto.CarTemplate;
 import com.berg.fastsearch.core.car.service.ICarSearchService;
 import com.berg.fastsearch.core.car.service.ICarService;
 import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
 import com.berg.fastsearch.core.system.search.service.impl.AbstractSearchService;
-import com.berg.fastsearch.user.car.dto.ValueBlock;
+import com.berg.fastsearch.core.enums.car.ValueBlock;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -20,8 +20,6 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * <p>车辆ES搜索服务对象</p>
@@ -86,7 +84,7 @@ public class CarSearchServiceImpl
 
     @Override
     public String getIndexName() {
-        return "fastsearch";
+        return "car";
     }
 
     @Override

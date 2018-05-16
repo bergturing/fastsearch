@@ -41,11 +41,16 @@ public abstract class AbstractBaseServiceImpl<
             return transform2D(getRepository().findAll());
         }
 
-        //获取条件查询的ids
-        List<ID> ids = getSearchService().query(condition);
+        if(getSearchService()!=null){
+            //获取条件查询的ids
+            List<ID> ids = getSearchService().query(condition);
 
-        //查询数据
-        return transform2D(getRepository().findAll(ids));
+            //查询数据
+            return transform2D(getRepository().findAll(ids));
+        }else{
+            //查询数据
+            return transform2D(getRepository().findAll());
+        }
     }
 
     @Override

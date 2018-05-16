@@ -1,0 +1,21 @@
+{
+  "mappings": {
+    "address": {
+      "dynamic": false,
+      "properties": {
+        "id":{
+          "type": "long"
+        },
+        "belongTo": {
+          "type": "long"
+        },
+        "cnName": {
+          "type": "keyword"
+        },
+        "enName": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
