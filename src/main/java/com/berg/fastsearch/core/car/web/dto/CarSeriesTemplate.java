@@ -1,32 +1,22 @@
 package com.berg.fastsearch.core.car.web.dto;
 
-import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
+import com.berg.fastsearch.core.system.search.template.BaseTemplate;
 
 /**
  * <p></p>
  *
  * @author bo.he02@hand-china.com
  * @version v1.0
- * @apiNote Created on 18-5-10
+ * @apiNote Created on 18-5-16
  */
-public class CarSeriesQueryCondition extends BaseQueryCondition {
-    private static final long serialVersionUID = 4087043591628429111L;
-
-    private Long id;
+public class CarSeriesTemplate extends BaseTemplate<Long> {
+    private static final long serialVersionUID = 5703532335952045004L;
 
     private Long brandId;
 
     private String code;
 
     private String name;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getBrandId() {
         return brandId;

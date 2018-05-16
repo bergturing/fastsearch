@@ -60,16 +60,16 @@ public class CarServiceImpl
     private ICarTagService carTagService;
 
     /**
-     * 车辆搜索服务
-     */
-    @Autowired
-    private ICarSearchService carSearchService;
-
-    /**
      * 地址服务
      */
     @Autowired
     private ISupportAddressService supportAddressService;
+
+    /**
+     * 车辆搜索服务
+     */
+    @Autowired
+    private ICarSearchService carSearchService;
 
     /**
      * 图片的前缀

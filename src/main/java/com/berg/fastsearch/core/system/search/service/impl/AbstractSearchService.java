@@ -106,17 +106,6 @@ public abstract class AbstractSearchService<
         } else {
             success = deleteAndCreate(totalHit, template);
         }
-
-//        ServiceResult serviceResult = addressService.lbsUpload(location.getResult(), house.getStreet() + house.getDistrict(),
-//                city.getCnName() + region.getCnName() + house.getStreet() + house.getDistrict(),
-//                message.getHouseId(), house.getPrice(), house.getArea());
-//
-//        if (!success || !serviceResult.isSuccess()) {
-//            this.index(message.getHouseId(), message.getRetry() + 1);
-//        } else {
-//            logger.debug("Index success with house " + houseId);
-//
-//        }
     }
 
     private boolean create(TEMPLATE template) {
@@ -124,7 +113,6 @@ public abstract class AbstractSearchService<
             IndexResponse response = this.esClient.prepareIndex(getIndexName(), getTypeName())
                     .setSource(objectMapper.writeValueAsBytes(template), XContentType.JSON).get();
 
-//            logger.debug("Create index with house: " + template.getId());
             if (response.status() == RestStatus.CREATED) {
                 return true;
             } else {

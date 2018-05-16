@@ -1,7 +1,5 @@
 package com.berg.fastsearch.core.system.base.service.impl;
 
-import com.berg.fastsearch.core.car.web.dto.CarDto;
-import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.system.base.entity.BaseEntity;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;

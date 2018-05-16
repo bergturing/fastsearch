@@ -95,12 +95,70 @@ var FSCarAdd = (function(){
         });
     };
 
+    /**
+     *
+     * @param brand
+     * @private
+     */
+    var _changeBrand = function(brand) {
+        $.get('/car/brand', function (data, status) {
+            if (status !== 'success' || data.code !== 200) {
+                _showError(data.message);
+                return;
+            }
+            brand.html(tipStr);
+            var str = '';
+            $.each(data.data, function (i, item) {
+                str += "<option value=" + item.id + ">" + item.name + "</option>";
+            });
+            brand.append(str);
+        });
+    };
+
+    /**
+     *
+     * @param series
+     * @param brandId
+     * @private
+     */
+    var _changeSeries = function (series, brandId) {
+        $.get('/car/series?brandId=' + brandId, function (data, status) {
+            if (status !== 'success' || data.code !== 200) {
+                _showError(data.message);
+                return;
+            }
+            var selectedVal = series.val();
+            series.html(tipStr);
+
+            var str = "";
+            $.each(data.data, function (i, item) {
+                if (item.id === selectedVal) {
+                    str += "<option value=" + item.id + " selected='selected'>" + item.name + "</option>";
+                } else {
+                    str += "<option value=" + item.id + ">" + item.name + "</option>";
+                }
+            });
+            series.append(str);
+        });
+    };
+
 
     var _initController = function(){
-        // 二级联动 地区 以及 地铁线路 动态变动
+        // 二级联动 车辆品牌与系列联动
+        $brand.change(function () {
+            var selectedVal = $(this).val();
+            if (typeof(selectedVal) === 'undefined' || selectedVal === "") {
+                layer.msg('请选择车辆品牌！', {icon: 5, time: 2000});
+                return;
+            }
+
+            _changeSeries($series, selectedVal);
+        });
+
+        // 二级联动 地区 以及 区域联动
         $city.change(function () {
             var selectedVal = $(this).val();
-            if (typeof(selectedVal) == 'undefined' || selectedVal == "") {
+            if (typeof(selectedVal) === 'undefined' || selectedVal === "") {
                 layer.msg('请选择所在城市！', {icon: 5, time: 2000});
                 return;
             }
@@ -123,6 +181,7 @@ var FSCarAdd = (function(){
      * @private
      */
     var _loadData = function(){
+        _changeBrand($brand);
         _changeCity($city);
     };
 
@@ -141,6 +200,7 @@ var FSCarAdd = (function(){
         _init();
 
         _loadData();
+
         return this;
     };
 

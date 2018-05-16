@@ -1,21 +1,18 @@
 {
   "mappings": {
-    "address": {
+    "carseries": {
       "dynamic": false,
       "properties": {
         "id":{
           "type": "long"
         },
-        "belongTo": {
+        "brandId": {
           "type": "long"
         },
-        "level": {
+        "code": {
           "type": "keyword"
         },
-        "cnName": {
-          "type": "keyword"
-        },
-        "enName": {
+        "name": {
           "type": "keyword"
         }
       }

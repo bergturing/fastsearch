@@ -1,21 +1,15 @@
 {
   "mappings": {
-    "address": {
+    "carbrand": {
       "dynamic": false,
       "properties": {
         "id":{
           "type": "long"
         },
-        "belongTo": {
-          "type": "long"
-        },
-        "level": {
+        "code": {
           "type": "keyword"
         },
-        "cnName": {
-          "type": "keyword"
-        },
-        "enName": {
+        "name": {
           "type": "keyword"
         }
       }
