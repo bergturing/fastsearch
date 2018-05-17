@@ -1,0 +1,15 @@
+{
+  "mappings": {
+    "cartag": {
+      "dynamic": false,
+      "properties": {
+        "id":{
+          "type": "long"
+        },
+        "name": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}

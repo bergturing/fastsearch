@@ -1,5 +1,6 @@
 package com.berg.fastsearch.core.address.service;
 
+import com.berg.fastsearch.core.address.web.dto.SupportAddressIndexMessage;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressQueryCondition;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
 
@@ -10,5 +11,5 @@ import com.berg.fastsearch.core.system.search.service.ISearchService;
  * @version v1.0
  * @apiNote Created on 18-5-16
  */
-public interface ISupportAddressSearchService extends ISearchService<Long, SupportAddressQueryCondition>{
+public interface ISupportAddressSearchService extends ISearchService<Long, SupportAddressIndexMessage, SupportAddressQueryCondition>{
 }

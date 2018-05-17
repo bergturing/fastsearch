@@ -37,11 +37,11 @@ server:
 
 # qiniu 注意替换成自己申请的配置
 qiniu:
-  AccessKey: GVD-MVQEoOiJOt7yNBDo-JrOKWHB33eZN2JmDFC6
-  SecretKey: sHnl57ZXtStejn7GgY5VF3lnm1CxMJ3hcayexAWz
-  Bucket: lakers
+  AccessKey: 5_o-1uXFijhRZEeSQXBl1n8O6EoR063xnYY5T_pt
+  SecretKey: 2b2OIi1_l4gL0-1vpCDzgw_RE0s1_wJX40yTLdY6
+  Bucket: fastsearch
   cdn:
-    prefix: http://7xo6gy.com1.z0.glb.clouddn.com/
+    prefix: http://p8vm8po1c.bkt.clouddn.com/
 
 elasticsearch:
   host: 192.168.2.81

@@ -1,7 +1,10 @@
 package com.berg.fastsearch.admin.car.controller;
 
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
+import com.berg.fastsearch.core.address.web.dto.SupportAddressQueryCondition;
 import com.berg.fastsearch.core.car.service.*;
+import com.berg.fastsearch.core.car.web.dto.CarDto;
+import com.berg.fastsearch.core.car.web.dto.CarSeriesQueryCondition;
 import com.berg.fastsearch.core.enums.address.Level;
 import com.berg.fastsearch.core.enums.car.*;
 import com.berg.fastsearch.core.system.base.web.controller.BaseUrlController;
@@ -21,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RequestMapping("/admin/car")
 @Controller
-public class AdminCarUrlController{
+public class AdminCarUrlController extends BaseUrlController<Long>{
 
     @Autowired
     private ICarService carService;
@@ -41,44 +44,41 @@ public class AdminCarUrlController{
     @Autowired
     private ICarSeriesService carSeriesService;
 
-    /**
-     * 列表界面
-     * @return      列表界面的路径
-     */
-    @GetMapping("/list")
-    public String list(){
-        return "admin/car/list";
+    @Override
+    protected String getPrefix() {
+        return "admin/car";
     }
 
-    /**
-     * 新增车辆的界面
-     * @return      新增车辆界面路径
-     */
-    @GetMapping("/add")
-    public String add(Model model){
+    @Override
+    protected void addData(Model model){
+        //设置基本属性
+        baseData(model);
+    }
+
+    @Override
+    public void editData(Long id, Model model){
         //设置基本属性
         baseData(model);
 
-        return "admin/car/add";
-    }
-
-    /**
-     * 编辑车辆的界面
-     * @return      编辑车辆的路径
-     */
-    @GetMapping("/edit")
-    public String edit(Long id, Model model){
-        //设置基本属性
-        baseData(model);
+        CarDto carDto = carService.findOne(id);
+        //设置车辆信息
+        model.addAttribute("car", carDto);
 
         //查询当前汽车的标签
         model.addAttribute("tags", carTagService.findByCarId(id));
         //查询当前汽车的图片
         model.addAttribute("pictures", carPictureService.findByCarId(id));
-        //设置车辆信息
-        model.addAttribute("car", carService.findOne(id));
 
-        return "admin/car/edit";
+        //设置系列数据
+        CarSeriesQueryCondition carSeriesQueryCondition = new CarSeriesQueryCondition();
+        carSeriesQueryCondition.setBrandId(carDto.getBrandId());
+        model.addAttribute("series", carSeriesService.findAll(carSeriesQueryCondition));
+
+        //设置区域数据
+        SupportAddressQueryCondition supportAddressQueryCondition = new SupportAddressQueryCondition();
+        supportAddressQueryCondition.setBelongTo(carDto.getCityId());
+        supportAddressQueryCondition.setLevel(Level.REGION.getValue());
+        model.addAttribute("regions", supportAddressService.findAll(supportAddressQueryCondition));
     }
 
     /**
@@ -100,9 +100,5 @@ public class AdminCarUrlController{
         model.addAttribute("styles", Style.values());
         //所有的标签
         model.addAttribute("allTags", carTagService.findAll(null));
-        //所有的城市
-        model.addAttribute("citys", supportAddressService.findByLevel(Level.CITY.getValue()));
-        //品牌的信息
-        model.addAttribute("brands", carBrandService.findAll(null));
     }
 }

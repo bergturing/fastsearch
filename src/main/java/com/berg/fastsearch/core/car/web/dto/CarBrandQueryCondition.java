@@ -12,6 +12,12 @@ import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
 public class CarBrandQueryCondition extends BaseQueryCondition {
     private static final long serialVersionUID = 5477447144439298517L;
 
+    public static final String FIELD_ID = "id";
+
+    public static final String FIELD_CODE = "code";
+
+    public static final String FIELD_NAME = "name";
+
     private Long id;
 
     private String code;

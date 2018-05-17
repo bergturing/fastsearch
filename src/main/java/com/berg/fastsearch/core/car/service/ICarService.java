@@ -21,5 +21,5 @@ public interface ICarService extends IBaseService<Long, CarDto, CarQueryConditio
 //     * @return
 //     */
 //    List<CarDto> wholeMapQuery(CarQueryCondition carQueryCondition);
-    CarDto watchCar(Long id);
+    CarDto watchCar(Long id) throws Exception;
 }

@@ -50,4 +50,16 @@ public class UserRoleServiceImpl
     protected UserRole createEntity() {
         return new UserRole();
     }
+
+    @Override
+    protected void transform2E(UserRoleDto dto, UserRole entity) throws Exception {
+        //如果dto有Id,就设置用于数据的更新
+        Long id = dto.getId();
+        if(id!=null && id>0){
+            //更新
+            entity.setId(id);
+        }else{
+            //新建
+        }
+    }
 }

@@ -3,11 +3,13 @@ package com.berg.fastsearch.core.car.service.impl;
 import com.berg.fastsearch.core.car.entity.CarTag;
 import com.berg.fastsearch.core.car.repository.CarTagRepository;
 import com.berg.fastsearch.core.car.service.ICarTagAssService;
+import com.berg.fastsearch.core.car.service.ICarTagSearchService;
 import com.berg.fastsearch.core.car.service.ICarTagService;
 import com.berg.fastsearch.core.car.web.dto.CarTagAssDto;
 import com.berg.fastsearch.core.car.web.dto.CarTagDto;
 import com.berg.fastsearch.core.car.web.dto.CarTagQueryCondition;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
+import com.berg.fastsearch.core.system.search.service.ISearchService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -40,6 +42,17 @@ public class CarTagServiceImpl
     @Autowired
     private ICarTagAssService carTagAssService;
 
+    /**
+     *
+     */
+    @Autowired
+    private ICarTagSearchService carTagSearchService;
+
+    @Override
+    protected ISearchService getSearchService() {
+        return carTagSearchService;
+    }
+
     @Override
     protected JpaRepository<CarTag, Long> getRepository() {
         return carTagRepository;
@@ -53,6 +66,18 @@ public class CarTagServiceImpl
     @Override
     protected CarTag createEntity() {
         return new CarTag();
+    }
+
+    @Override
+    protected void transform2E(CarTagDto dto, CarTag entity) throws Exception {
+        //如果dto有Id,就设置用于数据的更新
+        Long id = dto.getId();
+        if(id!=null && id>0){
+            //更新
+            entity.setId(id);
+        }else{
+            //新建
+        }
     }
 
     @Override

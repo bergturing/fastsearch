@@ -11,4 +11,24 @@ import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
  */
 public class CarSubscribeQueryCondition extends BaseQueryCondition {
     private static final long serialVersionUID = 8021973393144129698L;
+
+    private Long userId;
+
+    private Long carId;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
+    }
 }

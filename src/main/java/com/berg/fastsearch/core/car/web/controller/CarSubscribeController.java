@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping(value = {"/car/subscribe"})
 @RestController
-public class CarSubscribrController extends BaseController<Long, CarSubscribeDto, CarSubscribeQueryCondition> {
+public class CarSubscribeController extends BaseController<Long, CarSubscribeDto, CarSubscribeQueryCondition> {
 
     @Autowired
     private ICarSubscribeService carSubscribeService;

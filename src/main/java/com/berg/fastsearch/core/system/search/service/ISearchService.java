@@ -1,6 +1,7 @@
 package com.berg.fastsearch.core.system.search.service;
 
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
+import com.berg.fastsearch.core.system.kafka.message.BaseIndexMessage;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 
@@ -14,16 +15,10 @@ import java.util.List;
  * @version v1.0
  * @apiNote Created on 18-5-7
  */
-public interface ISearchService<ID extends Serializable, CONDITION extends BaseQueryCondition> {
-    /**
-     * 索引名
-     */
-//    String INDEX_NAME = "fastsearch";
-
-    /**
-     * 索引类型
-     */
-//    String INDEX_TYPE = "car";
+public interface ISearchService<
+        ID extends Serializable,
+        MESSAGE extends BaseIndexMessage<ID>,
+        CONDITION extends BaseQueryCondition> {
 
     /**
      * 索引目标
@@ -36,6 +31,12 @@ public interface ISearchService<ID extends Serializable, CONDITION extends BaseQ
      * @param id    目标主键
      */
     void remove(ID id);
+
+    /**
+     *  处理消息
+     * @param content   消息对象
+     */
+    void processMessage(String content);
 
     /**
      * 检索

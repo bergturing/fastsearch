@@ -1,5 +1,7 @@
 package com.berg.fastsearch.core.system.file.controller;
 
+import com.berg.fastsearch.core.car.entity.CarPicture;
+import com.berg.fastsearch.core.car.web.dto.CarPictureDto;
 import com.berg.fastsearch.core.system.base.web.dto.ResponseData;
 import com.berg.fastsearch.core.system.file.dto.QiNiuPutRet;
 import com.berg.fastsearch.core.system.file.service.IQiNiuService;

@@ -39,7 +39,19 @@ public class SupportAddressSearchServiceImpl
     }
 
     @Override
-    protected Class<SupportAddressIndexMessage> getIndexMessageClass() {
+    protected Class<SupportAddressTemplate> getTemplateClass() {
+        return SupportAddressTemplate.class;
+    }
+
+    @Override
+    protected SupportAddressIndexMessage getMessage() {
+        SupportAddressIndexMessage message = new SupportAddressIndexMessage();
+        message.setProcessServiceName("supportAddressSearchServiceImpl");
+        return message;
+    }
+
+    @Override
+    protected Class<SupportAddressIndexMessage> getMessageClass() {
         return SupportAddressIndexMessage.class;
     }
 

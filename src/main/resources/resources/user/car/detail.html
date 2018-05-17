@@ -69,12 +69,13 @@
                 <div class="sub" th:text="${car.description}">这个经纪人很懒，没写核心卖点</div>
             </div>
             <div class="btnContainer ">
-                <button id="subscribe" th:switch="${car.status}"
-                        th:attr="data-bind=${car.status}" th:style="${car.status != null} ? 'background-color: #6a7b8c; color: black;'">
-                    <span th:case="ADDED">已加入待看</span>
-                    <span th:case="SUBSCRIBED">已预约时间</span>
-                    <span th:case="SAW">已看过此车</span>
-                    <span th:default>预约看车</span>
+                <button id="subscribe" th:switch="${car.subscribe.status}"
+                        th:attr="data-bind=${car.subscribe.status}" th:style="${car.subscribe.status != null} ? 'background-color: #6a7b8c; color: black;'">
+                    <span th:each="status : ${subscribeStatus}"
+                          th:text="${status.name}"
+                          th:case="${status.code}">
+                    </span>
+                    <span th:case="*">预约看车</span>
                 </button>
             </div>
         </div>
@@ -335,23 +336,10 @@
 <div id="only" data-city="bj" data-page="zufang_view"></div>
 
 <script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
-
-<!--<div th:include="common :: footer"></div>-->
-<script type='text/javascript'>
-    (function(m, ei, q, i, a, j, s) {
-        m[i] = m[i] || function() {
-                (m[i].a = m[i].a || []).push(arguments)
-            };
-        j = ei.createElement(q),
-            s = ei.getElementsByTagName(q)[0];
-        j.async = true;
-        j.charset = 'UTF-8';
-        j.src = 'https://static.meiqia.com/dist/meiqia.js?_=t';
-        s.parentNode.insertBefore(j, s);
-    })(window, document, 'script', '_MEIQIA');
-    _MEIQIA('entId', 75794);
-</script>
 <script src="/static/lib/layui/layui.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/lib/layer/2.4/layer.js"></script>
+
+
 <script th:inline="javascript" type="text/javascript">
     <!-- layui的图片轮播 -->
     layui.use('carousel', function () {
@@ -373,11 +361,11 @@
         subscribeBtn.on('click', function () {
             var subscribeStatus = subscribeBtn.attr('data-bind');
             switch (subscribeStatus) {
-                case "1":
-                case "2":
+                case "ADDED":
+                case "SUBSCRIBED":
                     cancelSubscribe();
                     break;
-                case "3":
+                case "SAW":
                     layer.msg('您已看过此房!', {icon: 5, time: 2000});
                     break;
                 default:
@@ -387,14 +375,16 @@
 
             function subscribe() {
                 $.ajax({
-                    url: '/api/user/house/subscribe',
-                    data: {
-                        'car_id': carId
-                    },
-                    type: 'POST',
+                    url: '/car/subscribe',
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        'carId': carId
+                    }),
+                    dataType: "json",
                     success: function (data) {
                         if (data.code === 200) {
-                            subscribeBtn.attr('data-bind', "1");
+                            subscribeBtn.attr('data-bind', "SUBSCRIBED");
                             subscribeBtn.css('background-color', '#6a7b8c');
                             subscribeBtn.css('color', 'black');
                             subscribeBtn.find('span').text('已加入待看');
@@ -419,14 +409,14 @@
                     btn: ['确认', '取消'] //按钮
                 }, function () {
                     $.ajax({
-                        url: '/api/user/house/subscribe?car_id=' + carId,
+                        url: '/car/subscribe/' + [[${car.subscribe.id}]],
                         type: 'DELETE',
                         success: function (data) {
                             if (data.code === 200) {
-                                subscribeBtn.attr('data-bind', "0")
+                                subscribeBtn.attr('data-bind', "ADD")
                                     .css('background-color', '#0054a5')
                                     .css('color', '#fff');
-                                subscribeBtn.find('span').text('预约看房').css('color');
+                                subscribeBtn.find('span').text('预约看车').css('color');
                                 layer.msg('已取消预约!', {icon: 6, time: 2000});
                             } else if (data.code === 403) {
                                 layer.msg('请先登录,再执行操作', {icon: 5, time: 2000});

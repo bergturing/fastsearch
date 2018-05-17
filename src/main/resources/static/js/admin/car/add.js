@@ -40,6 +40,12 @@ var FSCarAdd = (function(){
     var tipStr = '<option value="">请选择</option>';
 
     /**
+     * 标签
+     * @type {Set}
+     */
+    var _tags = new Set();
+
+    /**
      *
      * @param message
      * @private
@@ -166,6 +172,109 @@ var FSCarAdd = (function(){
             _changeRegion($region, selectedVal);
         });
 
+        /**
+         * 绑定标签的点击事件
+         */
+        $('#tags span').on('click', function () {
+            var tag = $(this).attr("primaryKey");
+            if (_tags.has(tag)) {
+                $(this).removeClass('label-success').addClass('label-default').css('border', 'none');
+                _tags.delete(tag);
+            } else {
+                $(this).removeClass('label-default').addClass('label-success').css('border', 'solid black 1px');
+                _tags.add(tag);
+            }
+        });
+
+        //表单验证
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-add").validate({
+            rules: {
+                title: {
+                    required: true,
+                    maxlength: 16
+                },
+                price: {
+                    required: true
+                },
+                seats: {
+                    required: true
+                },
+                displacement: {
+                    required: true
+                },
+                mileage: {
+                    required: true
+                },
+                age: {
+                    required: true
+                },
+                gearBox: {
+                    required: true
+                },
+                color: {
+                    required: true
+                },
+                driveType: {
+                    required: true
+                },
+                emissionStandard: {
+                    required: true
+                },
+                style: {
+                    required: true
+                },
+                fuelType: {
+                    required: true
+                },
+                address: {
+                    required: true
+                }
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+                var cover = $(form).find("input:radio[name='cover']:checked").val();
+
+                if (cover == null || typeof(cover) == "undefined" || cover == "" || cover.length < 1) {
+                    layer.msg('至少要上传一个封面！', {icon: 5, time: 2000});
+                    return false;
+                }
+
+                $(form).find('input.house-tag').remove();
+                var index = 0;
+                _tags.forEach(function (tag) {
+                    $(form).append('<input class="house-tag" name="tags[' + index++ + '].id" type="hidden" value="'+ tag + '"/>');
+                });
+
+                $(form).ajaxSubmit({
+                    type: 'post',
+                    url: '/car/form', // 提交地址
+                    success: function (data) {
+                        if (data.code === 200) {
+                            alert('提交成功！');
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.$('.btn-refresh').click();
+                            parent.layer.close(index);
+                            removeIframe();
+                        } else {
+                            layer.msg(data.message, {icon: 5, time: 2000});
+                        }
+                    },
+                    error: function (request, message, e) {
+                        layer.msg(request.responseText, {icon: 5, time: 2000});
+                    }
+                });
+                return false; //此处必须返回false，阻止常规的form提交
+            }
+        });
+
     };
 
     /**
@@ -206,118 +315,3 @@ var FSCarAdd = (function(){
 
     return _fsCarAdd;
 })();
-
-
-// $(function () {
-//
-//
-//     changeCity($city);
-//
-//
-//
-//     // 地铁站三级联动
-//     $subwayLine.change(function () {
-//         var selectedVal = $(this).val();
-//         if (typeof(selectedVal) == 'undefined' || selectedVal == "") {
-//             layer.msg('请选择地铁线路！', {icon: 5, time: 2000});
-//             return;
-//         }
-//
-//         changeSubwayStation($subwayStation, selectedVal);
-//     });
-//
-//     var tags = new Set();
-//     $('#tags span').on('click', function () {
-//         var tag = $(this).text();
-//         if (tags.has(tag)) {
-//             $(this).removeClass('label-success').addClass('label-default').css('border', 'none');
-//             tags.delete(tag);
-//         } else {
-//             $(this).removeClass('label-default').addClass('label-success').css('border', 'solid black 1px');
-//             tags.add(tag);
-//         }
-//     });
-//
-//
-//     //表单验证
-//     $('.skin-minimal input').iCheck({
-//         checkboxClass: 'icheckbox-blue',
-//         radioClass: 'iradio-blue',
-//         increaseArea: '20%'
-//     });
-//
-//     $("#form-car-add").validate({
-//         rules: {
-//             title: {
-//                 required: true,
-//                 maxlength: 16
-//             },
-//             price: {
-//                 required: true
-//             },
-//             seats: {
-//                 required: true
-//             },
-//             displacement: {
-//                 required: true
-//             },
-//             mileage: {
-//                 required: true
-//             },
-//             age: {
-//                 required: true
-//             },
-//             gearBox: {
-//                 required: true
-//             },
-//             color: {
-//                 required: true
-//             },
-//             driveType: {
-//                 required: true
-//             },
-//             emissionStandard: {
-//                 required: true
-//             },
-//             style: {
-//                 required: true
-//             },
-//             fuelType: {
-//                 required: true
-//             },
-//             address: {
-//                 required: true
-//             }
-//         },
-//         onkeyup: false,
-//         focusCleanup: true,
-//         success: "valid",
-//         submitHandler: function (form) {
-//             var params = $(form).serializeArray();
-//             var values = {};
-//             for( x in params ){
-//                 if(params.hasOwnProperty(x)){
-//                     values[params[x].name] = params[x].value;
-//                 }
-//             }
-//             var idata = JSON.stringify(values);
-//
-//             $.ajax({
-//                 url: "/car",
-//                 type: "POST",
-//                 contentType: "application/json",
-//                 data: idata,
-//                 dataType: "json",
-//                 success: function (data) {
-//                     layer.msg('添加成功!', {icon: 1, time: 1000});
-//                 },
-//                 error: function (XmlHttpRequest, textStatus, errorThrown) {
-//                     layer.msg('error!', {icon: 1, time: 1000});
-//                 }
-//             });
-//             var index = parent.layer.getFrameIndex(window.name);
-//             parent.$('.btn-refresh').click();
-//             parent.layer.close(index);
-//         }
-//     });
-// });

@@ -18,6 +18,8 @@ public class CarSeriesDto extends BaseDto<Long> {
 
     private String name;
 
+    private String brandName;
+
     public Long getBrandId() {
         return brandId;
     }
@@ -40,5 +42,13 @@ public class CarSeriesDto extends BaseDto<Long> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 }

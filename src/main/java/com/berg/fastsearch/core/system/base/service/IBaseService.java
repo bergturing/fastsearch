@@ -36,14 +36,14 @@ public interface IBaseService<
      * @param dto       dto对象
      * @return          保存的结果
      */
-    DTO create(DTO dto);
+    DTO create(DTO dto) throws Exception;
 
     /**
      * 更新一条的信息
      * @param dto       dto对象
      * @return          保存的结果
      */
-    DTO update(DTO dto);
+    DTO update(DTO dto) throws Exception;
 
     /**
      * 删除一条数据,并返回删除的对象

@@ -23,15 +23,11 @@ import java.util.List;
  * @version v1.0
  * @apiNote Created on 18-5-3
  */
-@Service
 public abstract class AbstractBaseServiceImpl<
         ID extends Serializable,
         DTO extends BaseDto<ID>,
         ENTITY extends BaseEntity,
         CONDITION extends BaseQueryCondition> implements IBaseService<ID, DTO, CONDITION> {
-
-    @Autowired
-    private TransportClient esClient;
 
     @Override
     public final List<DTO> findAll(CONDITION condition){
@@ -57,21 +53,24 @@ public abstract class AbstractBaseServiceImpl<
     }
 
     @Override
-    public final DTO create(DTO dto) {
+    public final DTO create(DTO dto) throws Exception {
         //创建数据
-        dto = transform2D(getRepository().save(transform2E(dto)));
+        ID id = transform2D(getRepository().save(transform2E(dto))).getId();
+
+        //数据添加成功之后的操作
+        afterCreate(id, dto);
 
         //建立索引
         if(getSearchService()!=null){
-            getSearchService().index(dto.getId());
+            getSearchService().index(id);
         }
 
         //返回结果
-        return dto;
+        return this.findOne(id);
     }
 
     @Override
-    public final DTO update(DTO dto) {
+    public final DTO update(DTO dto) throws Exception {
         //更新数据
         dto = transform2D(getRepository().save(transform2E(dto)));
 
@@ -85,7 +84,7 @@ public abstract class AbstractBaseServiceImpl<
     }
 
     @Override
-    public DTO delete(ID id) {
+    public final DTO delete(ID id) {
         //查找删除
         DTO dto = this.findOne(id);
 
@@ -102,7 +101,7 @@ public abstract class AbstractBaseServiceImpl<
     }
 
     @Override
-    public List<DTO> batchDelete(List<ID> ids) {
+    public final List<DTO> batchDelete(List<ID> ids) {
         final List<DTO> dtoList = new ArrayList<>();
 
         //判断是否有删除的对象
@@ -118,10 +117,10 @@ public abstract class AbstractBaseServiceImpl<
     }
 
     @Override
-    public boolean indexAll() {
+    public final boolean indexAll() {
         List<DTO> all = this.findAll(null);
 
-        final ISearchService<ID, CONDITION> searchService = getSearchService();
+        final ISearchService searchService = getSearchService();
         if(searchService != null){
             if(CollectionUtils.isNotEmpty(all)){
                 all.forEach(dto -> {
@@ -174,7 +173,7 @@ public abstract class AbstractBaseServiceImpl<
      * @param dto       dto对象
      * @return          entity对象
      */
-    protected final ENTITY transform2E(DTO dto){
+    protected final ENTITY transform2E(DTO dto) throws Exception {
         if(dto!=null){
             ENTITY entity = createEntity();
             BeanUtils.copyProperties(dto, entity);
@@ -199,14 +198,18 @@ public abstract class AbstractBaseServiceImpl<
             List<ENTITY> entityList = new ArrayList<>();
 
             dtoList.forEach(dto -> {
-                entityList.add(transform2E(dto));
+                try {
+                    entityList.add(transform2E(dto));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             });
 
             return entityList;
         }
     }
 
-    protected ISearchService<ID, CONDITION> getSearchService(){
+    protected ISearchService getSearchService(){
         return null;
     }
 
@@ -240,6 +243,13 @@ public abstract class AbstractBaseServiceImpl<
      * @param dto       dto对象
      * @param entity    entity对象
      */
-    protected void transform2E(final DTO dto, final ENTITY entity){ }
+    protected void transform2E(final DTO dto, final ENTITY entity) throws Exception { }
+
+    /**
+     * 存储之后的操作
+     * @param id    主键
+     * @param dto   操作之后的dto
+     */
+    protected void afterCreate(ID id, DTO dto) throws Exception {}
 
 }

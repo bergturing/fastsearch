@@ -1,0 +1,12 @@
+{
+  "mappings": {
+    "userrole": {
+      "dynamic": false,
+      "properties": {
+        "id":{
+          "type": "long"
+        }
+      }
+    }
+  }
+}

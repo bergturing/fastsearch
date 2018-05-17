@@ -1,0 +1,12 @@
+{
+  "mappings": {
+    "role": {
+      "dynamic": false,
+      "properties": {
+        "id":{
+          "type": "long"
+        }
+      }
+    }
+  }
+}

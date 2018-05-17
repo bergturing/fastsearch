@@ -1,6 +1,6 @@
 package com.berg.fastsearch.core.car.web.dto;
 
-import com.berg.fastsearch.core.system.search.support.BaseIndexMessage;
+import com.berg.fastsearch.core.system.kafka.message.BaseIndexMessage;
 
 /**
  * <p></p>

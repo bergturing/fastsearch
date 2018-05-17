@@ -64,7 +64,19 @@ public class CarSearchServiceImpl
     }
 
     @Override
-    protected Class<CarIndexMessage> getIndexMessageClass() {
+    protected Class<CarTemplate> getTemplateClass() {
+        return CarTemplate.class;
+    }
+
+    @Override
+    protected CarIndexMessage getMessage() {
+        CarIndexMessage message = new CarIndexMessage();
+        message.setProcessServiceName("carSearchServiceImpl");
+        return message;
+    }
+
+    @Override
+    protected Class<CarIndexMessage> getMessageClass() {
         return CarIndexMessage.class;
     }
 

@@ -1,14 +1,19 @@
 package com.berg.fastsearch.core.car.service.impl;
 
+import com.berg.fastsearch.core.account.service.IUserService;
+import com.berg.fastsearch.core.account.web.dto.UserDto;
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.car.entity.Car;
+import com.berg.fastsearch.core.car.entity.CarTagAss;
 import com.berg.fastsearch.core.car.repository.CarRepository;
 import com.berg.fastsearch.core.car.service.*;
 import com.berg.fastsearch.core.car.web.dto.*;
 import com.berg.fastsearch.core.enums.car.*;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
+import com.berg.fastsearch.core.utils.AccountUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -72,13 +77,31 @@ public class CarServiceImpl
     private ICarSearchService carSearchService;
 
     /**
+     * 车辆预约的服务
+     */
+    @Autowired
+    private ICarSubscribeService subscribeService;
+
+    /**
+     * 用户服务
+     */
+    @Autowired
+    private IUserService userService;
+
+    /**
+     * 汽车标签分派服务
+     */
+    @Autowired
+    private ICarTagAssService carTagAssService;
+
+    /**
      * 图片的前缀
      */
     @Value("${qiniu.cdn.prefix}")
     private String cdnPrefix;
 
     @Override
-    protected ISearchService<Long, CarQueryCondition> getSearchService() {
+    protected ISearchService getSearchService() {
         return carSearchService;
     }
 
@@ -137,41 +160,30 @@ public class CarServiceImpl
         dto.setCityCnName(supportAddressService.findOne(entity.getCityId()).getCnName());
         //设置地区名
         dto.setRegionCnName(supportAddressService.findOne(entity.getRegionId()).getCnName());
+
+        //设置预约对象
+        CarSubscribeQueryCondition carSubscribeQueryCondition = new CarSubscribeQueryCondition();
+        carSubscribeQueryCondition.setCarId(entity.getId());
+        carSubscribeQueryCondition.setUserId(1L);
+        List<CarSubscribeDto> carSubscribeDtoList = subscribeService.findAll(carSubscribeQueryCondition);
+        if(CollectionUtils.isNotEmpty(carSubscribeDtoList) && carSubscribeDtoList.size()==1){
+            dto.setSubscribe(carSubscribeDtoList.get(0));
+        }else {
+            dto.setSubscribe(new CarSubscribeDto());
+        }
+
     }
 
     @Override
-    protected void transform2E(CarDto dto, Car entity) {
-        //处理照片的数据
-        List<CarPictureDto> carPictureDtos = dto.getPictures();
-        if(CollectionUtils.isNotEmpty(carPictureDtos)){
-            final Long carId = dto.getId();
-
-            carPictureDtos.forEach(carPictureDto -> {
-                Long id = carPictureDto.getId();
-                if(id==null || id<1){
-                    //新建
-                    carPictureDto.setCarId(carId);
-                    carPictureDto.setCdnPrefix(cdnPrefix);
-                    carPictureService.create(carPictureDto);
-                }else{
-                    //更新
-                    carPictureService.update(carPictureDto);
-                }
-            });
-        }
-
-        if(dto.getId()==null || dto.getId()<=0){
-            //新建
-
-            //处理创建时间
-            entity.setCreateTime(new Date());
-
-            entity.setDeployeeId(1L);
-            entity.setStatus("NEW");
-        }else{
+    protected void transform2E(CarDto dto, Car entity) throws Exception {
+        //如果dto有Id,就设置用于数据的更新
+        Long id = dto.getId();
+        if(id!=null && id>0){
             //更新
-            dto = this.findOne(dto.getId());
-            entity.setId(dto.getId());
+            entity.setId(id);
+
+            //处理其他数据
+            dto = this.findOne(id);
             entity.setCover(dto.getCover());
 
             //查看次数
@@ -184,6 +196,30 @@ public class CarServiceImpl
             entity.setCreateTime(dto.getCreateTime());
             entity.setDeployeeId(dto.getDeployeeId());
             entity.setStatus(dto.getStatus());
+        }else{
+            //新建
+
+            //处理创建时间
+            entity.setCreateTime(new Date());
+
+            String loginUserName = AccountUtil.getLoginUserName();
+            if(StringUtils.isNotBlank(loginUserName)){
+                UserDto userDto = userService.findByName(loginUserName);
+                if(userDto != null){
+                    //设置部署人
+                    entity.setDeployeeId(userDto.getId());
+                    //设置封面
+                    entity.setCover(cdnPrefix + dto.getCover());
+                    //设置车辆状态为新建
+                    entity.setStatus(Status.NEW.getCode());
+                    //设置车辆的初始查看次数
+                    entity.setWatchTimes(0L);
+                }else{
+                    throw new Exception("用户不存在");
+                }
+            }else{
+                throw new Exception("用户未登录");
+            }
         }
 
         //新建和更新都需要处理的
@@ -192,7 +228,41 @@ public class CarServiceImpl
     }
 
     @Override
-    public CarDto watchCar(Long id) {
+    protected void afterCreate(Long id, CarDto dto) throws Exception {
+        //处理照片的数据
+        List<CarPictureDto> carPictureDtos = dto.getPictures();
+        if(CollectionUtils.isNotEmpty(carPictureDtos)){
+            for (CarPictureDto carPictureDto : carPictureDtos) {
+                Long pictureDtoId = carPictureDto.getId();
+                if(pictureDtoId==null || pictureDtoId<1){
+                    //新建
+                    carPictureDto.setCarId(id);
+                    carPictureDto.setCdnPrefix(cdnPrefix);
+                    carPictureService.create(carPictureDto);
+                }else{
+                    //更新
+                    carPictureService.update(carPictureDto);
+                }
+            }
+        }
+
+        //处理标签
+        List<CarTagDto> tags = dto.getTags();
+        if(CollectionUtils.isNotEmpty(tags)){
+            CarTagAssDto tagAss = new CarTagAssDto();
+            for (CarTagDto tag : tags) {
+                Long tagId = tag.getId();
+                if(tagId!=null && tagId>0){
+                    tagAss.setCarId(id);
+                    tagAss.setCarTagId(tagId);
+                    carTagAssService.create(tagAss);
+                }
+            }
+        }
+    }
+
+    @Override
+    public CarDto watchCar(Long id) throws Exception {
         CarDto carDto = this.findOne(id);
 
         //查看车辆数据增加一次

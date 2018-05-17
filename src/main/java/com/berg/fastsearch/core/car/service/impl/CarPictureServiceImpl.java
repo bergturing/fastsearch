@@ -44,7 +44,14 @@ public class CarPictureServiceImpl
 
     @Override
     protected void transform2E(CarPictureDto dto, CarPicture entity) {
-        entity.setId(dto.getId());
+        //如果dto有Id,就设置用于数据的更新
+        Long id = dto.getId();
+        if(id!=null && id>0){
+            //更新
+            entity.setId(id);
+        }else{
+            //新建
+        }
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.berg.fastsearch.admin.car.controller;
 
+import com.berg.fastsearch.core.car.service.ICarBrandService;
 import com.berg.fastsearch.core.system.base.web.controller.BaseUrlController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,8 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin/car/brand")
 @Controller
 public class AdminCarBrandUrlController extends BaseUrlController<Long> {
+
+    @Autowired
+    private ICarBrandService carBrandService;
+
     @Override
     protected String getPrefix() {
         return "admin/car/brand";
+    }
+
+    @Override
+    protected void editData(Long id, Model model) {
+        //添加品牌数据
+        model.addAttribute("brand", carBrandService.findOne(id));
     }
 }

@@ -33,8 +33,8 @@ public abstract class BaseController<
     }
 
     /**
-     * 获取用户详细信息
-     * @return      用户的详细信息
+     * 获取详细信息
+     * @return      用   详细信息
      */
     @GetMapping("/{id:\\d+}")
     public ResponseData getInfo(@PathVariable("id") ID id){
@@ -42,26 +42,40 @@ public abstract class BaseController<
     }
 
     /**
-     * 创建用户对象
-     * @param roleDto   角色的详细信息
+     * 创建对象
+     * @param dto       详细信息
      * @return          新增之后的数据
      */
-    @PostMapping
-    public ResponseData create(@Valid @RequestBody DTO roleDto) throws Exception {
-        return ResponseData.ofSuccess(getService().create(roleDto));
+    @PostMapping("/form")
+    public ResponseData formCreate(@Valid @ModelAttribute("form-add") DTO dto) throws Exception {
+        if(dto.getId()!=null){
+            return ResponseData.ofSuccess(getService().update(dto));
+        }else{
+            return ResponseData.ofSuccess(getService().create(dto));
+        }
     }
 
     /**
-     * 根据id与用户对象修改用户信息
-     * @param id            用户的额主键
-     * @param roleDto       提交的角色的数据
+     * 创建对象
+     * @param dto       详细信息
+     * @return          新增之后的数据
+     */
+    @PostMapping
+    public ResponseData bodyCreate(@Valid @RequestBody DTO dto) throws Exception {
+        return ResponseData.ofSuccess(getService().create(dto));
+    }
+
+    /**
+     * 根据id与对象修改信息
+     * @param id            主键
+     * @param dto           提交的数据
      * @return              处理的结果
      */
     @PutMapping("/{id:\\d+}")
     public ResponseData update(@PathVariable("id") ID id,
-                               @Valid @RequestBody DTO roleDto){
-        roleDto.setId(id);
-        return ResponseData.ofSuccess(getService().update(roleDto));
+                               @Valid @RequestBody DTO dto) throws Exception {
+        dto.setId(id);
+        return ResponseData.ofSuccess(getService().update(dto));
     }
 
     @DeleteMapping("/{id:\\d+}")

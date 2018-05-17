@@ -1,0 +1,12 @@
+{
+  "mappings": {
+    "carsubscribe": {
+      "dynamic": false,
+      "properties": {
+        "id":{
+          "type": "long"
+        }
+      }
+    }
+  }
+}

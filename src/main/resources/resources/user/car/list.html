@@ -263,7 +263,7 @@
                                                     <span class="fang-subway-ex">
                                                         <span>
                                                             <span th:text="'排量: ' + ${car.displacement} + 'L'"></span>
-                                                            <span th:text="'车型: ' + ${car.style}"></span>
+                                                            <span th:text="'车型: ' + ${car.styleMeaning}"></span>
                                                         </span>
                                                     </span>
                                                 <!--</span>-->
@@ -382,31 +382,6 @@
             window.location.href = locate_url(page, pageSize);
             return false;
         });
-
-        var availableTags = [
-            "ActionScript",
-            "AppleScript",
-            "Asp",
-            "BASIC",
-            "C",
-            "C++",
-            "Clojure",
-            "COBOL",
-            "ColdFusion",
-            "Erlang",
-            "Fortran",
-            "Groovy",
-            "Haskell",
-            "Java",
-            "JavaScript",
-            "Lisp",
-            "Perl",
-            "PHP",
-            "Python",
-            "Ruby",
-            "Scala",
-            "Scheme"
-        ];
 
         $('#keyword-box').autocomplete({
             minLength: 2, // 最小字符数，默认1

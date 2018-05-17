@@ -5,6 +5,7 @@ import com.berg.fastsearch.core.address.repository.SupportAddressRepository;
 import com.berg.fastsearch.core.address.service.ISupportAddressSearchService;
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
+import com.berg.fastsearch.core.address.web.dto.SupportAddressIndexMessage;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressQueryCondition;
 import com.berg.fastsearch.core.enums.address.Level;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
@@ -38,8 +39,9 @@ public class SupportAddressServiceImpl
     @Autowired
     private ISupportAddressSearchService supportAddressSearchService;
 
+
     @Override
-    protected ISearchService<Long, SupportAddressQueryCondition> getSearchService() {
+    protected ISearchService getSearchService() {
         return supportAddressSearchService;
     }
 
@@ -63,6 +65,18 @@ public class SupportAddressServiceImpl
         //设置上一行政级别的中文名
         if(StringUtils.isBlank(dto.getBelongToCnName())){
             dto.setBelongToCnName(supportAddressRepository.findOne(entity.getBelongTo()).getCnName());
+        }
+    }
+
+    @Override
+    protected void transform2E(SupportAddressDto dto, SupportAddress entity) throws Exception {
+        //如果dto有Id,就设置用于数据的更新
+        Long id = dto.getId();
+        if(id!=null && id>0){
+            //更新
+            entity.setId(id);
+        }else{
+            //新建
         }
     }
 

@@ -1,28 +1,24 @@
 package com.berg.fastsearch.core.system.search.service.impl;
 
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
+import com.berg.fastsearch.core.system.kafka.service.IKafkaService;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
-import com.berg.fastsearch.core.system.search.support.BaseIndexMessage;
+import com.berg.fastsearch.core.system.kafka.message.BaseIndexMessage;
 import com.berg.fastsearch.core.system.search.template.BaseTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.elasticsearch.action.admin.indices.analyze.AnalyzeAction;
-import org.elasticsearch.action.admin.indices.analyze.AnalyzeRequestBuilder;
-import org.elasticsearch.action.admin.indices.analyze.AnalyzeResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.DeleteByQueryAction;
 import org.elasticsearch.index.reindex.DeleteByQueryRequestBuilder;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.sort.SortBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +26,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,7 +43,7 @@ public abstract class AbstractSearchService<
         ID extends Serializable,
         CONDITION extends BaseQueryCondition,
         MESSAGE extends BaseIndexMessage<ID>,
-        TEMPLATE extends BaseTemplate> implements ISearchService<ID, CONDITION> {
+        TEMPLATE extends BaseTemplate> implements ISearchService<ID, MESSAGE, CONDITION> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -62,26 +57,28 @@ public abstract class AbstractSearchService<
     private ObjectMapper objectMapper;
 
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private IKafkaService kafkaService;
 
-    @KafkaListener(topics = INDEX_TOPIC)
-    private void handleMessage(String content) {
+    @Override
+    public void processMessage(String content) {
+        MESSAGE message = null;
         try {
-            MESSAGE message = objectMapper.readValue(content, getIndexMessageClass());
+            message = objectMapper.readValue(content, getMessageClass());
 
-            switch (message.getOperation()) {
-                case BaseIndexMessage.INDEX:
-                    this.createOrUpdateIndex(message);
-                    break;
-                case BaseIndexMessage.REMOVE:
-                    this.removeIndex(message);
-                    break;
-                default:
-                    logger.warn("Not support message content " + content);
-                    break;
-            }
         } catch (IOException e) {
-            logger.error("Cannot parse json for " + content, e);
+            e.printStackTrace();
+        }
+
+        switch (message.getOperation()) {
+            case BaseIndexMessage.INDEX:
+                this.createOrUpdateIndex(message);
+                break;
+            case BaseIndexMessage.REMOVE:
+                this.removeIndex(message);
+                break;
+            default:
+                logger.warn("Not support message content " + message);
+                break;
         }
     }
 
@@ -221,7 +218,11 @@ public abstract class AbstractSearchService<
 
         //获取结果
         for (SearchHit searchHitFields : hits){
-            list.add(objectMapper.convertValue(searchHitFields.getSource(), getIndexMessageClass()).getId());
+            Serializable id = objectMapper.convertValue(searchHitFields.getSource(), getTemplateClass()).getId();
+
+            if(id != null){
+                list.add((ID)id);
+            }
         }
 
         return list;
@@ -238,10 +239,12 @@ public abstract class AbstractSearchService<
             return;
         }
 
-        MESSAGE message = getIndexMessageClass().newInstance();
-        message.init(id, BaseIndexMessage.INDEX, retry);
+        MESSAGE message = getMessage();
+        message.setId(id);
+        message.setOperation(BaseIndexMessage.INDEX);
+        message.setRetry(retry);
         try {
-            kafkaTemplate.send(INDEX_TOPIC, objectMapper.writeValueAsString(message));
+            kafkaService.send(message);
         } catch (JsonProcessingException e) {
             logger.error("Json encode error for " + message);
         }
@@ -259,10 +262,12 @@ public abstract class AbstractSearchService<
             return;
         }
 
-        MESSAGE message = getIndexMessageClass().newInstance();
-        message.init(id, BaseIndexMessage.REMOVE, retry);
+        MESSAGE message = getMessage();
+        message.setId(id);
+        message.setOperation(BaseIndexMessage.REMOVE);
+        message.setRetry(retry);
         try {
-            kafkaTemplate.send(INDEX_TOPIC, objectMapper.writeValueAsString(message));
+            kafkaService.send(message);
         } catch (JsonProcessingException e) {
             logger.error("Json encode error for " + message);
         }
@@ -277,16 +282,27 @@ public abstract class AbstractSearchService<
     protected abstract TEMPLATE map(ID id);
 
     /**
+     * 获取模板对象的类
+     * @return  模板对象的类
+     */
+    protected abstract Class<TEMPLATE> getTemplateClass();
+
+    /**
+     * 获取message对象
+     * @return  message对象
+     */
+    protected abstract MESSAGE getMessage();
+
+    /**
      *
      * @return
      */
-    protected abstract Class<MESSAGE> getIndexMessageClass();
+    protected abstract Class<MESSAGE> getMessageClass();
 
     /**
      * 构建请求对象
      * @param searchRequestBuilder  请求对象
      * @param condition             查询条件
-     * @return                      构建的查询对象
      */
     protected abstract void buildRequest(final SearchRequestBuilder searchRequestBuilder, final CONDITION condition);
 

@@ -229,6 +229,11 @@ public class CarDto extends BaseDto<Long> {
      */
     private String regionCnName;
 
+    /**
+     * 预约的数据对象
+     */
+    private CarSubscribeDto subscribe;
+
     public Long getBrandId() {
         return brandId;
     }
@@ -539,5 +544,13 @@ public class CarDto extends BaseDto<Long> {
 
     public void setRegionCnName(String regionCnName) {
         this.regionCnName = regionCnName;
+    }
+
+    public CarSubscribeDto getSubscribe() {
+        return subscribe;
+    }
+
+    public void setSubscribe(CarSubscribeDto subscribe) {
+        this.subscribe = subscribe;
     }
 }

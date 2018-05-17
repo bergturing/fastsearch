@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:include="admin/common :: head"></div>
@@ -8,7 +8,7 @@
 </head>
 <body>
 <article class="page-container">
-    <form id="form-car-add" class="form form-horizontal">
+    <form id="form-add" class="form form-horizontal">
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>标题：</label>
@@ -189,11 +189,22 @@
         </div>
 
         <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">标签：</label>
+            <div id="tags" class="formControls col-xs-8 col-sm-9">
+                <span class="label label-default"
+                      th:each="tag : ${allTags}"
+                      th:text="${tag.name}" th:attr="primaryKey=${tag.id}">
+                </span>
+            </div>
+        </div>
+
+        <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">描述：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <textarea name="description" cols="" rows="" class="textarea" placeholder="说点什么...100个字符以内" dragonfly="true"
-                          onKeyUp="$.Huitextarealength(this,100)"></textarea>
+                <textarea name="description" cols="" rows="" class="textarea" placeholder="说点什么核心卖点之类的..."
+                          datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！"></textarea>
                 <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+            </div>
             </div>
         </div>
 

@@ -1,0 +1,18 @@
+{
+  "mappings": {
+    "cartagass": {
+      "dynamic": false,
+      "properties": {
+        "id":{
+          "type": "long"
+        },
+        "carId": {
+          "type": "long"
+        },
+        "carTagId": {
+          "type": "long"
+        }
+      }
+    }
+  }
+}

@@ -4,10 +4,47 @@
     <div th:include="admin/common :: head"></div>
     <link rel="stylesheet" type="text/css" href="/static/lib/webuploader/0.1.5/webuploader.css">
     <link rel="stylesheet" type="text/css" href="/static/css/admin/car/series/add.css">
-    <title>添加车辆 - 车辆管理 </title>
+    <title>添加系列 - 车辆管理 </title>
 </head>
 <body>
+
 <article class="page-container">
+    <form id="form-add" class="form form-horizontal">
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择品牌：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="brandId" size="1">
+                        <option>请选择</option>
+                        <option th:each="brand:${brands}"
+                                th:value="${brand.id}" th:text="${brand.name}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>系列代码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input name="code" type="text" class="input-text" value="" placeholder="请输入系列代码" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>系列名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input name="name" type="text" class="input-text" value="" placeholder="请输入系列名" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
 </article>
 
 <!--_footer 作为公共模版分离出去-->

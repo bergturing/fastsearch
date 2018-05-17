@@ -20,7 +20,7 @@ public abstract class BaseQueryCondition implements Serializable{
     /**
      * 默认页码大小
      */
-    public static final Integer DEFAULT_PAGE_SIZE = 10;
+    public static final Integer DEFAULT_PAGE_SIZE = 20;
 
     /**
      * 排序顺序

@@ -4,10 +4,34 @@
     <div th:include="admin/common :: head"></div>
     <link rel="stylesheet" type="text/css" href="/static/lib/webuploader/0.1.5/webuploader.css">
     <link rel="stylesheet" type="text/css" href="/static/css/admin/car/brand/edit.css">
-    <title>添加车辆 - 车辆管理 </title>
+    <title>编辑品牌 - 车辆管理 </title>
 </head>
 <body>
+
 <article class="page-container">
+    <form id="form-add" class="form form-horizontal">
+        <input th:value="${id}" name="id" type="hidden"/>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>品牌代码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input th:value="${brand.code}" name="code" type="text" class="input-text" value="" placeholder="请输入品牌代码" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>品牌名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input th:value="${brand.name}" name="name" type="text" class="input-text" value="" placeholder="请输入品牌名" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
 </article>
 
 <!--_footer 作为公共模版分离出去-->

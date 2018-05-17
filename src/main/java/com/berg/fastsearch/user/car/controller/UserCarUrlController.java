@@ -8,6 +8,7 @@ import com.berg.fastsearch.core.car.service.ICarService;
 import com.berg.fastsearch.core.car.web.dto.CarDto;
 import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.enums.address.Level;
+import com.berg.fastsearch.core.enums.car.SubscribeStatus;
 import com.berg.fastsearch.core.system.base.web.dto.ResponseData;
 import com.berg.fastsearch.user.car.dto.MapSearch;
 import com.berg.fastsearch.core.enums.car.ValueBlock;
@@ -112,7 +113,7 @@ public class UserCarUrlController{
 
     @GetMapping("/detail//{id:\\d+}")
     public String detail(@PathVariable("id") Long id,
-                         Model model){
+                         Model model) throws Exception {
         if (id <= 0) {
             return "404";
         }
@@ -135,8 +136,8 @@ public class UserCarUrlController{
         model.addAttribute("agent", userDto);
         model.addAttribute("car", carDto);
 
-//        ServiceResult<Long> aggResult = searchService.aggregateDistrictHouse(city.getEnName(), region.getEnName(), houseDTO.getDistrict());
-//        model.addAttribute("houseCountInDistrict", aggResult.getResult());
+        //所有的预约的状态
+        model.addAttribute("subscribeStatus", SubscribeStatus.values());
 
         return "user/car/detail";
     }

@@ -16,6 +16,10 @@ public class CarTagAssDto extends BaseDto<Long> {
 
     private Long carTagId;
 
+    private String carTitle;
+
+    private String carTagName;
+
     public Long getCarId() {
         return carId;
     }
@@ -30,5 +34,21 @@ public class CarTagAssDto extends BaseDto<Long> {
 
     public void setCarTagId(Long carTagId) {
         this.carTagId = carTagId;
+    }
+
+    public String getCarTitle() {
+        return carTitle;
+    }
+
+    public void setCarTitle(String carTitle) {
+        this.carTitle = carTitle;
+    }
+
+    public String getCarTagName() {
+        return carTagName;
+    }
+
+    public void setCarTagName(String carTagName) {
+        this.carTagName = carTagName;
     }
 }

@@ -47,15 +47,15 @@ VALUES
 INSERT INTO `fast_search`.`fs_cars`
 (`ID`, `TITLE`, `BRAND_ID`, `SERIES_ID`, `DEPLOYEE_ID`, `PRICE`, `SEATS`, `DISPLACEMENT`, `MILEAGE`, `AGE`, `GEAR_BOX`, `COLOR`, `DRIVE_TYPE`, `EMISSION_STANDARD`, `STYLE`, `FUEL_TYPE`, `WATCH_TIMES`, `CITY_ID`, `REGION_ID`, `ADDRESS`, `STATUS`, `COVER`, `DESCRIPTION`, `CREATE_TIME`, `LAST_UPDATE_TIME`)
 VALUES
-('1', '奥迪SQ5', '1', '1', '1', '126328', '4', '3.6', '25000', '12', 'HAND', 'RED', 'TWO_DRIVER', 'LEVEL_TWO', 'HATCHBACK', 'GASOLINE', '6134', '1', '6', '中国北京市东城区', 'NORMAL', '/images/car/SQ5.jpeg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
-('2', '奥迪S7', '1', '2', '1', '126328', '4', '5.5', '13000', '3', 'AUTO', 'BLUE', 'FOUR_DRIVER', 'LEVEL_FOUR', 'THREE', 'DIESEL_OIL', '534', '1', '7', '中国北京市西城区', 'NORMAL', '/images/car/S7.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
-('3', '奥迪S6', '1', '3', '1', '126328', '4', '8.6', '6000', '7', 'AUTO', 'WHITE', 'TWO_DRIVER', 'LEVEL_FIVE', 'SPORT', 'GASOLINE', '874', '1', '8', '中国北京市海淀区', 'NORMAL', '/images/car/S6.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
-('4', '奥迪S8', '1', '4', '1', '126328', '4', '4.6', '60000', '8', 'AUTO', 'GREE', 'TWO_DRIVER', 'LEVEL_TWO', 'SUV', 'DIESEL_OIL', '1984', '1', '9', '中国北京市昌平区', 'NORMAL', '/images/car/S8.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
-('5', '奥迪S5 COUPE', '1', '5', '1', '126328', '4', '3.6', '58695', '14', 'AUTO', 'BLACK', 'TWO_DRIVER', 'LEVEL_THREE', 'MPV', 'GASOLINE', '34', '1', '10', '中国北京市朝阳区', 'NORMAL', '/images/car/S5COUPE.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
-('6', '奥迪S5 四门轿跑车', '1', '6', '1', '126328', '4', '4.9', '15222', '1', 'HAND', 'BLACK', 'FOUR_DRIVER', 'LEVEL_FIVE', 'MICROBUS', 'DIESEL_OIL', '4', '2', '11', '中国上海市普陀区', 'NORMAL', '/images/car/S5四门轿跑车.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
-('7', '奥迪S5 敞篷', '1', '7', '1', '126328', '4', '5.5', '6897', '5', 'HAND', 'RED', 'TWO_DRIVER', 'LEVEL_THREE', 'PICKUP', 'GASOLINE', '454', '3', '12', '中国石家庄市桥东区', 'NORMAL', '/images/car/S5敞篷.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
-('8', '奥迪S4', '1', '8', '1', '126328', '4', '5.9', '9999', '6', 'AUTO', 'GRAY', 'TWO_DRIVER', 'LEVEL_TWO', 'SUV', 'GASOLINE', '14', '3', '13', '中国石家庄市桥西区', 'NORMAL', '/images/car/S4.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
-('9', '奥迪S3 四门轿车', '1', '9', '1', '126328', '4', '6.8', '84562', '7', 'AUTO', 'WHITE', 'TWO_DRIVER', 'LEVEL_THREE', 'SUV', 'DIESEL_OIL', '24', '3', '14', '中国石家庄市新华区', 'NORMAL', '/images/car/S3四门轿车.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02');
+('1', '奥迪SQ5', '1', '1', '1', '126328', '4', '3.6', '25000', '12', 'HAND', 'RED', 'TWO_DRIVER', 'LEVEL_TWO', 'HATCHBACK', 'GASOLINE', '6134', '1', '6', '中国北京市东城区', 'NORMAL', 'http://p8tqlzei6.bkt.clouddn.com/SQ5.jpeg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('2', '奥迪S7', '1', '2', '1', '126328', '4', '5.5', '13000', '3', 'AUTO', 'BLUE', 'FOUR_DRIVER', 'LEVEL_FOUR', 'THREE', 'DIESEL_OIL', '534', '1', '7', '中国北京市西城区', 'NORMAL', 'http://p8tqlzei6.bkt.clouddn.com/S7.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('3', '奥迪S6', '1', '3', '1', '126328', '4', '8.6', '6000', '7', 'AUTO', 'WHITE', 'TWO_DRIVER', 'LEVEL_FIVE', 'SPORT', 'GASOLINE', '874', '1', '8', '中国北京市海淀区', 'NORMAL', 'http://p8tqlzei6.bkt.clouddn.com/S6.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('4', '奥迪S8', '1', '4', '1', '126328', '4', '4.6', '60000', '8', 'AUTO', 'GREE', 'TWO_DRIVER', 'LEVEL_TWO', 'SUV', 'DIESEL_OIL', '1984', '1', '9', '中国北京市昌平区', 'NORMAL', 'http://p8tqlzei6.bkt.clouddn.com/S8.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('5', '奥迪S5 COUPE', '1', '5', '1', '126328', '4', '3.6', '58695', '14', 'AUTO', 'BLACK', 'TWO_DRIVER', 'LEVEL_THREE', 'MPV', 'GASOLINE', '34', '1', '10', '中国北京市朝阳区', 'NORMAL', 'http://p8tqlzei6.bkt.clouddn.com/S5COUPE.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('6', '奥迪S5 四门轿跑车', '1', '6', '1', '126328', '4', '4.9', '15222', '1', 'HAND', 'BLACK', 'FOUR_DRIVER', 'LEVEL_FIVE', 'MICROBUS', 'DIESEL_OIL', '4', '2', '11', '中国上海市普陀区', 'NORMAL', 'http://p8tqlzei6.bkt.clouddn.com/S5四门轿跑车.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('7', '奥迪S5 敞篷', '1', '7', '1', '126328', '4', '5.5', '6897', '5', 'HAND', 'RED', 'TWO_DRIVER', 'LEVEL_THREE', 'PICKUP', 'GASOLINE', '454', '3', '12', '中国石家庄市桥东区', 'NORMAL', 'http://p8tqlzei6.bkt.clouddn.com/S5敞篷.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('8', '奥迪S4', '1', '8', '1', '126328', '4', '5.9', '9999', '6', 'AUTO', 'GRAY', 'TWO_DRIVER', 'LEVEL_TWO', 'SUV', 'GASOLINE', '14', '3', '13', '中国石家庄市桥西区', 'NORMAL', 'http://p8tqlzei6.bkt.clouddn.com/S4.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02'),
+('9', '奥迪S3 四门轿车', '1', '9', '1', '126328', '4', '6.8', '84562', '7', 'AUTO', 'WHITE', 'TWO_DRIVER', 'LEVEL_THREE', 'SUV', 'DIESEL_OIL', '24', '3', '14', '中国石家庄市新华区', 'NORMAL', 'http://p8tqlzei6.bkt.clouddn.com/S3四门轿车.jpg', '描述数据', '2018-02-25 15:18:20', '2018-03-12 10:29:02');
 
 
 INSERT INTO `fast_search`.`fs_car_brands`
@@ -103,16 +103,16 @@ VALUES
 INSERT INTO `fast_search`.`fs_car_pictures`
 (`ID`, `CAR_ID`, `CDN_PREFIX`, `WIDTH`, `HEIGHT`, `LOCATION`, `PATH`)
 VALUES
-('1', '1', '/images/car/', '660', '440', '', 'SQ5.jpeg'),
-('2', '2', '/images/car/', '220', '165', '', 'S7.jpg'),
-('3', '3', '/images/car/', '200', '165', '', 'S6.jpg'),
-('4', '4', '/images/car/', '220', '147', '', 'S8.jpg'),
-('5', '5', '/images/car/', '220', '155', '', 'S5COUPE.jpg'),
-('6', '6', '/images/car/', '220', '147', '', 'S5四门轿跑车.jpg'),
-('7', '7', '/images/car/', '220', '142', '', 'S5敞篷.jpg'),
-('8', '8', '/images/car/', '220', '141', '', 'S4.jpg'),
-('9', '9', '/images/car/', '220', '156', '', 'S3四门轿车.jpg'),
-('10', '1', '/images/car/', '300', '200', '', 'SQ5-1.jpeg');
+('1', '1', 'http://p8tqlzei6.bkt.clouddn.com/', '660', '440', '', 'SQ5.jpeg'),
+('2', '2', 'http://p8tqlzei6.bkt.clouddn.com/', '220', '165', '', 'S7.jpg'),
+('3', '3', 'http://p8tqlzei6.bkt.clouddn.com/', '200', '165', '', 'S6.jpg'),
+('4', '4', 'http://p8tqlzei6.bkt.clouddn.com/', '220', '147', '', 'S8.jpg'),
+('5', '5', 'http://p8tqlzei6.bkt.clouddn.com/', '220', '155', '', 'S5COUPE.jpg'),
+('6', '6', 'http://p8tqlzei6.bkt.clouddn.com/', '220', '147', '', 'S5四门轿跑车.jpg'),
+('7', '7', 'http://p8tqlzei6.bkt.clouddn.com/', '220', '142', '', 'S5敞篷.jpg'),
+('8', '8', 'http://p8tqlzei6.bkt.clouddn.com/', '220', '141', '', 'S4.jpg'),
+('9', '9', 'http://p8tqlzei6.bkt.clouddn.com/', '220', '156', '', 'S3四门轿车.jpg'),
+('10', '1', 'http://p8tqlzei6.bkt.clouddn.com/', '300', '200', '', 'SQ5-1.jpeg');
 
 
 
