@@ -4,10 +4,75 @@
     <div th:include="admin/common :: head"></div>
     <link rel="stylesheet" type="text/css" href="/static/lib/webuploader/0.1.5/webuploader.css">
     <link rel="stylesheet" type="text/css" href="/static/css/admin/address/add.css">
-    <title>添加车辆 - 车辆管理 </title>
+    <title>添加地点 - 车辆管理 </title>
 </head>
 <body>
+
 <article class="page-container">
+    <form id="form-add" class="form form-horizontal">
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择行政级别：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="level" size="1">
+                        <option>请选择</option>
+                        <option th:each="level:${levels}"
+                                th:value="${level.code}" th:text="${level.name}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上一行政对象：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="belongTo" size="1">
+                        <option>请选择</option>
+                        <option th:each="city:${citys}"
+                                th:value="${city.id}" th:text="${city.cnName}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>中文名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input name="cnName" type="text" class="input-text" value="" placeholder="请输入中文名" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>英文名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input name="enName" type="text" class="input-text" value="" placeholder="请输入英文名" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经度：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input name="baiduMapLng" type="text" class="input-text" value="" placeholder="请输入经度" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>纬度：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input name="baiduMapLat" type="text" class="input-text" value="" placeholder="请输入纬度" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
 </article>
 
 <!--_footer 作为公共模版分离出去-->

@@ -88,7 +88,7 @@ public class SupportAddressServiceImpl
 
         SupportAddressDto city = findCity(cityEnName);
 
-        return transform2D(supportAddressRepository.findAllByLevelAndBelongTo(Level.REGION.getValue(), city.getId()));
+        return transform2D(supportAddressRepository.findAllByLevelAndBelongTo(Level.REGION.getCode(), city.getId()));
     }
 
     @Override
@@ -97,7 +97,7 @@ public class SupportAddressServiceImpl
             return null;
         }
 
-        SupportAddress supportAddress = supportAddressRepository.findByEnNameAndLevel(cityEnName, Level.CITY.getValue());
+        SupportAddress supportAddress = supportAddressRepository.findByEnNameAndLevel(cityEnName, Level.CITY.getCode());
         if (supportAddress == null) {
             return null;
         }

@@ -10,22 +10,37 @@ import com.berg.fastsearch.core.address.entity.SupportAddress;
  * @apiNote: Created on 18-5-13
  */
 public enum Level {
-    CITY("city"),
-    REGION("region");
+    CITY("city", "城市"),
+    REGION("region", "区域");
 
-    private String value;
+    private String code;
 
-    Level(String value) {
-        this.value = value;
+    private String name;
+
+    Level(String code, String name) {
+        this.code = code;
+        this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getCode() {
+        return code;
     }
 
-    public static Level of(String value) {
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public static Level of(String code) {
         for (Level level : Level.values()) {
-            if (level.getValue().equals(value)) {
+            if (level.getCode().equals(code)) {
                 return level;
             }
         }

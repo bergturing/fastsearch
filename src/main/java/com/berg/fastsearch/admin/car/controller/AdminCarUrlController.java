@@ -77,7 +77,7 @@ public class AdminCarUrlController extends BaseUrlController<Long>{
         //设置区域数据
         SupportAddressQueryCondition supportAddressQueryCondition = new SupportAddressQueryCondition();
         supportAddressQueryCondition.setBelongTo(carDto.getCityId());
-        supportAddressQueryCondition.setLevel(Level.REGION.getValue());
+        supportAddressQueryCondition.setLevel(Level.REGION.getCode());
         model.addAttribute("regions", supportAddressService.findAll(supportAddressQueryCondition));
     }
 
