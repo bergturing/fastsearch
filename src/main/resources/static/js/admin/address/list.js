@@ -151,8 +151,8 @@ var FastSearchAddress = (function(){
                     .replace("{{cnName}}", item.cnName)
                     .replace("{{level}}", item.level)
                     .replace("{{belongToCnName}}", item.belongToCnName)
-                    .replace("{{baiduMapLng}}", item.belongTo)
-                    .replace("{{baiduMapLat}}", item.belongTo);
+                    .replace("{{baiduMapLng}}", item.baiduMapLng)
+                    .replace("{{baiduMapLat}}", item.baiduMapLat);
             });
 
             target.html(_html);

@@ -4,10 +4,78 @@
     <div th:include="admin/common :: head"></div>
     <link rel="stylesheet" type="text/css" href="/static/lib/webuploader/0.1.5/webuploader.css">
     <link rel="stylesheet" type="text/css" href="/static/css/admin/address/edit.css">
-    <title>添加车辆 - 车辆管理 </title>
+    <title>修改地址 - 车辆管理 </title>
 </head>
 <body>
+
 <article class="page-container">
+    <form id="form-add" class="form form-horizontal">
+        <input th:value="${id}" name="id" type="hidden"/>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择行政级别：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select id="level" class="select" name="level" size="1">
+                        <option>请选择</option>
+                        <option th:each="level:${levels}"
+                                th:value="${level.code}" th:text="${level.name}"
+                                th:selected="${address.level==level.code}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">上一行政对象：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select id="city" class="select" name="belongTo" size="1">
+                        <option>请选择</option>
+                        <option th:each="city:${citys}"
+                                th:value="${city.id}" th:text="${city.cnName}"
+                                th:selected="${address.belongTo==city.id}">
+                        </option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>中文名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input th:value="${address.cnName}" name="cnName" type="text" class="input-text" value="" placeholder="请输入中文名" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>英文名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input th:value="${address.enName}" name="enName" type="text" class="input-text" value="" placeholder="请输入英文名" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经度：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input th:value="${address.baiduMapLng}" name="baiduMapLng" type="number" class="input-text" style="width: 300px" placeholder="请输入经度" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>纬度：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input th:value="${address.baiduMapLat}" name="baiduMapLat" type="number" class="input-text" style="width: 300px" placeholder="请输入纬度" required>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
 </article>
 
 <!--_footer 作为公共模版分离出去-->

@@ -9,7 +9,72 @@ $(function(){
 
 var FSCarAddressAdd = (function(){
 
+    /**
+     *
+     * @type {*|jQuery|HTMLElement}
+     */
+    var $level = $("#level");
+
+    /**
+     *
+     * @type {*|jQuery|HTMLElement}
+     */
+    var $city = $("#city");
+
+    /**
+     *
+     * @type {string}
+     */
+    var tipStr = '<option value="">请选择</option>';
+
+    /**
+     *
+     * @param message
+     * @private
+     */
+    var _showError = function(message) {
+        layer.msg("Error: " + message, {icon: 5, time: 2000});
+    };
+
+    /**
+     *
+     * @param city
+     * @param level
+     * @private
+     */
+    var _changeCity = function(city, level) {
+
+        if(level === "city"){
+            $.get('/address?level=city', function (data, status) {
+                if (status !== 'success' || data.code !== 200) {
+                    _showError(data.message);
+                    return;
+                }
+                city.html(tipStr);
+                var str = '';
+                $.each(data.data, function (i, item) {
+                    str += "<option value=" + item.id + ">" + item.cnName + "</option>";
+                });
+                city.append(str);
+            });
+        }else{
+            city.html("");
+        }
+    };
+
     var _initController = function(){
+
+        // 二级联动 行政级别与城市联动
+        $level.change(function () {
+            var selectedVal = $(this).val();debugger;
+            if (typeof(selectedVal) === 'undefined' || selectedVal === "") {
+                layer.msg('请选择行政级别！', {icon: 5, time: 2000});
+                return;
+            }
+
+            _changeCity($city, selectedVal);
+        });
+
         //表单验证
         $('.skin-minimal input').iCheck({
             checkboxClass: 'icheckbox-blue',
