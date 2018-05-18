@@ -8,6 +8,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -30,7 +31,7 @@ public class ImageCodeGenerator implements ValidateCodeGenerator<ImageCode> {
 
         Graphics g = image.getGraphics();
 
-        Random random = new Random();
+        Random random = new Random((new Date()).getTime());
 
         g.setColor(getRandColor(200, 250));
         g.fillRect(0, 0, width, height);

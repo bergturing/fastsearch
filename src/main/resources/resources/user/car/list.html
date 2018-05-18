@@ -8,8 +8,8 @@
     <meta name="applicable-device" content="pc">
 
     <title>寻车</title>
-    <link href="/static/css/main.css" rel='stylesheet' type='text/css'/>
-    <link href="/static/css/list.css" rel='stylesheet' type='text/css'/>
+    <link href="/static/css/user/main.css" rel='stylesheet' type='text/css'/>
+    <link href="/static/css/user/car/list.css" rel='stylesheet' type='text/css'/>
     <link href="/static/lib/layui/css/layui.css" rel="stylesheet" type="text/css" />
     <link href="/static/css/user/common.css" rel='stylesheet' type='text/css'/>
     <link href="/static/lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" type="text/css" />
@@ -319,7 +319,7 @@
 
     var data = {};
 
-    function locate_url(page, pageSize) {
+    function locate_url(start, size) {
         var keywords = $('#keyword-box').val();
         if (typeof(keywords) !== 'undefined' && keywords !== null && keywords.length > 0) {
             data.keywords = keywords;
@@ -331,7 +331,7 @@
                 target += (key + '=' + value + '&');
             }
         });
-        target += 'page=' + page + '&pageSize=' + pageSize;
+        target += 'start=' + start + '&size=' + size;
         return target;
     }
 
@@ -343,21 +343,21 @@
             default:
                 data[key] = value;
         }
-        window.location.href = locate_url(0, [[${searchBody.pageSize}]]);
+        window.location.href = locate_url(0, [[${searchBody.size}]]);
     }
 
     function changeSort(orderBy, direction) {
         data.orderBy = orderBy;
         data.orderDirection = direction;
 
-        window.location.href = locate_url(0, [[${searchBody.pageSize}]]);
+        window.location.href = locate_url(0, [[${searchBody.size}]]);
     }
 
     var total = [[${total}]];
-    var page = [[${searchBody.page}]];
-    var pageSize = [[${searchBody.pageSize}]];
-    if (pageSize < 1) {
-        pageSize = 5;
+    var start = [[${searchBody.start}]];
+    var size = [[${searchBody.size}]];
+    if (size < 1) {
+        size = 5;
     }
 
     $(function () {
@@ -379,7 +379,7 @@
         $('#sort-bar').find('div[data-bind="' + data.orderBy +  '"]').addClass('on');
 
         $('#searchForm').submit(function () {
-            window.location.href = locate_url(page, pageSize);
+            window.location.href = locate_url(start, size);
             return false;
         });
 
@@ -398,7 +398,7 @@
             },
             select: function (event, ui) { // 选中事件
                 $('#keyword-box').text(ui.item.value);
-                window.location.href = locate_url(page, pageSize);
+                window.location.href = locate_url(start, size);
             }
         });
 
@@ -411,8 +411,8 @@
 //         laypage.render({
 //             elem: 'pageable', //注意，这里的 test1 是 ID，不用加 # 号
 //             count: total, //数据总数，从服务端得到
-//             limit: pageSize,
-//             curr: page / pageSize + 1,
+//             limit: size,
+//             curr: start / size + 1,
 //             jump: function (obj, first) {
 //                 //obj包含了当前分页的所有参数，比如：
 // //                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。

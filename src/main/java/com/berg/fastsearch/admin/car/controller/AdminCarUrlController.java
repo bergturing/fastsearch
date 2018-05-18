@@ -3,17 +3,19 @@ package com.berg.fastsearch.admin.car.controller;
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressQueryCondition;
 import com.berg.fastsearch.core.car.service.*;
+import com.berg.fastsearch.core.car.service.brand.ICarBrandService;
+import com.berg.fastsearch.core.car.service.picture.ICarPictureService;
+import com.berg.fastsearch.core.car.service.series.ICarSeriesService;
+import com.berg.fastsearch.core.car.service.tag.ICarTagService;
 import com.berg.fastsearch.core.car.web.dto.CarDto;
-import com.berg.fastsearch.core.car.web.dto.CarSeriesQueryCondition;
+import com.berg.fastsearch.core.car.web.dto.series.CarSeriesQueryCondition;
 import com.berg.fastsearch.core.enums.address.Level;
 import com.berg.fastsearch.core.enums.car.*;
 import com.berg.fastsearch.core.system.base.web.controller.BaseUrlController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * <p></p>
@@ -33,7 +35,7 @@ public class AdminCarUrlController extends BaseUrlController<Long>{
     private ICarPictureService carPictureService;
 
     @Autowired
-    private ICarTagService  carTagService;
+    private ICarTagService carTagService;
 
     @Autowired
     private ISupportAddressService supportAddressService;

@@ -4,15 +4,20 @@ import com.berg.fastsearch.core.account.service.IUserService;
 import com.berg.fastsearch.core.account.web.dto.UserDto;
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
+import com.berg.fastsearch.core.car.service.ICarSearchService;
 import com.berg.fastsearch.core.car.service.ICarService;
+import com.berg.fastsearch.core.car.web.dto.CarBucketDto;
 import com.berg.fastsearch.core.car.web.dto.CarDto;
 import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
 import com.berg.fastsearch.core.enums.address.Level;
+import com.berg.fastsearch.core.enums.car.Status;
 import com.berg.fastsearch.core.enums.car.SubscribeStatus;
 import com.berg.fastsearch.core.system.base.web.dto.ResponseData;
+import com.berg.fastsearch.core.system.base.entity.ServiceMultiResult;
 import com.berg.fastsearch.user.car.dto.MapSearch;
 import com.berg.fastsearch.core.enums.car.ValueBlock;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -21,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +36,7 @@ import java.util.Map;
  * @version v1.0
  * @apiNote Created on 18-5-9
  */
-@RequestMapping("/user/car")
+@RequestMapping(value = {"/car", "/user/car"})
 @Controller
 public class UserCarUrlController{
 
@@ -44,6 +48,9 @@ public class UserCarUrlController{
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private ICarSearchService carSearchService;
 
     @GetMapping("/list")
     public String list(@ModelAttribute CarQueryCondition searchBody,
@@ -76,7 +83,9 @@ public class UserCarUrlController{
             return "redirect:/index";
         }
 
-        List<CarDto> cars = carService.findAll(searchBody);
+        //条件查询所有已经通过审核的车辆
+        searchBody.setStatus(Status.PASSED.getCode());
+        List<CarDto> cars = carService.findAll(searchBody).getResult();
 
         model.addAttribute("total", cars.size());
         model.addAttribute("cars", cars);
@@ -159,11 +168,11 @@ public class UserCarUrlController{
 
         List<SupportAddressDto> regions = supportAddressService.findAllRegionsByCityEnName(cityEnName);
 
+        //获取聚合结果
+        List<CarBucketDto> carBucketDtos = carSearchService.mapAggregate(cityEnName);
 
-//        ServiceMultiResult<HouseBucketDTO> serviceResult = searchService.mapAggregate(cityEnName);
-//
-        model.addAttribute("aggData", new ArrayList<>());
-        model.addAttribute("total", 0);
+        model.addAttribute("aggData", carBucketDtos);
+        model.addAttribute("total", carBucketDtos.size());
         model.addAttribute("regions", regions);
 
 
@@ -176,17 +185,23 @@ public class UserCarUrlController{
         if (mapSearch.getCityEnName() == null) {
             return ResponseData.ofMessage(HttpStatus.BAD_REQUEST.value(), "必须选择城市");
         }
-//        ServiceMultiResult<HouseDTO> serviceMultiResult;
-//        if (mapSearch.getLevel() < 13) {
-//            serviceMultiResult = houseService.wholeMapQuery(mapSearch);
-//        } else {
-//            // 小地图查询必须要传递地图边界参数
-//            serviceMultiResult = houseService.boundMapQuery(mapSearch);
-//        }
 
-        ResponseData response = ResponseData.ofSuccess(new ArrayList<>());
-//        response.setMore(serviceMultiResult.getTotal() > (mapSearch.getStart() + mapSearch.getSize()));
+
+        CarQueryCondition carQueryCondition = new CarQueryCondition();
+        BeanUtils.copyProperties(mapSearch, carQueryCondition);
+        //全查询,需要将边界属性设置为空
+        if (mapSearch.getLevel() < 13) {
+            carQueryCondition.setLeftLatitude(null);
+            carQueryCondition.setLeftLongitude(null);
+            carQueryCondition.setRightLatitude(null);
+            carQueryCondition.setRightLongitude(null);
+        }
+
+        //查询结果
+        ServiceMultiResult<CarDto> multiResult = carService.findAll(carQueryCondition);
+
+        ResponseData response = ResponseData.ofSuccess(multiResult.getResult());
+        response.setMore(multiResult.getTotal() > (mapSearch.getStart() + mapSearch.getSize()));
         return response;
-
     }
 }

@@ -38,6 +38,13 @@ public class CarQueryCondition extends BaseQueryCondition {
     public static final String FIELD_PRICE = "price";
 
     /**
+     * 状态字段名
+     */
+    public static final String FIELD_STATUS = "status";
+
+    public static final String AGG_REGION = "agg_region";
+
+    /**
      * 城市简写英文名
      */
     private String cityEnName;
@@ -63,9 +70,28 @@ public class CarQueryCondition extends BaseQueryCondition {
     private String priceBlock;
 
     /**
+     * 车辆的状态
+     */
+    private String status;
+
+    /**
      * 关键词
      */
     private String keywords;
+
+    /**
+     * 左上角
+     */
+    private Double leftLongitude;
+    private Double leftLatitude;
+
+    /**
+     * 右下角
+     */
+    private Double rightLongitude;
+    private Double rightLatitude;
+
+
 
     public String getCityEnName() {
         return cityEnName;
@@ -113,5 +139,45 @@ public class CarQueryCondition extends BaseQueryCondition {
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
+    }
+
+    public Double getLeftLongitude() {
+        return leftLongitude;
+    }
+
+    public void setLeftLongitude(Double leftLongitude) {
+        this.leftLongitude = leftLongitude;
+    }
+
+    public Double getLeftLatitude() {
+        return leftLatitude;
+    }
+
+    public void setLeftLatitude(Double leftLatitude) {
+        this.leftLatitude = leftLatitude;
+    }
+
+    public Double getRightLongitude() {
+        return rightLongitude;
+    }
+
+    public void setRightLongitude(Double rightLongitude) {
+        this.rightLongitude = rightLongitude;
+    }
+
+    public Double getRightLatitude() {
+        return rightLatitude;
+    }
+
+    public void setRightLatitude(Double rightLatitude) {
+        this.rightLatitude = rightLatitude;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

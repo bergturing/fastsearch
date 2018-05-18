@@ -1,9 +1,10 @@
 package com.berg.fastsearch.core.car.web.dto;
 
-import com.berg.fastsearch.core.car.entity.CarTag;
+import com.berg.fastsearch.core.car.web.dto.picture.CarPictureDto;
+import com.berg.fastsearch.core.car.web.dto.subscribe.CarSubscribeDto;
+import com.berg.fastsearch.core.car.web.dto.tag.CarTagDto;
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;

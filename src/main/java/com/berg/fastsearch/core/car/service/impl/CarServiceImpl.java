@@ -4,10 +4,22 @@ import com.berg.fastsearch.core.account.service.IUserService;
 import com.berg.fastsearch.core.account.web.dto.UserDto;
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.car.entity.Car;
-import com.berg.fastsearch.core.car.entity.CarTagAss;
 import com.berg.fastsearch.core.car.repository.CarRepository;
 import com.berg.fastsearch.core.car.service.*;
+import com.berg.fastsearch.core.car.service.brand.ICarBrandService;
+import com.berg.fastsearch.core.car.service.picture.ICarPictureService;
+import com.berg.fastsearch.core.car.service.series.ICarSeriesService;
+import com.berg.fastsearch.core.car.service.subscribe.ICarSubscribeService;
+import com.berg.fastsearch.core.car.service.tag.ICarTagAssService;
+import com.berg.fastsearch.core.car.service.tag.ICarTagService;
 import com.berg.fastsearch.core.car.web.dto.*;
+import com.berg.fastsearch.core.car.web.dto.brand.CarBrandDto;
+import com.berg.fastsearch.core.car.web.dto.picture.CarPictureDto;
+import com.berg.fastsearch.core.car.web.dto.series.CarSeriesDto;
+import com.berg.fastsearch.core.car.web.dto.subscribe.CarSubscribeDto;
+import com.berg.fastsearch.core.car.web.dto.subscribe.CarSubscribeQueryCondition;
+import com.berg.fastsearch.core.car.web.dto.tag.CarTagAssDto;
+import com.berg.fastsearch.core.car.web.dto.tag.CarTagDto;
 import com.berg.fastsearch.core.enums.car.*;
 import com.berg.fastsearch.core.system.base.service.impl.AbstractBaseServiceImpl;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
@@ -165,7 +177,7 @@ public class CarServiceImpl
         CarSubscribeQueryCondition carSubscribeQueryCondition = new CarSubscribeQueryCondition();
         carSubscribeQueryCondition.setCarId(entity.getId());
         carSubscribeQueryCondition.setUserId(1L);
-        List<CarSubscribeDto> carSubscribeDtoList = subscribeService.findAll(carSubscribeQueryCondition);
+        List<CarSubscribeDto> carSubscribeDtoList = subscribeService.findAll(carSubscribeQueryCondition).getResult();
         if(CollectionUtils.isNotEmpty(carSubscribeDtoList) && carSubscribeDtoList.size()==1){
             dto.setSubscribe(carSubscribeDtoList.get(0));
         }else {
@@ -210,8 +222,8 @@ public class CarServiceImpl
                     entity.setDeployeeId(userDto.getId());
                     //设置封面
                     entity.setCover(cdnPrefix + dto.getCover());
-                    //设置车辆状态为新建
-                    entity.setStatus(Status.NEW.getCode());
+                    //设置车辆状态为未审核
+                    entity.setStatus(Status.UNAUDITED.getCode());
                     //设置车辆的初始查看次数
                     entity.setWatchTimes(0L);
                 }else{

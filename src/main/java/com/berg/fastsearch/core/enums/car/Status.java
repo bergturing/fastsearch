@@ -8,7 +8,22 @@ package com.berg.fastsearch.core.enums.car;
  * @apiNote Created on 18-5-17
  */
 public enum  Status {
-    NEW("NEW", "新建");
+    /**
+     * 车辆新建或则还未审核时候的状态
+     */
+    UNAUDITED("UNAUDITED", "未审核"),
+    /**
+     * 车辆已经通过审核,用户只能查看已经通过审核的车辆
+     */
+    PASSED("PASSED", "审核通过"),
+    /**
+     * 车辆已经出售了
+     */
+    SOLDED("SOLDED", "已出售"),
+    /**
+     * 删除数据只是从逻辑上删除数据
+     */
+    DELETED("DELETED", "逻辑删除");
 
     private String code;
 

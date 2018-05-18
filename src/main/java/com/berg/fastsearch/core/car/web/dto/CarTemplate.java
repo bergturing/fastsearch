@@ -1,5 +1,6 @@
 package com.berg.fastsearch.core.car.web.dto;
 
+import com.berg.fastsearch.core.system.search.entity.BaiduMapLocation;
 import com.berg.fastsearch.core.system.search.template.BaseTemplate;
 
 import java.math.BigDecimal;
@@ -171,6 +172,11 @@ public class CarTemplate extends BaseTemplate<Long> {
      * 车辆区域的英文名
      */
     private String regionEnName;
+
+    /**
+     * 百度地图的位置
+     */
+    private BaiduMapLocation location;
 
     public Long getBrandId() {
         return brandId;
@@ -418,5 +424,13 @@ public class CarTemplate extends BaseTemplate<Long> {
 
     public void setRegionEnName(String regionEnName) {
         this.regionEnName = regionEnName;
+    }
+
+    public BaiduMapLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(BaiduMapLocation location) {
+        this.location = location;
     }
 }

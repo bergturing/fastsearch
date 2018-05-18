@@ -19,11 +19,11 @@ import javax.imageio.ImageIO;
 public class ImageCodeServiceImpl extends AbstractValidateCodeService<ImageCode> {
 
     @Autowired
-    private ValidateCodeGenerator imageCodeGenerator;
+    private ValidateCodeGenerator<ImageCode> imageCodeGenerator;
 
     @Override
     protected ImageCode generate(ServletWebRequest request) {
-        return (ImageCode) imageCodeGenerator.generate(request);
+        return imageCodeGenerator.generate(request);
     }
 
     @Override

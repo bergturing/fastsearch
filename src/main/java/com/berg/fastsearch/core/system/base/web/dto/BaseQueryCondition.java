@@ -15,12 +15,12 @@ public abstract class BaseQueryCondition implements Serializable{
     /**
      * 默认页码
      */
-    public static final Integer DEFAULT_PAGE = 1;
+    public static final Integer DEFAULT_START = 1;
 
     /**
      * 默认页码大小
      */
-    public static final Integer DEFAULT_PAGE_SIZE = 20;
+    public static final Integer DEFAULT_SIZE = 20;
 
     /**
      * 排序顺序
@@ -35,12 +35,12 @@ public abstract class BaseQueryCondition implements Serializable{
     /**
      * 分页的页码
      */
-    private Integer page = DEFAULT_PAGE;
+    private Integer start = DEFAULT_START;
 
     /**
      * 分页大小
      */
-    private Integer pageSize = DEFAULT_PAGE_SIZE;
+    private Integer size = DEFAULT_SIZE;
 
     /**
      * 排序的字段
@@ -53,20 +53,20 @@ public abstract class BaseQueryCondition implements Serializable{
     private String orderDirection;
 
 
-    public Integer getPage() {
-        return page;
+    public Integer getStart() {
+        return start;
     }
 
-    public void setPage(Integer page) {
-        this.page = page;
+    public void setStart(Integer start) {
+        this.start = start;
     }
 
-    public Integer getPageSize() {
-        return pageSize;
+    public Integer getSize() {
+        return size;
     }
 
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
     public String getOrderBy() {

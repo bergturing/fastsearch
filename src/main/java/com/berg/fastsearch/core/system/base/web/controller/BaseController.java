@@ -29,7 +29,7 @@ public abstract class BaseController<
      */
     @GetMapping
     public ResponseData query(CONDITION condition){
-        return ResponseData.ofSuccess(getService().findAll(condition));
+        return ResponseData.ofSuccess(getService().findAll(condition).getResult());
     }
 
     /**

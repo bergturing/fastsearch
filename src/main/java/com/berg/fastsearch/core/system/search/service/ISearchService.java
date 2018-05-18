@@ -1,12 +1,10 @@
 package com.berg.fastsearch.core.system.search.service;
 
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
+import com.berg.fastsearch.core.system.base.entity.ServiceMultiResult;
 import com.berg.fastsearch.core.system.kafka.message.BaseIndexMessage;
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * <p></p>
@@ -43,5 +41,5 @@ public interface ISearchService<
      * @param condition      查询条件
      * @return               检索的结果
      */
-    List<ID> query(CONDITION condition);
+    ServiceMultiResult<ID> query(CONDITION condition);
 }

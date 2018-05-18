@@ -27,7 +27,7 @@ public class UserBaseUrlController {
      * 用户主页
      * @return  用户主页
      */
-    @GetMapping("/index")
+    @GetMapping(value = {"", "/index"})
     public String userIndexPage(){
         return "user/index";
     }

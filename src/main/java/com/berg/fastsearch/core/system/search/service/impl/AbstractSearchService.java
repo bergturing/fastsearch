@@ -1,6 +1,7 @@
 package com.berg.fastsearch.core.system.search.service.impl;
 
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
+import com.berg.fastsearch.core.system.base.entity.ServiceMultiResult;
 import com.berg.fastsearch.core.system.kafka.service.IKafkaService;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
 import com.berg.fastsearch.core.system.kafka.message.BaseIndexMessage;
@@ -22,8 +23,6 @@ import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -65,24 +64,23 @@ public abstract class AbstractSearchService<
         try {
             message = objectMapper.readValue(content, getMessageClass());
 
-        } catch (IOException e) {
+            switch (message.getOperation()) {
+                case BaseIndexMessage.INDEX:
+                    this.createOrUpdateIndex(message);
+                    break;
+                case BaseIndexMessage.REMOVE:
+                    this.removeIndex(message);
+                    break;
+                default:
+                    logger.warn("Not support message content " + message);
+                    break;
+            }
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        switch (message.getOperation()) {
-            case BaseIndexMessage.INDEX:
-                this.createOrUpdateIndex(message);
-                break;
-            case BaseIndexMessage.REMOVE:
-                this.removeIndex(message);
-                break;
-            default:
-                logger.warn("Not support message content " + message);
-                break;
         }
     }
 
-    private void createOrUpdateIndex(MESSAGE message) {
+    private void createOrUpdateIndex(MESSAGE message) throws Exception {
         ID id = message.getId();
 
         TEMPLATE template = map(id);
@@ -189,7 +187,7 @@ public abstract class AbstractSearchService<
     }
 
     @Override
-    public final List<ID> query(CONDITION condition) {
+    public final ServiceMultiResult<ID> query(CONDITION condition) {
         List<ID> list = new ArrayList<>();
 
         SearchRequestBuilder searchRequestBuilder = this.esClient.prepareSearch(getIndexName()).setTypes(getTypeName());
@@ -197,12 +195,12 @@ public abstract class AbstractSearchService<
         //如果查询条件不为空,就构建查询条件
         if(condition != null){
             //页码与分页大小
-            Integer page = condition.getPage();
-            Integer pageSize = condition.getPageSize();
-            if(page!=null && page>0 && pageSize!=null && pageSize>0){
+            Integer start = condition.getStart();
+            Integer size = condition.getSize();
+            if(start!=null && start>0 && size!=null && size>0){
                 searchRequestBuilder = searchRequestBuilder
-                        .setFrom((page-1)*pageSize)
-                        .setSize(pageSize);
+                        .setFrom(start)
+                        .setSize(size);
             }
 
             //子类实现的构建的其他查询条件
@@ -225,7 +223,7 @@ public abstract class AbstractSearchService<
             }
         }
 
-        return list;
+        return new ServiceMultiResult<ID>(searchResponse.getHits().getTotalHits(), list);
     }
 
     /**
@@ -279,7 +277,7 @@ public abstract class AbstractSearchService<
      * @param id    主键
      * @return      es模板对象
      */
-    protected abstract TEMPLATE map(ID id);
+    protected abstract TEMPLATE map(ID id) throws Exception;
 
     /**
      * 获取模板对象的类

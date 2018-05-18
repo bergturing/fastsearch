@@ -1,7 +1,7 @@
 package com.berg.fastsearch.admin.car.controller;
 
-import com.berg.fastsearch.core.car.service.ICarBrandService;
-import com.berg.fastsearch.core.car.service.ICarSeriesService;
+import com.berg.fastsearch.core.car.service.brand.ICarBrandService;
+import com.berg.fastsearch.core.car.service.series.ICarSeriesService;
 import com.berg.fastsearch.core.system.base.web.controller.BaseUrlController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

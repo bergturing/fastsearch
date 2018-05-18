@@ -1,5 +1,6 @@
 package com.berg.fastsearch.core.system.validatecode.web.controller;
 
+import com.berg.fastsearch.core.system.validatecode.entity.ImageCode;
 import com.berg.fastsearch.core.system.validatecode.service.IValidateCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ImageCodeController {
 
     @Autowired
-    private IValidateCodeService imageCodeServiceImpl;
+    private IValidateCodeService<ImageCode> imageCodeServiceImpl;
 
     @GetMapping("/image/code")
     public void createCode(HttpServletRequest request,

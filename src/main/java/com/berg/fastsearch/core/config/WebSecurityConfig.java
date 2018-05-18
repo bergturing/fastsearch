@@ -67,6 +67,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
                 .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+                .and()
             //记住我
             .rememberMe()
                 .tokenRepository(persistentTokenRepository())
@@ -79,11 +85,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         //管理员登录界面
                         "/admin/login",
                         //用户登录入口
+                        "/login",
                         "/user/login",
                         //静态资源
                         "/static/**",
                         //获取验证码
-                        "/image/code"
+                        "/image/code",
+                        "/sms/code"
                     ).permitAll()
                 .antMatchers(
                         //其他管理员界面
@@ -91,6 +99,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     ).hasRole("ADMIN")
                 .antMatchers(
                         //其他用户界面
+                        "/**",
                         "/user/**",
                         //接口
                         "/api/user/**"

@@ -1,8 +1,8 @@
 package com.berg.fastsearch.core.car.web.controller;
 
-import com.berg.fastsearch.core.car.service.ICarPictureService;
-import com.berg.fastsearch.core.car.web.dto.CarPictureDto;
-import com.berg.fastsearch.core.car.web.dto.CarPictureQueryCondition;
+import com.berg.fastsearch.core.car.service.picture.ICarPictureService;
+import com.berg.fastsearch.core.car.web.dto.picture.CarPictureDto;
+import com.berg.fastsearch.core.car.web.dto.picture.CarPictureQueryCondition;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 import com.berg.fastsearch.core.system.base.web.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;

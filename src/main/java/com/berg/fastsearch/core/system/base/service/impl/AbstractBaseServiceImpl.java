@@ -4,13 +4,11 @@ import com.berg.fastsearch.core.system.base.entity.BaseEntity;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
+import com.berg.fastsearch.core.system.base.entity.ServiceMultiResult;
 import com.berg.fastsearch.core.system.search.service.ISearchService;
 import org.apache.commons.collections.CollectionUtils;
-import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,20 +28,22 @@ public abstract class AbstractBaseServiceImpl<
         CONDITION extends BaseQueryCondition> implements IBaseService<ID, DTO, CONDITION> {
 
     @Override
-    public final List<DTO> findAll(CONDITION condition){
+    public final ServiceMultiResult<DTO> findAll(CONDITION condition){
         if(null == condition){
-            return transform2D(getRepository().findAll());
+            List<DTO> dtoList = transform2D(getRepository().findAll());
+            return new ServiceMultiResult<DTO>(dtoList.size(), dtoList);
         }
 
         if(getSearchService()!=null){
             //获取条件查询的ids
-            List<ID> ids = getSearchService().query(condition);
+            ServiceMultiResult<ID> multiResult = getSearchService().query(condition);
 
             //查询数据
-            return transform2D(getRepository().findAll(ids));
+            return new ServiceMultiResult<DTO>(multiResult.getTotal(), transform2D(getRepository().findAll(multiResult.getResult())));
         }else{
             //查询数据
-            return transform2D(getRepository().findAll());
+            List<DTO> dtoList = transform2D(getRepository().findAll());
+            return new ServiceMultiResult<DTO>(dtoList.size(), dtoList);
         }
     }
 
@@ -118,7 +118,7 @@ public abstract class AbstractBaseServiceImpl<
 
     @Override
     public final boolean indexAll() {
-        List<DTO> all = this.findAll(null);
+        List<DTO> all = this.findAll(null).getResult();
 
         final ISearchService searchService = getSearchService();
         if(searchService != null){

@@ -1,8 +1,8 @@
 package com.berg.fastsearch.core.car.web.controller;
 
-import com.berg.fastsearch.core.car.service.ICarSubscribeService;
-import com.berg.fastsearch.core.car.web.dto.CarSubscribeDto;
-import com.berg.fastsearch.core.car.web.dto.CarSubscribeQueryCondition;
+import com.berg.fastsearch.core.car.service.subscribe.ICarSubscribeService;
+import com.berg.fastsearch.core.car.web.dto.subscribe.CarSubscribeDto;
+import com.berg.fastsearch.core.car.web.dto.subscribe.CarSubscribeQueryCondition;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 import com.berg.fastsearch.core.system.base.web.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;

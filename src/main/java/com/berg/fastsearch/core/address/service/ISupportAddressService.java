@@ -4,7 +4,9 @@ import com.berg.fastsearch.core.address.entity.SupportAddress;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressQueryCondition;
 import com.berg.fastsearch.core.enums.address.Level;
+import com.berg.fastsearch.core.system.base.entity.ServiceResult;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
+import com.berg.fastsearch.core.system.search.entity.BaiduMapLocation;
 
 import java.util.List;
 import java.util.Map;
@@ -46,4 +48,9 @@ public interface ISupportAddressService extends IBaseService<Long, SupportAddres
      * @return
      */
     List<SupportAddressDto> findByLevel(String level);
+
+    /**
+     * 根据城市以及具体地位获取百度地图的经纬度
+     */
+    ServiceResult<BaiduMapLocation> getBaiduMapLocation(String city, String address);
 }

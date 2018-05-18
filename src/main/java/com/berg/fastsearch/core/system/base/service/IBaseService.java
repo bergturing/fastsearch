@@ -2,6 +2,7 @@ package com.berg.fastsearch.core.system.base.service;
 
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
+import com.berg.fastsearch.core.system.base.entity.ServiceMultiResult;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +23,7 @@ public interface IBaseService<
      * 查询所有的数据
      * @return  查询到的所有的数据
      */
-    List<DTO> findAll(CONDITION condition);
+    ServiceMultiResult<DTO> findAll(CONDITION condition);
 
     /**
      * 根据主键查询数据

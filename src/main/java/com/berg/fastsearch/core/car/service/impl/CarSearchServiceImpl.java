@@ -2,24 +2,37 @@ package com.berg.fastsearch.core.car.service.impl;
 
 import com.berg.fastsearch.core.address.service.ISupportAddressService;
 import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
-import com.berg.fastsearch.core.car.web.dto.CarIndexMessage;
-import com.berg.fastsearch.core.car.web.dto.CarTemplate;
+import com.berg.fastsearch.core.car.web.dto.*;
 import com.berg.fastsearch.core.car.service.ICarSearchService;
 import com.berg.fastsearch.core.car.service.ICarService;
-import com.berg.fastsearch.core.car.web.dto.CarQueryCondition;
+import com.berg.fastsearch.core.system.base.entity.ServiceResult;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
+import com.berg.fastsearch.core.system.search.entity.BaiduMapLocation;
 import com.berg.fastsearch.core.system.search.service.impl.AbstractSearchService;
 import com.berg.fastsearch.core.enums.car.ValueBlock;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.sort.SortOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>车辆ES搜索服务对象</p>
@@ -32,6 +45,11 @@ import org.springframework.stereotype.Service;
 public class CarSearchServiceImpl
         extends AbstractSearchService<Long, CarQueryCondition, CarIndexMessage, CarTemplate>
         implements ICarSearchService{
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private TransportClient esClient;
 
     /**
      * 车辆的服务对象
@@ -46,11 +64,13 @@ public class CarSearchServiceImpl
     private ISupportAddressService supportAddressService;
 
     @Override
-    protected CarTemplate map(Long id) {
+    protected CarTemplate map(Long id) throws Exception {
         CarTemplate carTemplate = new CarTemplate();
 
+        CarDto carDto = carService.findOne(id);
+
         //设置车辆的基本信息
-        BeanUtils.copyProperties(carService.findOne(id), carTemplate);;
+        BeanUtils.copyProperties(carDto, carTemplate);;
 
         //设置城市信息
         SupportAddressDto city = supportAddressService.findOne(carTemplate.getCityId());
@@ -59,6 +79,14 @@ public class CarSearchServiceImpl
         //设置区域数据
         SupportAddressDto region = supportAddressService.findOne(carTemplate.getRegionId());
         carTemplate.setRegionEnName(region.getEnName());
+
+        //设置位置
+        String address = city.getCnName() + region.getCnName() + carDto.getAddress();
+        ServiceResult<BaiduMapLocation> location = supportAddressService.getBaiduMapLocation(city.getCnName(), address);
+        if (!location.isSuccess()) {
+            throw new Exception("获取地理位置失败");
+        }
+        carTemplate.setLocation(location.getResult());
 
         return carTemplate;
     }
@@ -175,7 +203,65 @@ public class CarSearchServiceImpl
             builder = builder
                     .must(rangeQueryBuilder);
         }
+
+        //地理位置
+        Double leftLatitude = condition.getLeftLatitude();
+        Double leftLongitude = condition.getLeftLongitude();
+        Double rightLatitude = condition.getRightLatitude();
+        Double rightLongitude = condition.getRightLongitude();
+        if(leftLatitude!=null && leftLatitude>0){
+            if(leftLongitude!=null && leftLongitude>0){
+                if(rightLatitude!=null && rightLatitude>0){
+                    if(rightLongitude!=null && rightLongitude>0){
+                        builder.must(
+                                QueryBuilders
+                                        .geoBoundingBoxQuery("location")
+                                        .setCorners(
+                                                new GeoPoint(leftLatitude, leftLongitude),
+                                                new GeoPoint(rightLatitude, rightLongitude)
+                                        ));
+                    }
+                }
+            }
+        }
+
+        //状态
+        String status = condition.getStatus();
+        if(StringUtils.isNotBlank(status)){
+            builder = builder
+                    .must(QueryBuilders.termQuery(CarQueryCondition.FIELD_STATUS, status));
+        }
+
         //返回查询条件
         return builder;
+    }
+
+    @Override
+    public List<CarBucketDto> mapAggregate(String cityEnName) {
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+        boolQuery.filter(QueryBuilders.termQuery(CarQueryCondition.FIELD_CITY_EN_NAME, cityEnName));
+
+        AggregationBuilder aggBuilder = AggregationBuilders.terms(CarQueryCondition.AGG_REGION)
+                .field(CarQueryCondition.FIELD_REGION_EN_NAME);
+        SearchRequestBuilder requestBuilder = this.esClient.prepareSearch(getIndexName())
+                .setTypes(getTypeName())
+                .setQuery(boolQuery)
+                .addAggregation(aggBuilder);
+
+        logger.debug(requestBuilder.toString());
+
+        SearchResponse response = requestBuilder.get();
+        List<CarBucketDto> buckets = new ArrayList<>();
+        if (response.status() != RestStatus.OK) {
+            logger.warn("Aggregate status is not ok for " + requestBuilder);
+            return buckets;
+        }
+
+        Terms terms = response.getAggregations().get(CarQueryCondition.AGG_REGION);
+        for (Terms.Bucket bucket : terms.getBuckets()) {
+            buckets.add(new CarBucketDto(bucket.getKeyAsString(), bucket.getDocCount()));
+        }
+
+        return buckets;
     }
 }
