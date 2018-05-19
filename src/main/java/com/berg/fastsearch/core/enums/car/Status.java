@@ -29,6 +29,16 @@ public enum  Status {
 
     private String name;
 
+    public static Status get(String code){
+        for (Status style : Status.values()) {
+            if(style.getCode().equals(code)){
+                return style;
+            }
+        }
+
+        throw new IllegalArgumentException();
+    }
+
     Status(String code, String name) {
         this.code = code;
         this.name = name;

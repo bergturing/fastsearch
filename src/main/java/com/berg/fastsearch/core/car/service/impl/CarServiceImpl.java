@@ -184,6 +184,9 @@ public class CarServiceImpl
             dto.setSubscribe(new CarSubscribeDto());
         }
 
+        //设置状态含义
+        dto.setStatusMeaning(Status.get(entity.getStatus()).getName());
+
     }
 
     @Override
@@ -204,10 +207,16 @@ public class CarServiceImpl
                 entity.setWatchTimes(dto.getWatchTimes());
             }
 
+            //处理状态
+            String status = entity.getStatus();
+            if(StringUtils.isBlank(status)){
+                entity.setStatus(dto.getStatus());
+            }
+
             //其他未展现的数据
             entity.setCreateTime(dto.getCreateTime());
             entity.setDeployeeId(dto.getDeployeeId());
-            entity.setStatus(dto.getStatus());
+
         }else{
             //新建
 
@@ -281,5 +290,35 @@ public class CarServiceImpl
         carDto.setWatchTimes(carDto.getWatchTimes()+1);
 
         return this.update(carDto);
+    }
+
+    @Override
+    public CarDto pass(Long id) throws Exception {
+        CarDto carDto = this.findOne(id);
+
+        //车辆未发布才能操作
+        if(StringUtils.equalsIgnoreCase(carDto.getStatus(), Status.UNAUDITED.getCode())){
+            carDto.setStatus(Status.PASSED.getCode());
+            carDto = this.update(carDto);
+        }else{
+            throw new Exception("车辆已经发布");
+        }
+
+        return carDto;
+    }
+
+    @Override
+    public CarDto stop(Long id) throws Exception {
+        CarDto carDto = this.findOne(id);
+
+        //车辆为审核通过才能操作
+        if(StringUtils.equalsIgnoreCase(carDto.getStatus(), Status.PASSED.getCode())){
+            carDto.setStatus(Status.UNAUDITED.getCode());
+            carDto = this.update(carDto);
+        }else{
+            throw new Exception("车辆未发布");
+        }
+
+        return carDto;
     }
 }

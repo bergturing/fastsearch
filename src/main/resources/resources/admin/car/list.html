@@ -72,10 +72,7 @@
                 <th width="40">排量(L)</th>
                 <th width="50">里程(km)</th>
                 <th width="40">车龄</th>
-                <th width="50">变速箱</th>
                 <th width="50">颜色</th>
-                <th width="50">驱动</th>
-                <th width="50">排放标准</th>
                 <th width="50">车型</th>
                 <th width="50">燃油类型</th>
                 <th width="70">查看次数(次)</th>
@@ -99,27 +96,45 @@
                 <td>{{displacement}}</td>
                 <td>{{mileage}}</td>
                 <td>{{age}}</td>
-                <td>{{gearBox}}</td>
                 <td>{{color}}</td>
-                <td>{{driveType}}</td>
-                <td>{{emissionStandard}}</td>
                 <td>{{style}}</td>
                 <td>{{fuelType}}</td>
                 <td>{{watchTimes}}</td>
                 <td>{{address}}</td>
-                <td>{{status}}</td>
+                <td>{{statusMeaning}}</td>
                 <td>{{description}}</td>
                 <td class="f-14">
-                    <a car_id="{{id}}" class="car_edit" title="编辑" href="javascript:;" style="text-decoration:none">
-                        <i class="Hui-iconfont">&#xe6df;</i>
-                    </a>
-                    <a car_id="{{id}}" class="car_delete ml-5" title="删除" href="javascript:;" style="text-decoration:none">
-                        <i class="Hui-iconfont">&#xe6e2;</i>
-                    </a>
+                    {{operate}}
                 </td>
             </tr>
         </tbody>
     </table>
+
+    <!--上架时候的操作模板-->
+    <div id="operate_template_up" style="display: none">
+        <a car_id="{{id}}" class="car_up" title="发布" href="javascript:;" style="text-decoration:none">
+            <i class="iconfont">&#xe98e;</i>
+        </a>
+        <a car_id="{{id}}" class="car_edit" title="编辑" href="javascript:;" style="text-decoration:none">
+            <i class="Hui-iconfont">&#xe6df;</i>
+        </a>
+        <a car_id="{{id}}" class="car_delete ml-5" title="删除" href="javascript:;" style="text-decoration:none">
+            <i class="Hui-iconfont">&#xe6e2;</i>
+        </a>
+    </div>
+
+    <!--下架时候的操作模板-->
+    <div id="operate_template_down" style="display: none">
+        <a car_id="{{id}}" class="car_down" title="下架" href="javascript:;" style="text-decoration:none">
+            <i class="iconfont">&#xebda;</i>
+        </a>
+        <a car_id="{{id}}" class="car_edit" title="编辑" href="javascript:;" style="text-decoration:none">
+            <i class="Hui-iconfont">&#xe6df;</i>
+        </a>
+        <a car_id="{{id}}" class="car_delete ml-5" title="删除" href="javascript:;" style="text-decoration:none">
+            <i class="Hui-iconfont">&#xe6e2;</i>
+        </a>
+    </div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>

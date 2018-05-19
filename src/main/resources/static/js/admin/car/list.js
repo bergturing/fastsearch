@@ -77,6 +77,57 @@ var FastSearchCar = (function(){
     };
 
     /**
+     * 内部方法: 发布
+     * @private
+     */
+    var _carUp = function(){
+        var obj = this;
+
+        $.ajax({
+            url: '/car/pass/' + $(obj).attr("car_id"),
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                if(response.code === 200){
+                    //重新加载
+                    _loadData();
+                }else{
+                    console.log(response.msg);
+                }
+            },
+            error: function (response) {
+                console.log(response.msg);
+            }
+        });
+    };
+
+    /**
+     * 内部方法: 下架
+     * @private
+     */
+    var _carDown = function(){
+        var obj = this;
+
+        $.ajax({
+            url: '/car/stop/' + $(obj).attr("car_id"),
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                if(response.code === 200){
+                    //重新加载
+                    _loadData();
+                }else{
+                    console.log(response.msg);
+                }
+            },
+            error: function (response) {
+                console.log(response.msg);
+            }
+        });
+
+    };
+
+    /**
      * 内部方法: 编辑车辆信息
      */
     var _carEdit = function(){
@@ -123,6 +174,13 @@ var FastSearchCar = (function(){
         //索引所有数据
         $("#index_all").bind("click", _indexAll);
 
+
+        //发布操作
+        $("#car_list").on("click", ".car_up", _carUp);
+
+        //下架操作
+        $("#car_list").on("click", ".car_down", _carDown);
+
         //编辑车辆
         $("#car_list").on("click", ".car_edit", _carEdit);
 
@@ -138,30 +196,53 @@ var FastSearchCar = (function(){
             $("#car_count").html('共有数据：<strong>' + data.length +'</strong> 条');
 
             var target = $("#car_list>tbody");
-            var _template = $("#car_template>tbody").html().replace(" style=\"display: none\"", "");
+            var _template = $("#car_template>tbody").html();
+
+            //发布
+            var operate_template_up = $("#operate_template_up").html();
+            //下架
+            var operate_template_down = $("#operate_template_down").html();
 
             var _html = "";
 
             $.each(data, function(index, item){
+
+                //处理操作的模板
+                var operate = "";
+                switch(item.status){
+                    //未审核
+                    case "UNAUDITED":
+                        operate = operate_template_up;
+                        break;
+                    //审核通过
+                    case "PASSED":
+                        operate = operate_template_down;
+                        break;
+                    default:
+                        operate = operate_template_down;
+                        break;
+                }
+
+                operate = operate
+                    .replace("{{id}}", item.id)
+                    .replace("{{id}}", item.id)
+                    .replace("{{id}}", item.id);
+
                 _html += _template.replace("{{id}}", item.id)
-                    .replace("{{id}}", item.id)
-                    .replace("{{id}}", item.id)
                     .replace("{{title}}", item.title)
                     .replace("{{price}}", item.price)
                     .replace("{{seats}}", item.seats)
                     .replace("{{displacement}}", item.displacement)
                     .replace("{{mileage}}", item.mileage)
                     .replace("{{age}}", item.age)
-                    .replace("{{gearBox}}", item.gearBoxMeaning)
                     .replace("{{color}}", item.colorMeaning)
-                    .replace("{{driveType}}", item.driveTypeMeaning)
-                    .replace("{{emissionStandard}}", item.emissionStandardMeaning)
                     .replace("{{style}}", item.styleMeaning)
                     .replace("{{fuelType}}", item.fuelTypeMeaning)
                     .replace("{{watchTimes}}", item.watchTimes)
                     .replace("{{address}}", item.address)
-                    .replace("{{status}}", item.status)
-                    .replace("{{description}}", item.description);
+                    .replace("{{statusMeaning}}", item.statusMeaning)
+                    .replace("{{description}}", item.description)
+                    .replace("{{operate}}", operate);
             });
 
             target.html(_html);

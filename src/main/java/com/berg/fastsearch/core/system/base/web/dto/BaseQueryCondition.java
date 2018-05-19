@@ -15,7 +15,7 @@ public abstract class BaseQueryCondition implements Serializable{
     /**
      * 默认页码
      */
-    public static final Integer DEFAULT_START = 1;
+    public static final Integer DEFAULT_START = 0;
 
     /**
      * 默认页码大小

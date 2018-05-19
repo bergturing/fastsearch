@@ -235,6 +235,11 @@ public class CarDto extends BaseDto<Long> {
      */
     private CarSubscribeDto subscribe;
 
+    /**
+     * 车辆状态的含义
+     */
+    private String statusMeaning;
+
     public Long getBrandId() {
         return brandId;
     }
@@ -553,5 +558,13 @@ public class CarDto extends BaseDto<Long> {
 
     public void setSubscribe(CarSubscribeDto subscribe) {
         this.subscribe = subscribe;
+    }
+
+    public String getStatusMeaning() {
+        return statusMeaning;
+    }
+
+    public void setStatusMeaning(String statusMeaning) {
+        this.statusMeaning = statusMeaning;
     }
 }

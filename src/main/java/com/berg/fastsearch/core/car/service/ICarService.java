@@ -15,11 +15,25 @@ import java.util.List;
  */
 public interface ICarService extends IBaseService<Long, CarDto, CarQueryCondition> {
 
-//    /**
-//     * 全地图查询
-//     * @param carQueryCondition
-//     * @return
-//     */
-//    List<CarDto> wholeMapQuery(CarQueryCondition carQueryCondition);
+    /**
+     * 查看车辆
+     * @param id            主键
+     * @return              处理的结果
+     * @throws Exception    处理异常
+     */
     CarDto watchCar(Long id) throws Exception;
+
+    /**
+     * 车辆发布
+     * @param id        主键
+     * @return          处理的结果
+     */
+    CarDto pass(Long id) throws Exception;
+
+    /**
+     * 车辆下架
+     * @param id        主键
+     * @return          处理结果
+     */
+    CarDto stop(Long id) throws Exception;
 }
