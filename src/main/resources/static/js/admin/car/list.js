@@ -260,12 +260,12 @@ var FastSearchCar = (function(){
     /**
      * 内部方法: 加载数据
      */
-    var _loadData = function(){
+    var _loadData = function(condition){
         //移除所有数据
         $("#car_list tbody tr").remove();
 
         $.ajax({
-            url: '/car',
+            url: '/car?' + conditon,
             type: 'GET',
             dataType: 'json',
             success: function (response) {

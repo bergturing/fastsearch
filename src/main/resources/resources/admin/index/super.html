@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="admin/common :: head"></div>
+</head>
+
+<body>
+
+<header th:replace="admin/common :: header"></header>
+
+<aside class="Hui-aside">
+    <div class="menu_dropdown bk_2">
+        <dl id="menu-admin">
+            <dt><i class="Hui-iconfont">&#xe62d;</i> 用户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="/admin/account/role/list" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+                    <li><a data-href="/admin/account/userrole/list" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+                    <li><a data-href="/admin/account/user/list" data-title="用户列表" href="javascript:void(0)">用户列表</a></li>
+                </ul>
+            </dd>
+        </dl>
+
+        <dl id="menu-base">
+            <dt><i class="Hui-iconfont">&#xe620;</i> 基础数据<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="/admin/car/brand/list" data-title="品牌管理" href="javascript:void(0)">品牌管理</a></li>
+                    <li><a data-href="/admin/car/series/list" data-title="系列管理" href="javascript:void(0)">系列管理</a></li>
+                    <li><a data-href="/admin/car/tag/list" data-title="标签管理" href="javascript:void(0)">标签管理</a></li>
+                    <li><a data-href="/admin/car/tag/ass/list" data-title="标签分派" href="javascript:void(0)">标签分派</a></li>
+                    <li><a data-href="/admin/address/list" data-title="地点管理" href="javascript:void(0)">地点管理</a></li>
+                </ul>
+            </dd>
+        </dl>
+    </div>
+</aside>
+<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
+</div>
+<section class="Hui-article-box">
+    <div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
+        <div class="Hui-tabNav-wp">
+            <ul id="min_title_list" class="acrossTab cl">
+                <li class="active">
+                    <span title="我的桌面" data-href="welcome.html">我的桌面</span>
+                    <em></em></li>
+            </ul>
+        </div>
+        <div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S"
+                                                  href="javascript:;"><i class="Hui-iconfont">&#xe6d4;</i></a><a
+                id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d7;</i></a>
+        </div>
+    </div>
+    <div id="iframe_box" class="Hui-article">
+        <div class="show_iframe">
+            <div style="display:none" class="loading"></div>
+            <iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+        </div>
+    </div>
+</section>
+
+<div class="contextMenu" id="Huiadminmenu">
+    <ul>
+        <li id="closethis">关闭当前</li>
+        <li id="closeall">关闭全部</li>
+    </ul>
+</div>
+
+<header th:replace="admin/common :: footer"></header>
+
+<script type="text/javascript" src="/static/lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
+</body>
+</html>

@@ -7,7 +7,10 @@
           "type": "long"
         },
         "title": {
-          "type": "text"
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
         },
         "brandId": {
           "type": "long"
@@ -15,11 +18,23 @@
         "brandCode": {
           "type": "keyword"
         },
+        "brand": {
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
+        },
         "seriesId": {
           "type": "long"
         },
         "seriesCode": {
           "type": "keyword"
+        },
+        "series": {
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
         },
         "deployeeId": {
           "type": "long"
@@ -33,6 +48,12 @@
         "displacement": {
           "type": "double"
         },
+        "displacementMeaning": {
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
+        },
         "mileage": {
           "type": "double"
         },
@@ -42,20 +63,56 @@
         "gearBox": {
           "type": "keyword"
         },
+        "gearBoxMeaning": {
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
+        },
         "color": {
           "type": "keyword"
+        },
+        "colorMeaning": {
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
         },
         "driveType": {
           "type": "keyword"
         },
+        "driveTypeMeaning": {
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
+        },
         "emissionStandard": {
           "type": "keyword"
+        },
+        "emissionStandardMeaning": {
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
         },
         "style": {
           "type": "keyword"
         },
+        "styleMeaning": {
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
+        },
         "fuelType": {
           "type": "keyword"
+        },
+        "fuelTypeMeaning": {
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
         },
         "watchTimes": {
           "type": "long"
@@ -90,19 +147,22 @@
           "type": "keyword"
         },
         "cityCnName": {
-          "type": "keyword"
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
         },
         "regionCnName": {
-          "type": "keyword"
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
         },
         "tags": {
-          "type": "text"
-        },
-        "brand": {
-          "type": "text"
-        },
-        "series": {
-          "type": "text"
+          "type": "text",
+          "index": true,
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
         },
         "location": {
           "type": "geo_point"

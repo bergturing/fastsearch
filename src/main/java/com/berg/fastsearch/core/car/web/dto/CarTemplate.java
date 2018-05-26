@@ -178,6 +178,46 @@ public class CarTemplate extends BaseTemplate<Long> {
      */
     private BaiduMapLocation location;
 
+    /**
+     * 汽车排量含义
+     */
+    private String displacementMeaning;
+
+    /**
+     * 变速箱类型含义
+     */
+    private String gearBoxMeaning;
+
+    /**
+     * 颜色含义
+     */
+    private String colorMeaning;
+
+    /**
+     * 驱动类型含义
+     */
+    private String driveTypeMeaning;
+
+    /**
+     * 排放标准含义
+     */
+    private String emissionStandardMeaning;
+
+    /**
+     * 风格含义
+     */
+    private String styleMeaning;
+
+    /**
+     * 燃油类型含义
+     */
+    private String fuelTypeMeaning;
+
+    /**
+     * 标签
+     */
+    private String tags;
+
     public Long getBrandId() {
         return brandId;
     }
@@ -432,5 +472,69 @@ public class CarTemplate extends BaseTemplate<Long> {
 
     public void setLocation(BaiduMapLocation location) {
         this.location = location;
+    }
+
+    public String getDisplacementMeaning() {
+        return displacementMeaning;
+    }
+
+    public void setDisplacementMeaning(String displacementMeaning) {
+        this.displacementMeaning = displacementMeaning;
+    }
+
+    public String getGearBoxMeaning() {
+        return gearBoxMeaning;
+    }
+
+    public void setGearBoxMeaning(String gearBoxMeaning) {
+        this.gearBoxMeaning = gearBoxMeaning;
+    }
+
+    public String getColorMeaning() {
+        return colorMeaning;
+    }
+
+    public void setColorMeaning(String colorMeaning) {
+        this.colorMeaning = colorMeaning;
+    }
+
+    public String getDriveTypeMeaning() {
+        return driveTypeMeaning;
+    }
+
+    public void setDriveTypeMeaning(String driveTypeMeaning) {
+        this.driveTypeMeaning = driveTypeMeaning;
+    }
+
+    public String getEmissionStandardMeaning() {
+        return emissionStandardMeaning;
+    }
+
+    public void setEmissionStandardMeaning(String emissionStandardMeaning) {
+        this.emissionStandardMeaning = emissionStandardMeaning;
+    }
+
+    public String getStyleMeaning() {
+        return styleMeaning;
+    }
+
+    public void setStyleMeaning(String styleMeaning) {
+        this.styleMeaning = styleMeaning;
+    }
+
+    public String getFuelTypeMeaning() {
+        return fuelTypeMeaning;
+    }
+
+    public void setFuelTypeMeaning(String fuelTypeMeaning) {
+        this.fuelTypeMeaning = fuelTypeMeaning;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }

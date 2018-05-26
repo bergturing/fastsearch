@@ -49,6 +49,12 @@
                                placeholder="密码">
                         <i class="fa fa-lock"></i>
                     </div>
+                    <div class="form-group help">
+                        <input name="validateCode" type="text" class="form-control password" placeholder="验证码">
+                        <i class="fa fa-lock"></i>
+                        <img id="codeImg" src="/image/code"> <a id="kanbuq" href="javascript:;">看不清，换一张</a>
+
+                    </div>
                 </div>
                 <div class="form-group">
                     <button id="submit-btn" type="submit" class="btn btn-default">登录</button>
@@ -62,6 +68,13 @@
 
 <script type="text/javascript" src="/static/lib/layui/layui.js"></script>
 <script th:inline="javascript">
+    $(function(){
+        $("#kanbuq").bind("click", function(){
+            var codeImg = $("#codeImg");
+            codeImg.attr("src", codeImg.attr("src"));
+        });
+    });
+
     $(function () {
         var authError = [[${param.authError}]];
         var smsCodeError = [[${param.smsCodeError}]];

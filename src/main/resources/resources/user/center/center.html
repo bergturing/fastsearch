@@ -5,6 +5,7 @@
     <link href="/static/css/user/main.css" rel='stylesheet' type='text/css'/>
     <link href="/static/css/user/common.css" rel='stylesheet' type='text/css'/>
     <link href="/static/css/user/center/center.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <meta charset="UTF-8">
     <title>个人中心</title>
 </head>
@@ -21,7 +22,7 @@
         </div>
 
         <ul class="select">
-            <li class="hover"><a href="javascript:void(0);" data-bind="wait-record">待看清单</a></li>
+            <li class="hover"><a href="javascript:void(0);" data-bind="wait-record">收藏列表</a></li>
             <li><a href="javascript:void(0);" data-bind="subscribe">我的预约</a></li>
             <li><a href="javascript:void(0);" data-bind="finish-record">看房记录</a></li>
             <li><a href="javascript:void(0);" data-bind="edit-info">编辑资料</a></li>
@@ -29,7 +30,7 @@
     </div>
     <div class="user-right fl">
         <div class="right-body wait-record on">
-            <div class="title">待看清单</div>
+            <div class="title">收藏列表</div>
             <hr class="split-line"/>
             <form action="#">
                 <div class="content">
@@ -47,6 +48,7 @@
                 </div>
             </form>
         </div>
+
         <div class="right-body subscribe">
             <div class="title">预约列表</div>
             <hr class="split-line"/>
@@ -60,7 +62,7 @@
         </div>
 
         <div class="right-body finish-record">
-            <div class="title">看房记录</div>
+            <div class="title">看车记录</div>
             <hr class="split-line"/>
             <div class="content">
                 <ul>
@@ -115,6 +117,7 @@
 <div th:replace="user/common :: footer"></div>
 <script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/static/lib/layui/layui.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.js"></script>
 <script type="text/javascript" src="/static/js/user/center/center.js"></script>
 </body>
 </html>

@@ -5,11 +5,13 @@ import com.berg.fastsearch.core.address.web.dto.SupportAddressDto;
 import com.berg.fastsearch.core.car.web.dto.*;
 import com.berg.fastsearch.core.car.service.ICarSearchService;
 import com.berg.fastsearch.core.car.service.ICarService;
+import com.berg.fastsearch.core.car.web.dto.tag.CarTagDto;
 import com.berg.fastsearch.core.system.base.entity.ServiceResult;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
 import com.berg.fastsearch.core.system.search.entity.BaiduMapLocation;
 import com.berg.fastsearch.core.system.search.service.impl.AbstractSearchService;
 import com.berg.fastsearch.core.enums.car.ValueBlock;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -70,7 +72,18 @@ public class CarSearchServiceImpl
         CarDto carDto = carService.findOne(id);
 
         //设置车辆的基本信息
-        BeanUtils.copyProperties(carDto, carTemplate);;
+        BeanUtils.copyProperties(carDto, carTemplate);
+
+        List<CarTagDto> tags = carDto.getTags();
+        if(CollectionUtils.isNotEmpty(tags)){
+            StringBuilder stringBuilder = new StringBuilder("");
+
+            for (CarTagDto tag : tags) {
+                stringBuilder.append(tag.getName()).append(",");
+            }
+
+            carTemplate.setTags(stringBuilder.toString());
+        }
 
         //设置城市信息
         SupportAddressDto city = supportAddressService.findOne(carTemplate.getCityId());
@@ -230,6 +243,29 @@ public class CarSearchServiceImpl
         if(StringUtils.isNotBlank(status)){
             builder = builder
                     .must(QueryBuilders.termQuery(CarQueryCondition.FIELD_STATUS, status));
+        }
+
+        String keywords = condition.getKeywords();
+        if(StringUtils.isNotBlank(keywords)){
+            builder = builder.must(
+                    QueryBuilders.multiMatchQuery(keywords,
+                            CarQueryCondition.FIELD_CITY_EN_NAME,
+                            CarQueryCondition.FIELD_REGION_EN_NAME,
+                            CarQueryCondition.FIELD_CITY_CN_NAME,
+                            CarQueryCondition.FIELD_REGION_CN_NAME,
+                            CarQueryCondition.FIELD_SERIES_CODE,
+                            CarQueryCondition.FIELD_SERIES,
+                            CarQueryCondition.FIELD_BRAND_CODE,
+                            CarQueryCondition.FIELD_BRAND,
+                            CarQueryCondition.FIELD_TAGS,
+                            CarQueryCondition.FIELD_GEAR_BOX_MEANING,
+                            CarQueryCondition.FIELD_COLOR_MEANING,
+                            CarQueryCondition.FIELD_DRIVE_TYPE_MEANING,
+                            CarQueryCondition.FIELD_EMISSION_STANDAR_MEANING,
+                            CarQueryCondition.FIELD_STYLE_MEANING,
+                            CarQueryCondition.FIELD_FUEL_TYPE_MEANING,
+                            CarQueryCondition.FIELD_ADDRESS
+                    ));
         }
 
         //返回查询条件

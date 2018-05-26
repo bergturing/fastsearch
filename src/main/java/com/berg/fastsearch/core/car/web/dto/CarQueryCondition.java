@@ -44,6 +44,36 @@ public class CarQueryCondition extends BaseQueryCondition {
 
     public static final String AGG_REGION = "agg_region";
 
+    public static final String FIELD_BRAND = "brand";
+
+    public static final String FIELD_SERIES = "series";
+
+    public static final String FIELD_TAGS = "tags";
+
+    public static final String FIELD_GEAR_BOX_MEANING = "gearBoxMeaning";
+
+    public static final String FIELD_COLOR_MEANING = "colorMeaning";
+
+    public static final String FIELD_DRIVE_TYPE_MEANING = "driveTypeMeaning";
+
+    public static final String FIELD_EMISSION_STANDAR_MEANING = "emissionStandardMeaning";
+
+    public static final String FIELD_STYLE_MEANING = "styleMeaning";
+
+    public static final String FIELD_FUEL_TYPE_MEANING = "fuelTypeMeaning";
+
+    public static final String FIELD_ADDRESS = "address";
+
+    /**
+     * 城市字段名
+     */
+    public static final String FIELD_CITY_CN_NAME = "cityCnName";
+
+    /**
+     * 区域字段名
+     */
+    public static final String FIELD_REGION_CN_NAME = "regionCnName";
+
     /**
      * 城市简写英文名
      */

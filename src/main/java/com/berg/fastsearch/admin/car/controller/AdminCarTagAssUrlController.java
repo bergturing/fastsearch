@@ -53,8 +53,8 @@ public class AdminCarTagAssUrlController extends BaseUrlController<Long> {
      */
     private void baseData(final Model model){
         //设置所有的车辆
-        model.addAttribute("cars", carService.findAll(null));
+        model.addAttribute("cars", carService.findAll(null).getResult());
         //设置所有的标签
-        model.addAttribute("tags", carTagService.findAll(null));
+        model.addAttribute("tags", carTagService.findAll(null).getResult());
     }
 }

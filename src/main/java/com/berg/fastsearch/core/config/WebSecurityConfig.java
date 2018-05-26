@@ -96,14 +96,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         //其他管理员界面
                         "/admin/**"
-                    ).hasRole("ADMIN")
+                    ).hasAnyRole("SUPER_ADMIN", "BUSINESS_ADMIN", "CUSTOMER_ADMIN")
                 .antMatchers(
                         //其他用户界面
                         "/**",
                         "/user/**",
                         //接口
                         "/api/user/**"
-                    ).hasAnyRole("ADMIN", "USER")
+                    ).hasAnyRole("SUPER_ADMIN", "BUSINESS_ADMIN", "CUSTOMER_ADMIN", "USER")
                 .anyRequest()
                 .authenticated()
                 .and()

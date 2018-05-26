@@ -74,13 +74,13 @@ public class AdminCarUrlController extends BaseUrlController<Long>{
         //设置系列数据
         CarSeriesQueryCondition carSeriesQueryCondition = new CarSeriesQueryCondition();
         carSeriesQueryCondition.setBrandId(carDto.getBrandId());
-        model.addAttribute("series", carSeriesService.findAll(carSeriesQueryCondition));
+        model.addAttribute("series", carSeriesService.findAll(carSeriesQueryCondition).getResult());
 
         //设置区域数据
         SupportAddressQueryCondition supportAddressQueryCondition = new SupportAddressQueryCondition();
         supportAddressQueryCondition.setBelongTo(carDto.getCityId());
         supportAddressQueryCondition.setLevel(Level.REGION.getCode());
-        model.addAttribute("regions", supportAddressService.findAll(supportAddressQueryCondition));
+        model.addAttribute("regions", supportAddressService.findAll(supportAddressQueryCondition).getResult());
     }
 
     /**
@@ -101,6 +101,6 @@ public class AdminCarUrlController extends BaseUrlController<Long>{
         //车型
         model.addAttribute("styles", Style.values());
         //所有的标签
-        model.addAttribute("allTags", carTagService.findAll(null));
+        model.addAttribute("allTags", carTagService.findAll(null).getResult());
     }
 }

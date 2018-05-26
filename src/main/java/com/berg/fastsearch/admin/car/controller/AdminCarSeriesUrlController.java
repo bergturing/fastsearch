@@ -49,6 +49,6 @@ public class AdminCarSeriesUrlController extends BaseUrlController<Long> {
      */
     private void baseData(final Model model){
         //设置所有的品牌
-        model.addAttribute("brands", carBrandService.findAll(null));
+        model.addAttribute("brands", carBrandService.findAll(null).getResult());
     }
 }
