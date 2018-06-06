@@ -7,5 +7,5 @@ package com.berg.fastsearch.core.system.base.entity;
  * @version v1.0
  * @apiNote Created on 18-5-4
  */
-public class BaseEntity {
+public abstract class BaseEntity {
 }

@@ -1,5 +1,7 @@
 package com.berg.fastsearch.core.system.base.web.dto;
 
+import java.io.Serializable;
+
 /**
  * <p>REST响应数据体</p>
  *
@@ -7,7 +9,8 @@ package com.berg.fastsearch.core.system.base.web.dto;
  * @version v1.0
  * @apiNote Created on 18-3-18
  */
-public class ResponseData {
+public class ResponseData implements Serializable{
+    private static final long serialVersionUID = 8723239645309087276L;
     /**
      * 状态码
      */

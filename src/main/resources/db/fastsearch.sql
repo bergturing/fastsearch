@@ -174,7 +174,7 @@ CREATE TABLE `sys_code_value_tl`(
 DROP TABLE IF EXISTS `fs_cars`;
 CREATE TABLE `fs_cars`(
 	`ID` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '汽车实体的主键',
-    `TITLE` VARCHAR(32) NOT NULL,
+    `TITLE` VARCHAR(32) NOT NULL COMMENT '标题',
     `BRAND_ID` BIGINT(20) UNSIGNED NOT NULL COMMENT '车辆品牌的id,用户表(fs_car_brands)的主键',
     `SERIES_ID` BIGINT(20) UNSIGNED NOT NULL COMMENT '车辆系列的id,用户表(fs_car_series)的主键',
     `DEPLOYEE_ID` BIGINT(20) UNSIGNED NOT NULL COMMENT '发布者的id,用户表(sys_users)的主键',
