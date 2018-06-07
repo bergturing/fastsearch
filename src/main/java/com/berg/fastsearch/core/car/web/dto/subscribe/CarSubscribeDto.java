@@ -1,5 +1,6 @@
 package com.berg.fastsearch.core.car.web.dto.subscribe;
 
+import com.berg.fastsearch.core.car.web.dto.CarDto;
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 
 import javax.persistence.Column;
@@ -30,6 +31,29 @@ public class CarSubscribeDto extends BaseDto<Long> {
     private Date createTime;
 
     private Date lastUpdateTime;
+
+    /**
+     * 预约状态含义
+     */
+    private String statusMeaning;
+
+    /**
+     * 车辆信息
+     */
+    private String title;
+
+    private String brand;
+
+    private String series;
+
+    private String city;
+
+    private String region;
+
+    /**
+     * 用户信息
+     */
+    private String userName;
 
     public Long getCarId() {
         return carId;
@@ -93,5 +117,61 @@ public class CarSubscribeDto extends BaseDto<Long> {
 
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public String getStatusMeaning() {
+        return statusMeaning;
+    }
+
+    public void setStatusMeaning(String statusMeaning) {
+        this.statusMeaning = statusMeaning;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getSeries() {
+        return series;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

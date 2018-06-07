@@ -8,7 +8,7 @@ package com.berg.fastsearch.core.enums.car;
  * @apiNote Created on 18-5-17
  */
 public enum SubscribeStatus {
-    ADDED("ADDED", "已加入待看"),
+    ADDED("ADDED", "已收藏"),
     SUBSCRIBED("SUBSCRIBED", "已预约时间"),
     SAW("SAW", "已看过此车");
 

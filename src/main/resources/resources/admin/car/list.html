@@ -19,16 +19,21 @@
 <div class="page-container">
     <div class="text-c">
         <span class="select-box inline">
-            <select id="city" name="city" class="select">
+            <select id="car_city" name="city" class="select">
                 <option value="">所有城市</option>
             </select>
         </span>
         <span class="select-box inline">
-            <select id="houseStatus" name="houseStatus" class="select">
-                <option value="">全部车源</option>
-                <option value="0">待审核</option>
-                <option value="1">已发布</option>
-                <option value="2">已出租</option>
+            <select id="car_region" name="region" class="select">
+                <option value="">所有区域</option>
+            </select>
+        </span>
+        <span class="select-box inline">
+            <select id="car_status" name="carStatus" class="select">
+                <option value="">全部状态</option>
+                <option th:each="status:${statuses}"
+                        th:value="${status.code}" th:text="${status.name}">
+                </option>
             </select>
 		</span> 创建时间：
         <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'createTimeMax\')||\'%y-%M-%d\'}' })"
@@ -36,9 +41,9 @@
         -
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'createTimeMin\')}',maxDate:'%y-%M-%d' })"
                id="createTimeMax" class="input-text Wdate" style="width:110px;">
-        <input type="text" name="houseTitle" id="houseTitle" placeholder=" 房源标题" style="width:250px" class="input-text">
-        <button id="houseSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>
-            搜标签
+        <input type="text" name="carTitle" id="car_title" placeholder=" 车源标题" style="width:250px" class="input-text">
+        <button id="car_search" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>
+            搜车辆
         </button>
     </div>
 
@@ -125,16 +130,21 @@
 
     <!--下架时候的操作模板-->
     <div id="operate_template_down" style="display: none">
-        <a car_id="{{id}}" class="car_down" title="下架" href="javascript:;" style="text-decoration:none">
+        <a car_id="{{id}}" class="car_down ml-5" title="下架" href="javascript:;" style="text-decoration:none">
             <i class="iconfont">&#xebda;</i>
         </a>
-        <a car_id="{{id}}" class="car_edit" title="编辑" href="javascript:;" style="text-decoration:none">
+        <a car_id="{{id}}" class="car_edit ml-5" title="编辑" href="javascript:;" style="text-decoration:none">
             <i class="Hui-iconfont">&#xe6df;</i>
         </a>
         <a car_id="{{id}}" class="car_delete ml-5" title="删除" href="javascript:;" style="text-decoration:none">
             <i class="Hui-iconfont">&#xe6e2;</i>
         </a>
     </div>
+
+    <nav aria-label="Page navigation">
+        <ul id="page_nl" class="pagination">
+        </ul>
+    </nav>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>

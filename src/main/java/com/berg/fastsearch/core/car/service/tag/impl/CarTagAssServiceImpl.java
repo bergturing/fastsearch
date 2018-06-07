@@ -41,7 +41,7 @@ public class CarTagAssServiceImpl
     private CarTagRepository carTagRepository;
 
     @Override
-    protected ISearchService getSearchService() {
+    public ISearchService getSearchService() {
         return carTagAssSearchService;
     }
 

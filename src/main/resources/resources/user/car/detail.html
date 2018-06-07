@@ -75,7 +75,7 @@
                           th:text="${status.name}"
                           th:case="${status.code}">
                     </span>
-                    <span th:case="*">预约看车</span>
+                    <span th:case="*">收藏</span>
                 </button>
             </div>
         </div>
@@ -231,103 +231,103 @@
                     </ul>
                 </div>
             </div>
-            <div class="feature">
-                <div class="name">车源特色</div>
-                <div class="zf-tag">
-                    <ul class="se">
-                        <li class="tag1 tags">
-                            <span></span>
-                            床
-                            <p>
-                            </p>
-                        </li>
-                        <li class="tag11 tags">
-                            <span></span>
-                            衣柜
-                            <p>
-                            </p>
-                        </li>
-                        <li class="tag12 tags">
-                            <span></span>
-                            桌椅
-                            <p>
-                            </p>
-                        </li>
-                        <li class="tag2 tags">
-                            <span></span>
-                            电视
-                            <p>
-                            </p>
-                        </li>
-                        <li class="tag3 tags">
-                            <span></span>
-                            冰箱
-                            <p>
-                            </p>
-                        </li>
-                        <li class="tag4 tags">
-                            <span></span>
-                            洗衣机
-                            <p>
-                            </p>
-                        </li>
-                        <li class="tag5 tags">
-                            <span></span>
-                            空调
-                            <p>
-                            </p>
-                        </li>
-                        <li class="tag10 tags">
-                            <span></span>
-                            热水器
-                            <p>
-                            </p>
-                        </li>
-                        <li class="tag13 tags">
-                            <span></span>
-                            微波炉
-                            <p>
-                            </p>
-                        </li>
-                        <li class="tag6 tags">
-                            <span></span>
-                            暖气
-                            <p>
-                            </p>
-                        </li>
-                        <li class="tag7 tags">
-                            <span></span>
-                            宽带
-                            <p>
-                            </p>
-                        </li>
-                        <li class="tag9 tags">
-                            <span></span>
-                            天然气
-                            <p>
-                            </p>
-                        </li>
-                    </ul>
-                    <div class="clear"></div>
-                </div>
-                <div class="featureContent">
-                    <ul>
-                        <li>
-                            <span class="label">户型介绍：</span>
-                            <span class="text" th:text="${car.description}">暂无描述</span>
-                        </li>
-                        <li>
-                            <span class="label">详细地址：</span>
-                            <span class="text" th:text="${car.address}">暂无描述</span>
-                        </li>
-                        <li>
-                            <span class="label">描述：</span>
-                            <span class="text" th:text="${car.description}">暂无描述</span>
-                        </li>
+            <!--<div class="feature">-->
+                <!--<div class="name">车源特色</div>-->
+                <!--<div class="zf-tag">-->
+                    <!--<ul class="se">-->
+                        <!--<li class="tag1 tags">-->
+                            <!--<span></span>-->
+                            <!--床-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                        <!--<li class="tag11 tags">-->
+                            <!--<span></span>-->
+                            <!--衣柜-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                        <!--<li class="tag12 tags">-->
+                            <!--<span></span>-->
+                            <!--桌椅-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                        <!--<li class="tag2 tags">-->
+                            <!--<span></span>-->
+                            <!--电视-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                        <!--<li class="tag3 tags">-->
+                            <!--<span></span>-->
+                            <!--冰箱-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                        <!--<li class="tag4 tags">-->
+                            <!--<span></span>-->
+                            <!--洗衣机-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                        <!--<li class="tag5 tags">-->
+                            <!--<span></span>-->
+                            <!--空调-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                        <!--<li class="tag10 tags">-->
+                            <!--<span></span>-->
+                            <!--热水器-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                        <!--<li class="tag13 tags">-->
+                            <!--<span></span>-->
+                            <!--微波炉-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                        <!--<li class="tag6 tags">-->
+                            <!--<span></span>-->
+                            <!--暖气-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                        <!--<li class="tag7 tags">-->
+                            <!--<span></span>-->
+                            <!--宽带-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                        <!--<li class="tag9 tags">-->
+                            <!--<span></span>-->
+                            <!--天然气-->
+                            <!--<p>-->
+                            <!--</p>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                    <!--<div class="clear"></div>-->
+                <!--</div>-->
+                <!--<div class="featureContent">-->
+                    <!--<ul>-->
+                        <!--<li>-->
+                            <!--<span class="label">户型介绍：</span>-->
+                            <!--<span class="text" th:text="${car.description}">暂无描述</span>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<span class="label">详细地址：</span>-->
+                            <!--<span class="text" th:text="${car.address}">暂无描述</span>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<span class="label">描述：</span>-->
+                            <!--<span class="text" th:text="${car.description}">暂无描述</span>-->
+                        <!--</li>-->
 
-                    </ul>
-                </div>
-            </div>
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
         <div class="more">展开更多信息</div>
     </div>
@@ -362,11 +362,13 @@
             var subscribeStatus = subscribeBtn.attr('data-bind');
             switch (subscribeStatus) {
                 case "ADDED":
-                case "SUBSCRIBED":
                     cancelSubscribe();
                     break;
+                case "SUBSCRIBED":
+                    layer.msg('已预约此车!', {icon: 5, time: 2000});
+                    break;
                 case "SAW":
-                    layer.msg('您已看过此房!', {icon: 5, time: 2000});
+                    layer.msg('您已看过此车!', {icon: 5, time: 2000});
                     break;
                 default:
                     subscribe();
@@ -387,16 +389,16 @@
                             subscribeBtn.attr('data-bind', "SUBSCRIBED");
                             subscribeBtn.css('background-color', '#6a7b8c');
                             subscribeBtn.css('color', 'black');
-                            subscribeBtn.find('span').text('已加入待看');
+                            subscribeBtn.find('span').text('已收藏');
                         } else if (data.code === 403) {
-                            layer.msg('请先登录,再执行预约操作', {icon: 5, time: 2000});
+                            layer.msg('请先登录,再执行收藏操作', {icon: 5, time: 2000});
                         } else {
                             layer.msg(data.message, {icon: 5, time: 2000});
                         }
                     },
                     error: function (xhr, response, error) {
                         if (xhr.status === 403) {
-                            layer.msg('请先登录,再执行预约操作', {icon: 5, time: 2000});
+                            layer.msg('请先登录,再执行收藏操作', {icon: 5, time: 2000});
                         } else {
                             layer.msg('Server Error: ' + response, {icon: 5, time: 3000});
                         }
@@ -405,7 +407,7 @@
             }
 
             function cancelSubscribe() {
-                layer.confirm('确认要取消预约吗', {
+                layer.confirm('确认要取消收藏吗', {
                     btn: ['确认', '取消'] //按钮
                 }, function () {
                     $.ajax({
@@ -416,8 +418,8 @@
                                 subscribeBtn.attr('data-bind', "ADD")
                                     .css('background-color', '#0054a5')
                                     .css('color', '#fff');
-                                subscribeBtn.find('span').text('预约看车').css('color');
-                                layer.msg('已取消预约!', {icon: 6, time: 2000});
+                                subscribeBtn.find('span').text('收藏').css('color');
+                                layer.msg('已取消收藏!', {icon: 6, time: 2000});
                             } else if (data.code === 403) {
                                 layer.msg('请先登录,再执行操作', {icon: 5, time: 2000});
                             } else {
@@ -426,7 +428,7 @@
                         },
                         error: function (xhr, response, error) {
                             if (xhr.status === 403) {
-                                layer.msg('请先登录,再执行预约操作', {icon: 5, time: 2000});
+                                layer.msg('请先登录,再执行收藏操作', {icon: 5, time: 2000});
                             } else {
                                 layer.msg('Server Error: ' + response, {icon: 5, time: 3000});
                             }

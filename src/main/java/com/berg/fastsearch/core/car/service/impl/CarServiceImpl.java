@@ -113,7 +113,7 @@ public class CarServiceImpl
     private String cdnPrefix;
 
     @Override
-    protected ISearchService getSearchService() {
+    public ISearchService getSearchService() {
         return carSearchService;
     }
 
@@ -174,13 +174,10 @@ public class CarServiceImpl
         dto.setRegionCnName(supportAddressService.findOne(entity.getRegionId()).getCnName());
 
         //设置预约对象
-        CarSubscribeQueryCondition carSubscribeQueryCondition = new CarSubscribeQueryCondition();
-        carSubscribeQueryCondition.setCarId(entity.getId());
-        carSubscribeQueryCondition.setUserId(1L);
-        List<CarSubscribeDto> carSubscribeDtoList = subscribeService.findAll(carSubscribeQueryCondition).getResult();
-        if(CollectionUtils.isNotEmpty(carSubscribeDtoList) && carSubscribeDtoList.size()==1){
-            dto.setSubscribe(carSubscribeDtoList.get(0));
-        }else {
+        CarSubscribeDto carSubscribeDto = subscribeService.findByCarIdAndUserId(entity.getId(), userService.findByName(AccountUtil.getLoginUserName()).getId());
+        if(carSubscribeDto!=null){
+            dto.setSubscribe(carSubscribeDto);
+        }else{
             dto.setSubscribe(new CarSubscribeDto());
         }
 

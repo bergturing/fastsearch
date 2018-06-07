@@ -27,9 +27,10 @@ public class ResponseData implements Serializable{
     private Object data;
 
     /**
-     * 是否有更多数据
+     * 总数
      */
-    private boolean more;
+    private Long total;
+
 
     public ResponseData() {
         this.code = Status.SUCCESS.getCode();
@@ -66,12 +67,12 @@ public class ResponseData implements Serializable{
         this.data = data;
     }
 
-    public boolean isMore() {
-        return more;
+    public Long getTotal() {
+        return total;
     }
 
-    public void setMore(boolean more) {
-        this.more = more;
+    public void setTotal(Long total) {
+        this.total = total;
     }
 
     public static ResponseData ofMessage(int code, String message){

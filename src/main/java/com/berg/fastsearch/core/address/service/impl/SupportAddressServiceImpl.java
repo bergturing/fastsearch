@@ -76,7 +76,7 @@ public class SupportAddressServiceImpl
 
 
     @Override
-    protected ISearchService getSearchService() {
+    public ISearchService getSearchService() {
         return supportAddressSearchService;
     }
 

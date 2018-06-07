@@ -18,14 +18,20 @@
 </nav>
 
 <div class="page-container">
-    <div class="text-c"> 日期范围：
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
-               class="input-text Wdate" style="width:120px;">
-        -
-        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
-               class="input-text Wdate" style="width:120px;">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入用户名称" id="" name="">
-        <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜预约</button>
+    <div class="text-c">
+        <span class="select-box inline">
+            <select id="subscribe_status" name="carStatus" class="select">
+                <option value="">全部状态</option>
+                <option th:each="status:${statuses}"
+                        th:value="${status.code}" th:text="${status.name}">
+                </option>
+            </select>
+		</span>
+
+        <button id="subscribe_search" type="submit" class="btn btn-success">
+            <i class="Hui-iconfont">&#xe665;</i>
+            搜预约
+        </button>
     </div>
 
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -67,8 +73,8 @@
         <tbody>
         <tr class="text-c">
             <td><input type="checkbox" value="{{id}}"></td>
-            <td>{{carId}}</td>
-            <td>{{userId}}</td>
+            <td>{{title}}</td>
+            <td>{{userName}}</td>
             <td>{{orderTime}}</td>
             <td>{{phoneNumber}}</td>
             <td>{{status}}</td>
@@ -76,10 +82,10 @@
             <td>{{createTime}}</td>
             <td>{{lastUpdateTime}}</td>
             <td class="f-14">
-                <a primaryKey="{{id}}" class="edit" title="编辑" href="javascript:;" style="text-decoration:none">
+                <a primaryKey="{{id}}" class="finish_saw" title="完成看车" href="javascript:;" style="text-decoration:none">
                     <i class="Hui-iconfont">&#xe6df;</i>
                 </a>
-                <a primaryKey="{{id}}" class="delete ml-5" title="删除" href="javascript:;" style="text-decoration:none">
+                <a primaryKey="{{id}}" class="finish_trade ml-5" title="完成交易" href="javascript:;" style="text-decoration:none">
                     <i class="Hui-iconfont">&#xe6e2;</i>
                 </a>
             </td>

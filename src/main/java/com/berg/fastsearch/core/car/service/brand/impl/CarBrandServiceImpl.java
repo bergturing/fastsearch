@@ -31,7 +31,7 @@ public class CarBrandServiceImpl
     private ICarBrandSearchService carBrandSearchService;
 
     @Override
-    protected ISearchService getSearchService() {
+    public ISearchService getSearchService() {
         return carBrandSearchService;
     }
 

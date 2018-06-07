@@ -48,7 +48,7 @@ public class AdminAddressUrlController extends BaseUrlController<Long> {
         //设置所有的城市
         SupportAddressQueryCondition supportAddressQueryCondition = new SupportAddressQueryCondition();
         supportAddressQueryCondition.setLevel(Level.CITY.getCode());
-        model.addAttribute("citys", supportAddressService.findAll(supportAddressQueryCondition));
+        model.addAttribute("citys", supportAddressService.findAll(supportAddressQueryCondition).getResult());
 
         //添加行政级别
         model.addAttribute("levels", Level.values());

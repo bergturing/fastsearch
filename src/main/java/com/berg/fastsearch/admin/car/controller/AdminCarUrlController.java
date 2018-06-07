@@ -52,6 +52,12 @@ public class AdminCarUrlController extends BaseUrlController<Long>{
     }
 
     @Override
+    protected void listData(Model model) {
+        //车辆的状态
+        model.addAttribute("statuses", Status.values());
+    }
+
+    @Override
     protected void addData(Model model){
         //设置基本属性
         baseData(model);

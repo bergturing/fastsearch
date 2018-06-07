@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="/static/lib/layui/css/layui.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/user/main.css" rel='stylesheet' type='text/css'/>
+    <link href="/static/css/user/common.css" rel='stylesheet' type='text/css'/>
+    <link href="/static/css/user/center/center.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+</head>
+<body>
+<div class="container">
+    <div class="right-body edit-info">
+        <div class="title">个人信息</div>
+        <hr class="split-line"/>
+        <div class="content">
+            <div class="tab">
+                <span class="actTab" data-bind="change-email">修改邮箱</span>
+                <span class="actTab" data-bind="change-password">修改密码</span>
+            </div>
+            <div class="modify-tab">
+                <div class="modify-content change-email">
+                    <ul class="change-pwd">
+                        <li>
+                            <span>设置邮箱：</span>
+                            <input type="text" name="email" class="email">
+                        </li>
+                        <li><span></span><a class="emailSubmit lj-btn">保存修改</a></li>
+                    </ul>
+                </div>
+                <div class="modify-content change-password">
+                    <ul class="change-pwd">
+                        <li>
+                            <span>设置密码：</span>
+                            <input type="password" name="password" class="nickName">
+                        </li>
+                        <li><span></span><a class="passwordSubmit lj-btn">保存修改</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/layui/layui.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/js/user/center/message.js"></script>
+
+</body>
+</html>

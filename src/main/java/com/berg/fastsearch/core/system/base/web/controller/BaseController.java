@@ -1,6 +1,7 @@
 package com.berg.fastsearch.core.system.base.web.controller;
 
 import com.berg.fastsearch.core.system.base.entity.BaseEntity;
+import com.berg.fastsearch.core.system.base.entity.ServiceMultiResult;
 import com.berg.fastsearch.core.system.base.service.IBaseService;
 import com.berg.fastsearch.core.system.base.web.dto.BaseDto;
 import com.berg.fastsearch.core.system.base.web.dto.BaseQueryCondition;
@@ -29,7 +30,16 @@ public abstract class BaseController<
      */
     @GetMapping
     public ResponseData query(CONDITION condition){
-        return ResponseData.ofSuccess(getService().findAll(condition).getResult());
+        //获取结果
+        ServiceMultiResult<DTO> multiResult = getService().findAll(condition);
+
+        //数据
+        ResponseData responseData = ResponseData.ofSuccess(multiResult.getResult());
+
+        //总数
+        responseData.setTotal(multiResult.getTotal());
+
+        return responseData;
     }
 
     /**

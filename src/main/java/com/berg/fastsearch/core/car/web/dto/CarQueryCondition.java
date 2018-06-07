@@ -13,6 +13,11 @@ public class CarQueryCondition extends BaseQueryCondition {
     private static final long serialVersionUID = 4319051233705555484L;
 
     /**
+     * 标题字段名
+     */
+    public static final String FIELD_TITLE = "title";
+
+    /**
      * 城市字段名
      */
     public static final String FIELD_CITY_EN_NAME = "cityEnName";
@@ -108,6 +113,11 @@ public class CarQueryCondition extends BaseQueryCondition {
      * 关键词
      */
     private String keywords;
+
+    /**
+     * 车辆标题
+     */
+    private String title;
 
     /**
      * 左上角
@@ -209,5 +219,13 @@ public class CarQueryCondition extends BaseQueryCondition {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -201,7 +201,7 @@ public class UserCarUrlController{
         ServiceMultiResult<CarDto> multiResult = carService.findAll(carQueryCondition);
 
         ResponseData response = ResponseData.ofSuccess(multiResult.getResult());
-        response.setMore(multiResult.getTotal() > (mapSearch.getStart() + mapSearch.getSize()));
+        response.setTotal(multiResult.getTotal());
         return response;
     }
 }

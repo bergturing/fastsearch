@@ -7,6 +7,18 @@ $(function(){
 var FastSearchCar = (function(){
 
     /**
+     *
+     * @type {*|jQuery|HTMLElement}
+     */
+    var $city = $("#car_city");
+
+    /**
+     *
+     * @type {*|jQuery|HTMLElement}
+     */
+    var $region = $("#car_region");
+
+    /**
      * 内部方法: 添加一个汽车
      */
     var _carAdd = function(){
@@ -162,6 +174,80 @@ var FastSearchCar = (function(){
     };
 
     /**
+     * 获取查询条件
+     * @private
+     */
+    var _getCondition = function(condition){
+        condition = condition || "1=1";
+
+        //其他条件
+        var cityEnName = $("#car_city").val().split("-")[1];
+        if(!!cityEnName){
+            condition += "&cityEnName=" + cityEnName;
+        }
+
+        var regionEnName = $("#car_region").val().split("-")[1];
+        if(!!regionEnName){
+            condition += "&regionEnName=" + regionEnName;
+        }
+
+        var status = $("#car_status").val();
+        if(!!status){
+            condition += "&status=" + status;
+        }
+
+        var title = $("#car_title").val();
+        if(!!title){
+            condition += "&title=" + title;
+        }
+
+        return condition;
+    };
+
+    /**
+     *
+     * @param city
+     * @private
+     */
+    var _changeCity = function(city) {
+        $.get('/address?level=city', function (data, status) {
+            if (status !== 'success' || data.code !== 200) {
+                _showError(data.message);
+                return;
+            }
+            city.html('<option value="">所有城市</option>');
+            var str = '';
+            $.each(data.data, function (i, item) {
+                str += "<option value=" + item.id + "-" + item.enName + ">" + item.cnName + "</option>";
+            });
+            city.append(str);
+        });
+    };
+
+    /**
+     *
+     * @param region
+     * @param belongTo
+     * @private
+     */
+    var _changeRegion = function (region, belongTo) {
+        $.get('/address?level=region&belongTo=' + belongTo, function (data, status) {
+            if (status !== 'success' || data.code !== 200) {
+                _showError(data.message);
+                return;
+            }
+            var selectedVal = region.val();
+            region.html('<option value="">所有区域</option>');
+
+            var str = "";
+            $.each(data.data, function (i, item) {
+                str += "<option value=" + item.id + "-" + item.enName + ">" + item.cnName + "</option>";
+            });
+            region.append(str);
+        });
+    };
+
+    /**
      * 内部方法: 绑定事件
      */
     var _bind = function(){
@@ -174,18 +260,22 @@ var FastSearchCar = (function(){
         //索引所有数据
         $("#index_all").bind("click", _indexAll);
 
+        $("#car_list")
+            .on("click", ".car_up", _carUp)             //发布操作
+            .on("click", ".car_down", _carDown)         //下架操作
+            .on("click", ".car_edit", _carEdit)         //编辑车辆
+            .on("click", ".car_delete", _carDelete);    //删除车辆
 
-        //发布操作
-        $("#car_list").on("click", ".car_up", _carUp);
+        $("#car_search").bind("click", function () {
+            _loadData();
+        });
 
-        //下架操作
-        $("#car_list").on("click", ".car_down", _carDown);
+        // 二级联动 地区 以及 区域联动
+        $city.change(function () {
+            var selectedVal = $(this).val().split("-")[0];
 
-        //编辑车辆
-        $("#car_list").on("click", ".car_edit", _carEdit);
-
-        //删除车辆
-        $("#car_list").on("click", ".car_delete", _carDelete);
+            _changeRegion($region, selectedVal);
+        });
     };
 
     /**
@@ -193,8 +283,6 @@ var FastSearchCar = (function(){
      */
     var _makeList = function(data){
         if(data && (data instanceof Array)){
-            $("#car_count").html('共有数据：<strong>' + data.length +'</strong> 条');
-
             var target = $("#car_list>tbody");
             var _template = $("#car_template>tbody").html();
 
@@ -249,12 +337,35 @@ var FastSearchCar = (function(){
         }
     };
 
+    var _makePage = function(response){
+        var $page = $("#page_nl");
+
+        // $page.html("<li>\n" +
+        //     "                <a href=\"#\" aria-label=\"Previous\">\n" +
+        //     "                    <span aria-hidden=\"true\">&laquo;</span>\n" +
+        //     "                </a>\n" +
+        //     "            </li>\n" +
+        //     "            <li><a href=\"#\">1</a></li>\n" +
+        //     "            <li><a href=\"#\">2</a></li>\n" +
+        //     "            <li><a href=\"#\">3</a></li>\n" +
+        //     "            <li><a href=\"#\">4</a></li>\n" +
+        //     "            <li><a href=\"#\">5</a></li>\n" +
+        //     "            <li>\n" +
+        //     "                <a href=\"#\" aria-label=\"Next\">\n" +
+        //     "                    <span aria-hidden=\"true\">&raquo;</span>\n" +
+        //     "                </a>\n" +
+        //     "            </li>");
+
+    };
+
     /**
      * 内部方法: 初始化方法
      */
     var _init = function(){
         //绑定
         _bind();
+        //初始化城市数据
+        _changeCity($city);
     };
 
     /**
@@ -265,12 +376,14 @@ var FastSearchCar = (function(){
         $("#car_list tbody tr").remove();
 
         $.ajax({
-            url: '/car?' + conditon,
+            url: '/car?' + _getCondition(condition),
             type: 'GET',
             dataType: 'json',
             success: function (response) {
                 if(response.code === 200){
+                    $("#car_count").html('共有数据：<strong>' + response.total +'</strong> 条');
                     _makeList(response.data);
+                    _makePage(response);
                 }else{
                     console.log(response.msg);
                 }

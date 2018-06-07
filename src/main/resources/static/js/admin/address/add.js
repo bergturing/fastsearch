@@ -44,7 +44,7 @@ var FSCarAddressAdd = (function(){
      */
     var _changeCity = function(city, level) {
 
-        if(level === "city"){
+        if(level === "region"){
             $.get('/address?level=city', function (data, status) {
                 if (status !== 'success' || data.code !== 200) {
                     _showError(data.message);
@@ -66,7 +66,7 @@ var FSCarAddressAdd = (function(){
 
         // 二级联动 行政级别与城市联动
         $level.change(function () {
-            var selectedVal = $(this).val();debugger;
+            var selectedVal = $(this).val();
             if (typeof(selectedVal) === 'undefined' || selectedVal === "") {
                 layer.msg('请选择行政级别！', {icon: 5, time: 2000});
                 return;

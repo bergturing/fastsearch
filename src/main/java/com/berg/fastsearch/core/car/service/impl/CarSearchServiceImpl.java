@@ -173,6 +173,13 @@ public class CarSearchServiceImpl
     private QueryBuilder buildQuery(final CarQueryCondition condition){
         BoolQueryBuilder builder = QueryBuilders.boolQuery();
 
+        //标题
+        String title = condition.getTitle();
+        if(StringUtils.isNotBlank(title)){
+            builder = builder
+                    .must(QueryBuilders.termQuery(CarQueryCondition.FIELD_TITLE, title));
+        }
+
         //城市
         String cityEnName = condition.getCityEnName();
         if(StringUtils.isNotBlank(cityEnName)){
@@ -249,6 +256,7 @@ public class CarSearchServiceImpl
         if(StringUtils.isNotBlank(keywords)){
             builder = builder.must(
                     QueryBuilders.multiMatchQuery(keywords,
+                            CarQueryCondition.FIELD_TITLE,
                             CarQueryCondition.FIELD_CITY_EN_NAME,
                             CarQueryCondition.FIELD_REGION_EN_NAME,
                             CarQueryCondition.FIELD_CITY_CN_NAME,

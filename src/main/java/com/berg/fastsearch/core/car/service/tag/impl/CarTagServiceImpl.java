@@ -49,7 +49,7 @@ public class CarTagServiceImpl
     private ICarTagSearchService carTagSearchService;
 
     @Override
-    protected ISearchService getSearchService() {
+    public ISearchService getSearchService() {
         return carTagSearchService;
     }
 
