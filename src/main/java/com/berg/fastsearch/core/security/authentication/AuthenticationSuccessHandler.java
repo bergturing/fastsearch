@@ -75,9 +75,5 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
                 response.sendRedirect("/admin/index");
             }
         }
-
-
-
-
     }
 }
