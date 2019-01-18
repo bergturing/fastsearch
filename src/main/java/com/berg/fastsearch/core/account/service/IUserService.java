@@ -9,7 +9,7 @@ import com.berg.fastsearch.core.system.base.service.IBaseService;
 /**
  * <p>用户服务接口</p>
  *
- * @author bo.he02@hand-china.com
+ * @author bergturing@qq.com
  * @version v1.0
  * @apiNote Created on 18-3-18
  */

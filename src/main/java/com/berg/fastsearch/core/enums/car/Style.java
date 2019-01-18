@@ -4,7 +4,7 @@ package com.berg.fastsearch.core.enums.car;
  * <p>车型</p>
  *
  * @version: v1.0
- * @author: bo.he02@hand-china.com
+ * @author: bergturing@qq.com
  * @apiNote: Created on 18-5-13
  */
 public enum Style {

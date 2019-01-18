@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * <p>用户角色服务实现类</p>
  *
- * @author bo.he02@hand-china.com
+ * @author bergturing@qq.com
  * @version v1.0
  * @apiNote Created on 18-3-18
  */

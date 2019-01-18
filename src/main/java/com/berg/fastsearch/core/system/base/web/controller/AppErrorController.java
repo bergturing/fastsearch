@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * <p>处理web错误, 全局错误</p>
  *
- * @author bo.he02@hand-china.com
+ * @author bergturing@qq.com
  * @version v1.0
  * @apiNote Created on 18-3-18
  */

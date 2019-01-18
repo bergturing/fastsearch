@@ -6,7 +6,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 /**
  * <p></p>
  *
- * @author bo.he02@hand-china.com
+ * @author bergturing@qq.com
  * @version v1.0
  * @apiNote Created on 18-5-4
  */
